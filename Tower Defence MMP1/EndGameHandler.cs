@@ -13,7 +13,7 @@ namespace Tower_Defence
         private SpriteFont _spriteFont;
         private int _maxLifes;
         private int _stoppedEnemies;
-        private string _looseGameText = "You LOST to silly Monsters";
+        private string _looseGameText = "You LOST to silly Monsters!!!";
 
         #endregion
 
