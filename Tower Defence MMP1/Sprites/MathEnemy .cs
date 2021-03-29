@@ -20,8 +20,10 @@ namespace Tower_Defence.Sprites
         public bool TowerButtonIsClicked { get; set; }
         public bool MathOperationButtonIsClicked { get; set; }
 
+        private Random random = new Random();
         private SpriteFont _spriteFont;
         private MathOperation _mathOperation = MathOperation.subtraction;
+        private int[] healthPointsArray = new int[] { 7, 51, 49, 100, 66, 36, 3, 77, 16, 9, 81, 121, 90, 85, 55, 64, 69 };
 
         #region Fields
         private float _timer;
@@ -35,11 +37,18 @@ namespace Tower_Defence.Sprites
             _animation = new Animation(texture, tileRowCount, tileColumnCount);
             _animationManager = new AnimationManager(_animation);
             _spriteFont = spriteFont;
-            HealthPoints = 100;
+            HealthPoints = RandomHealthPoints();
             Color = Color.White;
             MathOperationButton.changeMathOperationHandler += HandleMathOperation;
             MathOperationButton.mathOperationButtonIsClicked += HandleMathOperationButtonIsClicked;
             GameState.TowerButtonIsClicked += HandleTowerButtonClicked;
+        }
+
+        private int RandomHealthPoints()
+        {
+            int num = random.Next(0, healthPointsArray.Length);
+
+            return healthPointsArray[num];
         }
 
         private void HandleMathOperationButtonIsClicked(MathOperation mathOperation, bool clicked)

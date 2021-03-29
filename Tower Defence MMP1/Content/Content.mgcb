@@ -265,6 +265,18 @@
 /processorParam:TextureFormat=Color
 /build:MenuButtons/button_play.png;MenuButtons/playButton.png
 
+#begin MenuButtons/button_restart.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:MenuButtons/button_restart.png;MenuButtons/restartButton.png
+
 #begin MenuButtons/button_settings.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -288,6 +300,13 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:MenuButtons/skull_arr.png;MenuButtons/mouse.png
+
+#begin MenuFont/EndGameFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:MenuFont/EndGameFont.spritefont;MenuFont/endGameFont.spritefont
 
 #begin MenuFont/menuFont.spritefont
 /importer:FontDescriptionImporter

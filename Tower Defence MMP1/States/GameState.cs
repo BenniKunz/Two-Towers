@@ -15,10 +15,19 @@ namespace Tower_Defence.States
     public class GameState : State
     {
         #region Fields
+
+        #region Miscallenous textures
         private Texture2D _levelMap;
         private Texture2D _statsTable;
+        private Texture2D _tableGUI;
+        private Texture2D _healthBar;
+        private Texture2D _healthBarBackground;
+        #endregion
+
+        #region Buttons/Weapons textures
         private Texture2D _backToMenuButton;
         private Texture2D _pauseButton;
+        private Texture2D _restartButton;
         private Texture2D _archerTowerButton;
         private Texture2D _archerTower;
         private Texture2D _archerWeapon;
@@ -26,41 +35,46 @@ namespace Tower_Defence.States
         private Texture2D _fireTower;
         private Texture2D _fireWeapon;
         private Texture2D _mathOperationButton;
-        private Texture2D _healthBar;
-        private Texture2D _healthBarBackground;
+        #endregion
+
+        #region Cursor textures
         private Texture2D _mouseCursor;
         private Texture2D _mouseCursorStandard;
         private Texture2D _mouseCursorSubtraction;
         private Texture2D _mouseCursorAddition;
         private Texture2D _mouseCursorDivision;
         private Texture2D _mouseCursorSquareRoot;
-        private Texture2D _tableGUI;
+        #endregion
+
         private Difficulty _difficulty;
         private MathOperation _mathOperation;
         private MouseState _currentMouse;
         private Song _gameSong;
 
         private SpriteFont _gameFont;
+        private SpriteFont _menuFont;
         private bool _pauseGame;
         private bool _isGameOver;
-        
+
         public static bool _towerButtonIsClicked;
         public static bool _mathOperationButtonIsClicked;
 
 
         private List<IGameParts> _gameParts;
         private Texture2D[] _enemyTextureArray;
-
+        #region Dictionaries
         private Dictionary<AttackType, Texture2D> _towerTextures = new Dictionary<AttackType, Texture2D>();
         private Dictionary<AttackType, Texture2D> _weaponTextures = new Dictionary<AttackType, Texture2D>();
         private Dictionary<MathOperation, Texture2D> _mathOperations = new Dictionary<MathOperation, Texture2D>();
+
+        #endregion
 
         private Queue<Tower> _towerQueue = new Queue<Tower>();
 
         private EndGameHandler endgameHandler;
 
         public static event Action<bool> TowerButtonIsClicked;
-        
+
 
         #region Enemy
         private Texture2D _enemy01_walkTile;
@@ -85,9 +99,11 @@ namespace Tower_Defence.States
             _levelMap = _content.Load<Texture2D>("Background/levelMap");
             _statsTable = _content.Load<Texture2D>("GameItems/statsTable");
             _tableGUI = _content.Load<Texture2D>("GameItems/tableGUI");
-            
+
             _backToMenuButton = _content.Load<Texture2D>("MenuButtons/closeButton");
             _pauseButton = _content.Load<Texture2D>("MenuButtons/pauseButton");
+            _restartButton = _content.Load<Texture2D>("MenuButtons/restartButton");
+
             _archerTowerButton = _content.Load<Texture2D>("TowerButtons/buildTower");
             _fireTowerButton = _content.Load<Texture2D>("TowerButtons/fireTowerButton");
 
@@ -103,7 +119,8 @@ namespace Tower_Defence.States
             _enemy01_walkTile = _content.Load<Texture2D>("Enemies/enemy01_walkTile");
             _enemy02_walkTile = _content.Load<Texture2D>("Enemies/enemy02_walkTile");
 
-            _gameFont = _content.Load<SpriteFont>("MenuFont/menuFont");
+            _gameFont = _content.Load<SpriteFont>("MenuFont/endGameFont");
+            _menuFont = _content.Load<SpriteFont>("MenuFont/menuFont");
 
             _mouseCursorStandard = _content.Load<Texture2D>("MenuButtons/mouse");
             _mouseCursorSubtraction = _content.Load<Texture2D>("GameItems/subtractionMouse");
@@ -165,7 +182,7 @@ namespace Tower_Defence.States
             {
                 Position = new Vector2(250, 30),
                 Scale = 0.7f,
-                Font = _gameFont
+                Font = _menuFont
             };
 
             fireButton.PreviewTowerEventHandler += HandleTowerPreview;
@@ -176,44 +193,41 @@ namespace Tower_Defence.States
             {
                 Position = new Vector2(450, 30),
                 Scale = 0.7f,
-                Font = _gameFont,
-                MathButtonText = "-1"    
-               
-            };
+                Font = _menuFont,
+                MathButtonText = "-1"
 
+            };
 
             MathOperationButton divisionButton = new MathOperationButton(_mathOperationButton, MathOperation.division)
             {
                 Position = new Vector2(650, 30),
                 Scale = 0.7f,
-                Font = _gameFont,
+                Font = _menuFont,
                 MathButtonText = "/2",
                 CoolDownTime = 5f,
 
-        };
-
+            };
 
             MathOperationButton additionButton = new MathOperationButton(_mathOperationButton, MathOperation.addition)
             {
                 Position = new Vector2(850, 30),
                 Scale = 0.7f,
-                Font = _gameFont,
+                Font = _menuFont,
                 MathButtonText = "+1"
             };
-
 
             MathOperationButton squareRootButton = new MathOperationButton(_mathOperationButton, MathOperation.squareroot)
             {
                 Position = new Vector2(1050, 30),
                 Scale = 0.7f,
-                Font = _gameFont,
+                Font = _menuFont,
                 MathButtonText = "sqrt",
                 CoolDownTime = 10f,
 
-        };
+            };
 
-            EnemySpawner enemySpawner = new EnemySpawner(_enemyTextureArray, _healthBar, _healthBarBackground, _gameFont);
-            endgameHandler = new EndGameHandler(_gameFont);
+            EnemySpawner enemySpawner = new EnemySpawner(_enemyTextureArray, _healthBar, _healthBarBackground, _menuFont);
+            endgameHandler = new EndGameHandler(_gameFont, _menuFont);
 
             endgameHandler.gameOverHandler += HandleGameOver;
 
@@ -235,7 +249,7 @@ namespace Tower_Defence.States
         private void HandleMathOperationButtonIsClicked(MathOperation mathOperation, bool clicked)
         {
             _mathOperationButtonIsClicked = clicked;
-            if(clicked)
+            if (clicked)
             {
                 _mouseCursor = _mathOperations[mathOperation];
             }
@@ -263,14 +277,28 @@ namespace Tower_Defence.States
 
         private void HandleGameOver()
         {
-            bool isGameOver = true;
+            _isGameOver = true;
+
+            MenuButton restartButton = new MenuButton(_restartButton, _menuFont)
+            {
+                Position = new Vector2(Game1.ScreenWidth / 2 - _restartButton.Width / 2, Game1.ScreenHeight / 2 - _restartButton.Height / 2)
+            };
+
+            restartButton.menuButtonEventHandler += HandleRestartButtonClicked;
+
+            _gameParts.Add(restartButton);
+        }
+
+        private void HandleRestartButtonClicked(bool clicked)
+        {
+            _game1.ChangeState(new GameState(_game1, _graphics, _content, _difficulty));
         }
 
         public override void Update(GameTime gameTime)
         {
-            
+
             //System.Diagnostics.Debug.WriteLine(_towerButtonIsClicked);
-            if (_pauseGame)
+            if (_pauseGame || _isGameOver)
             {
                 foreach (IGameParts gamePart in _gameParts)
                 {
@@ -280,9 +308,13 @@ namespace Tower_Defence.States
                 }
                 return;
             }
-            foreach (IGameParts gamePart in _gameParts.ToArray())
+            if(_isGameOver == false)
             {
-                gamePart.Update(gameTime, _gameParts);
+                foreach (IGameParts gamePart in _gameParts.ToArray())
+                {
+                    gamePart.Update(gameTime, _gameParts);
+                }
+
             }
         }
 
@@ -301,7 +333,7 @@ namespace Tower_Defence.States
                 new Vector2(0, 0),
                 0.7f,
                 SpriteEffects.None, 0f);
-            spritebatch.DrawString(_gameFont, $"{x}:{y}", new Vector2(50, 600), Color.White);
+            spritebatch.DrawString(_menuFont, $"{x}:{y}", new Vector2(50, 600), Color.White);
 
             if (_pauseGame)
             {
@@ -312,11 +344,26 @@ namespace Tower_Defence.States
                         gamePart.Draw(gameTime, spritebatch);
                     }
                 }
+                spritebatch.Draw(_mouseCursor, new Rectangle(x, y, _mouseCursor.Width, _mouseCursor.Height), null, Color.White, -2.0f, new Vector2(0, 0), SpriteEffects.None, 0f);
                 return;
             }
-            foreach (IGameParts gamePart in _gameParts)
+
+            if (_isGameOver == false)
             {
-                gamePart.Draw(gameTime, spritebatch);
+                foreach (IGameParts gamePart in _gameParts)
+                {
+                    gamePart.Draw(gameTime, spritebatch);
+                }
+            }
+            else
+            {
+                foreach (IGameParts gamePart in _gameParts)
+                {
+                    if (gamePart is MenuButton || gamePart is EndGameHandler)
+                    {
+                        gamePart.Draw(gameTime, spritebatch);
+                    }
+                }
             }
 
             spritebatch.Draw(_mouseCursor, new Rectangle(x, y, _mouseCursor.Width, _mouseCursor.Height), null, Color.White, -2.0f, new Vector2(0, 0), SpriteEffects.None, 0f);
@@ -324,7 +371,8 @@ namespace Tower_Defence.States
 
         private void HandleBackToMenuButtonClicked(bool clicked)
         {
-            _game1.QuitGame(); // replace with back to menu logic
+            _game1.ChangeState(new MenuState(_game1, _graphics, _content));
+           
         }
 
         private void HandlePauseButtonClicked(bool clicked)
@@ -341,17 +389,35 @@ namespace Tower_Defence.States
             Texture2D towerTexture = _towerTextures[towerType];
             Texture2D weaponTexture = _weaponTextures[towerType];
 
+            float towerStartRange = 0;
+            float towerMaxRange = 0;
+
+            if (towerType == AttackType.archer)
+            {
+               towerStartRange = 450f;
+               towerMaxRange = 1500f;
+
+             }
+            else if(towerType == AttackType.fire)
+            {
+                towerStartRange = 0f;
+                towerMaxRange = 350f;
+            }
+
             Tower newTower = new Tower(towerTexture)
             {
                 Position = new Vector2(_currentMouse.X, _currentMouse.Y),
-                weapon = new Weapon(weaponTexture, towerType)
-            };
-            
+                weapon = new Weapon(weaponTexture, towerType),
+                TowerMaxRange = towerMaxRange,
+                TowerStartRange = towerStartRange
+                
+        };
+
 
             _gameParts.Add(newTower);
         }
         private void HandleTurnPreviewOff()
-        { 
+        {
             _gameParts.Remove((Tower)_gameParts.FindLast(t => t is Tower));
             TowerButtonIsClicked?.Invoke(false);
             _towerButtonIsClicked = false;
@@ -382,7 +448,7 @@ namespace Tower_Defence.States
         private void CheckNumberOfTowers(Tower tower)
         {
             _towerQueue.Enqueue(tower);
-            if (_towerQueue.Count > 3)
+            if (_towerQueue.Count > 2)
             {
                 var removeTower = _towerQueue.Dequeue();
                 _gameParts.Remove(removeTower);

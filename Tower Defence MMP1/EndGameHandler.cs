@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Tower_Defence.Enums;
 using Tower_Defence.Sprites;
 
 namespace Tower_Defence
@@ -10,19 +11,22 @@ namespace Tower_Defence
     public class EndGameHandler : IGameParts
     {
         #region Fields
-        private SpriteFont _spriteFont;
+        private SpriteFont _gameFont;
+        private SpriteFont _menuFont;
         private int _maxLifes;
         private int _stoppedEnemies;
+        private bool _died;
         private string _looseGameText = "You LOST to silly Monsters!!!";
 
         #endregion
 
         public event Action gameOverHandler;
 
-        public EndGameHandler(SpriteFont spriteFont)
+        public EndGameHandler(SpriteFont spriteFont, SpriteFont menuFont)
         {
-            _spriteFont = spriteFont;
-            _maxLifes = 10;
+            _menuFont = menuFont;
+            _gameFont = spriteFont;
+            _maxLifes = 1;
             _stoppedEnemies = 0;
         }
 
@@ -58,23 +62,24 @@ namespace Tower_Defence
                     }
                 }
             }
-            if (_maxLifes <= 0)
+            if (_maxLifes <= 0 && _died == false)
             {
+                _died = true;
                 _maxLifes = 0;
                 gameOverHandler?.Invoke();
             }
         }
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            spriteBatch.DrawString(_spriteFont, $"{_maxLifes} Lifes", new Vector2(30, 220), Color.White);
-            spriteBatch.DrawString(_spriteFont, $"{_stoppedEnemies} Kills", new Vector2(230, 220), Color.White);
+            spriteBatch.DrawString(_menuFont, $"{_maxLifes} Lifes", new Vector2(30, 220), Color.White);
+            spriteBatch.DrawString(_menuFont, $"{_stoppedEnemies} Kills", new Vector2(230, 220), Color.White);
 
             if (_maxLifes <= 0)
             {
                 spriteBatch.DrawString(
-                    _spriteFont, _looseGameText,
-                    new Vector2(Game1.ScreenWidth / 2 - _spriteFont.MeasureString(_looseGameText).X /2, Game1.ScreenHeight / 2),
-                    Color.White);
+                    _gameFont, _looseGameText,
+                    new Vector2(Game1.ScreenWidth / 2 - _gameFont.MeasureString(_looseGameText).X /2, 300),
+                    Color.Red);
             }
         }
     }

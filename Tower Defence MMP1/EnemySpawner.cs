@@ -16,11 +16,11 @@ namespace Tower_Defence
         private float _mathEnemySpawnTime;
         private Vector2 _enemySpawnPoint = new Vector2(0, 600);
         private List<Texture2D> _levelOneEnemyList = new List<Texture2D>();
-        private int counter = 0;
 
         private Texture2D _healthBarTexture;
         private Texture2D _healthBarBackgroundTexture;
         private SpriteFont _spriteFont;
+        private Random random = new Random();
 
         public EnemySpawner(Texture2D[] enemyTextureArray, Texture2D healthBar, Texture2D healthBarBackground, SpriteFont spriteFont)
         {
@@ -28,8 +28,8 @@ namespace Tower_Defence
             {
                 _levelOneEnemyList.Add(texture);
             }
-            _enemySpawnTime = 12f;
-            _mathEnemySpawnTime = 7f;
+            _enemySpawnTime = 15f;
+            _mathEnemySpawnTime = 10f;
             _healthBarTexture = healthBar;
             _healthBarBackgroundTexture = healthBarBackground;
             _spriteFont = spriteFont;
@@ -39,7 +39,7 @@ namespace Tower_Defence
             _timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
             _mathTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            if (_timer >= _enemySpawnTime && counter < 1 )
+            if (_timer >= _enemySpawnTime)
             {
                 _timer = 0f;
                 var enemy = SpawnEnemies(gameTime);
@@ -47,7 +47,7 @@ namespace Tower_Defence
                 gameParts.Add(enemy);
                 gameParts.Add(enemy._healthBarBackground);
                 gameParts.Add(enemy._healthBar);
-                counter++;
+               
             }
             if (_mathTimer >= _mathEnemySpawnTime)
             {
@@ -62,12 +62,27 @@ namespace Tower_Defence
 
         private MathEnemy SpawnMathEnemy(GameTime gameTime)
         {
-            MathEnemy mathEnemy = new MathEnemy(_levelOneEnemyList[0], 5, 4, _healthBarTexture, _healthBarBackgroundTexture, _spriteFont)
+            int num = random.Next(0, 2);
+
+            MathEnemy mathEnemy = null;
+            if (num == 0)
             {
-                Position = _enemySpawnPoint,
-                TowerButtonIsClicked = GameState._towerButtonIsClicked,
-                MathOperationButtonIsClicked = GameState._mathOperationButtonIsClicked
-            };
+                mathEnemy = new MathEnemy(_levelOneEnemyList[0], 5, 4, _healthBarTexture, _healthBarBackgroundTexture, _spriteFont)
+                {
+                    Position = _enemySpawnPoint,
+                    TowerButtonIsClicked = GameState._towerButtonIsClicked,
+                    MathOperationButtonIsClicked = GameState._mathOperationButtonIsClicked
+                };
+            }
+            else if( num == 1)
+            {
+                mathEnemy = new MathEnemy(_levelOneEnemyList[1], 2, 5, _healthBarTexture, _healthBarBackgroundTexture, _spriteFont)
+                {
+                    Position = _enemySpawnPoint,
+                    TowerButtonIsClicked = GameState._towerButtonIsClicked,
+                    MathOperationButtonIsClicked = GameState._mathOperationButtonIsClicked
+                };
+            }
 
             return mathEnemy;
         }
@@ -80,7 +95,7 @@ namespace Tower_Defence
 
         private Enemy SpawnEnemies(GameTime gameTime)
         {
-            Random random = new Random();
+            
             int num = random.Next(0, 2);
 
             Enemy enemy = null;

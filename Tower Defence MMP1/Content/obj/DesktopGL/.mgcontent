@@ -28,6 +28,7 @@
     <File>C:/Users/benni/OneDrive/Desktop/MMT/2.Semester/MMP1/Visual Studio/Tower Defence MMP1/Tower Defence MMP1/Content/MenuButtons/button_play.png</File>
     <File>C:/Users/benni/OneDrive/Desktop/MMT/2.Semester/MMP1/Visual Studio/Tower Defence MMP1/Tower Defence MMP1/Content/MenuButtons/button_settings.png</File>
     <File>C:/Users/benni/OneDrive/Desktop/MMT/2.Semester/MMP1/Visual Studio/Tower Defence MMP1/Tower Defence MMP1/Content/MenuButtons/skull_arr.png</File>
+    <File>C:/Users/benni/OneDrive/Desktop/MMT/2.Semester/MMP1/Visual Studio/Tower Defence MMP1/Tower Defence MMP1/Content/MenuFont/EndGameFont.spritefont</File>
     <File>C:/Users/benni/OneDrive/Desktop/MMT/2.Semester/MMP1/Visual Studio/Tower Defence MMP1/Tower Defence MMP1/Content/MenuFont/menuFont.spritefont</File>
     <File>C:/Users/benni/OneDrive/Desktop/MMT/2.Semester/MMP1/Visual Studio/Tower Defence MMP1/Tower Defence MMP1/Content/MenuItems/rope_small.png</File>
     <File>C:/Users/benni/OneDrive/Desktop/MMT/2.Semester/MMP1/Visual Studio/Tower Defence MMP1/Tower Defence MMP1/Content/MenuSound/buttonSound.wav</File>
@@ -67,6 +68,7 @@
     <File>MenuButtons/playButton.png</File>
     <File>MenuButtons/settingsButton.png</File>
     <File>MenuButtons/mouse.png</File>
+    <File>MenuFont/endGameFont.spritefont</File>
     <File xsi:nil="true" />
     <File>MenuItems/ropeSmall.png</File>
     <File xsi:nil="true" />

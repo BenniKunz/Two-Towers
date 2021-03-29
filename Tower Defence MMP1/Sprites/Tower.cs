@@ -24,8 +24,9 @@ namespace Tower_Defence.Sprites
         private List<Rectangle> _towerPlacableRectangles = new List<Rectangle>();
 
         public Vector2 _weaponSpawnPoint;
-        public float _towerMaxRange;
-        public float _towerStartRange;
+
+        public float TowerMaxRange { get; set; }
+        public float TowerStartRange { get; set; }
 
         public bool isPreview = true;
         public bool isPlacable = false;
@@ -48,8 +49,6 @@ namespace Tower_Defence.Sprites
             towerPlacableRectangleEight = new Rectangle(1220, 1050 - _texture.Height, _texture.Width, _texture.Height);
             towerPlacableRectangleNine = new Rectangle(1615, 1050 - _texture.Height, _texture.Width, _texture.Height);
 
-            _towerStartRange = 250f;
-            _towerMaxRange = 650f;
         }
 
         public override void Update(GameTime gameTime, List<IGameParts> gameParts)
@@ -168,7 +167,8 @@ namespace Tower_Defence.Sprites
                 //System.Diagnostics.Debug.WriteLine(_targetEnemy._animationManager.AttackPosition);
                 Vector2 directionVector = enemyPosition - towerPosition;
                 float distance = MathF.Sqrt(directionVector.X * directionVector.X + directionVector.Y * directionVector.Y);
-                if (distance > _towerMaxRange || distance < _towerStartRange)
+
+                if (distance > TowerMaxRange || distance < TowerStartRange)
                 {
                     _targetEnemy = null;
                 }
@@ -187,7 +187,7 @@ namespace Tower_Defence.Sprites
                         
                         float distance = MathF.Sqrt(directionVector.X * directionVector.X + directionVector.Y * directionVector.Y);
                        
-                        if (distance > _towerMaxRange || distance < _towerStartRange) { continue; }
+                        if (distance > TowerMaxRange || distance < TowerStartRange) { continue; }
                         _targetEnemy = (Enemy)(gamePart);
 
                         Weapon weapon = new Weapon(this.weapon.Texture, _attackType)
