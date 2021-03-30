@@ -20,25 +20,28 @@ namespace Tower_Defence.Sprites
             _attackType = attackType;
             Color = Color.White;
             _lifeSpan = 2f;
-            _damagePoints = 5;
+            _damagePoints = 10;
             Speed = 10;
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(_texture, Position, null, Color, 0.5f, new Vector2(0, 0), 1f, SpriteEffects.None, 0f);
+            spriteBatch.Draw(_texture, Position, null, Color, 0.5f, _zeroPosition, 1f, SpriteEffects.None, 0f);
             
         }
 
         public override void Update(GameTime gameTime, List<IGameParts> gameParts)
         {
+            //float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            Position += Direction * Speed;
+
             _lifeSpanTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
             if (_lifeSpanTimer >= _lifeSpan)
             {
                 gameParts.Remove(this);
             }
 
-            
 
             foreach (IGameParts gamePart in gameParts.ToArray())
             {
@@ -56,8 +59,6 @@ namespace Tower_Defence.Sprites
                     }
                 }
             }
-
-            Position += Direction * Speed;
         }
 
         //idea of per pixel collision from: https://gamedev.stackexchange.com/questions/161854/2d-per-pixel-collision-detection-using-animated-sprite

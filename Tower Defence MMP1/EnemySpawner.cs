@@ -14,6 +14,7 @@ namespace Tower_Defence
         private float _mathTimer;
         private float _enemySpawnTime;
         private float _mathEnemySpawnTime;
+        private bool _startEnemySpawned;
         private Vector2 _enemySpawnPoint = new Vector2(0, 600);
         private List<Texture2D> _levelOneEnemyList = new List<Texture2D>();
 
@@ -28,8 +29,8 @@ namespace Tower_Defence
             {
                 _levelOneEnemyList.Add(texture);
             }
-            _enemySpawnTime = 15f;
-            _mathEnemySpawnTime = 10f;
+            _enemySpawnTime = 13f;
+            _mathEnemySpawnTime = 11f;
             _healthBarTexture = healthBar;
             _healthBarBackgroundTexture = healthBarBackground;
             _spriteFont = spriteFont;
@@ -39,9 +40,10 @@ namespace Tower_Defence
             _timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
             _mathTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            if (_timer >= _enemySpawnTime)
+            if (_timer >= _enemySpawnTime || _startEnemySpawned == false)
             {
                 _timer = 0f;
+                _startEnemySpawned = true;
                 var enemy = SpawnEnemies(gameTime);
                 
                 gameParts.Add(enemy);

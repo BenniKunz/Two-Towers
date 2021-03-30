@@ -16,7 +16,7 @@ namespace Tower_Defence.States
     {
         #region Fields
 
-        #region Miscallenous textures
+        #region Miscellaneous textures
         private Texture2D _levelMap;
         private Texture2D _statsTable;
         private Texture2D _tableGUI;
@@ -46,22 +46,6 @@ namespace Tower_Defence.States
         private Texture2D _mouseCursorSquareRoot;
         #endregion
 
-        private Difficulty _difficulty;
-        private MathOperation _mathOperation;
-        private MouseState _currentMouse;
-        private Song _gameSong;
-
-        private SpriteFont _gameFont;
-        private SpriteFont _menuFont;
-        private bool _pauseGame;
-        private bool _isGameOver;
-
-        public static bool _towerButtonIsClicked;
-        public static bool _mathOperationButtonIsClicked;
-
-
-        private List<IGameParts> _gameParts;
-        private Texture2D[] _enemyTextureArray;
         #region Dictionaries
         private Dictionary<AttackType, Texture2D> _towerTextures = new Dictionary<AttackType, Texture2D>();
         private Dictionary<AttackType, Texture2D> _weaponTextures = new Dictionary<AttackType, Texture2D>();
@@ -69,17 +53,40 @@ namespace Tower_Defence.States
 
         #endregion
 
+        #region EnemyTextures
+        private Texture2D _enemy01_walkTile;
+        private Texture2D _enemy02_walkTile;
+        #endregion
+
+        private MathOperation _mathOperation;
+        private MouseState _currentMouse;
+        private Song _gameSong;
+
+        private SpriteFont _gameFont;
+        private SpriteFont _menuFont;
+
+        private Vector2 _zeroPosition = new Vector2(0, 0);
+        private Vector2 _statsTablePosition = new Vector2(10, 200);
+        private Rectangle _tableGUIRectangle = new Rectangle(0, 0, Game1.ScreenWidth, 100);
+        private Rectangle _currentMouseRectangle = new Rectangle();
+
+        private bool _pauseGame;
+        private bool _isGameOver;
+
+        private List<IGameParts> _gameParts;
+        private Texture2D[] _enemyTextureArray;
+
         private Queue<Tower> _towerQueue = new Queue<Tower>();
 
         private EndGameHandler endgameHandler;
 
+        public static Difficulty _difficulty;
+        public static bool _towerButtonIsClicked;
+        public static bool _mathOperationButtonIsClicked;
+
         public static event Action<bool> TowerButtonIsClicked;
 
 
-        #region Enemy
-        private Texture2D _enemy01_walkTile;
-        private Texture2D _enemy02_walkTile;
-        #endregion
 
         #endregion
 
@@ -246,6 +253,84 @@ namespace Tower_Defence.States
             };
         }
 
+        public override void Update(GameTime gameTime)
+        {
+            if (_pauseGame || _isGameOver)
+            {
+                foreach (IGameParts gamePart in _gameParts)
+                {
+                    if (gamePart is MenuButton)
+                        gamePart.Update(gameTime, _gameParts);
+
+                }
+                return;
+            }
+            if(_isGameOver == false)
+            {
+                foreach (IGameParts gamePart in _gameParts.ToArray())
+                {
+                    gamePart.Update(gameTime, _gameParts);
+                }
+
+            }
+        }
+
+        public override void Draw(GameTime gameTime, SpriteBatch spritebatch)
+        {
+            var x = Mouse.GetState().X;
+            var y = Mouse.GetState().Y;
+            _currentMouseRectangle.X = x;
+            _currentMouseRectangle.Y = y;
+            _currentMouseRectangle.Width = _mouseCursor.Width;
+            _currentMouseRectangle.Height = _mouseCursor.Height;
+
+            spritebatch.Draw(_levelMap, _zeroPosition, Color.White);
+            spritebatch.Draw(_tableGUI, _tableGUIRectangle, Color.White);
+            spritebatch.Draw(
+                _statsTable,
+                _statsTablePosition,
+                null, Color.White,
+                0f,
+                _zeroPosition,
+                0.7f,
+                SpriteEffects.None, 0f);
+
+            spritebatch.DrawString(_menuFont, $"{x}:{y}", new Vector2(50, 600), Color.White);
+
+            if (_pauseGame)
+            {
+                foreach (IGameParts gamePart in _gameParts)
+                {
+                    if (gamePart is MenuButton)
+                    {
+                        gamePart.Draw(gameTime, spritebatch);
+                    }
+                }
+                spritebatch.Draw(_mouseCursor, _currentMouseRectangle, null, Color.White, -2.0f, _zeroPosition, SpriteEffects.None, 0f);
+                return;
+            }
+
+            if (_isGameOver == false)
+            {
+                foreach (IGameParts gamePart in _gameParts)
+                {
+                    gamePart.Draw(gameTime, spritebatch);
+                }
+            }
+            else
+            {
+                foreach (IGameParts gamePart in _gameParts)
+                {
+                    if (gamePart is MenuButton || gamePart is EndGameHandler)
+                    {
+                        gamePart.Draw(gameTime, spritebatch);
+                    }
+                }
+            }
+
+            spritebatch.Draw(_mouseCursor, _currentMouseRectangle, null, Color.White, -2.0f, _zeroPosition, SpriteEffects.None, 0f);
+        }
+
         private void HandleMathOperationButtonIsClicked(MathOperation mathOperation, bool clicked)
         {
             _mathOperationButtonIsClicked = clicked;
@@ -293,82 +378,6 @@ namespace Tower_Defence.States
         {
             _game1.ChangeState(new GameState(_game1, _graphics, _content, _difficulty));
         }
-
-        public override void Update(GameTime gameTime)
-        {
-
-            //System.Diagnostics.Debug.WriteLine(_towerButtonIsClicked);
-            if (_pauseGame || _isGameOver)
-            {
-                foreach (IGameParts gamePart in _gameParts)
-                {
-                    if (gamePart is MenuButton)
-                        gamePart.Update(gameTime, _gameParts);
-
-                }
-                return;
-            }
-            if(_isGameOver == false)
-            {
-                foreach (IGameParts gamePart in _gameParts.ToArray())
-                {
-                    gamePart.Update(gameTime, _gameParts);
-                }
-
-            }
-        }
-
-        public override void Draw(GameTime gameTime, SpriteBatch spritebatch)
-        {
-            var x = Mouse.GetState().X;
-            var y = Mouse.GetState().Y;
-
-            spritebatch.Draw(_levelMap, new Vector2(0, 0), Color.White);
-            spritebatch.Draw(_tableGUI, new Rectangle(0, 0, Game1.ScreenWidth, 100), Color.White);
-            spritebatch.Draw(
-                _statsTable,
-                new Vector2(10, 200),
-                null, Color.White,
-                0f,
-                new Vector2(0, 0),
-                0.7f,
-                SpriteEffects.None, 0f);
-            spritebatch.DrawString(_menuFont, $"{x}:{y}", new Vector2(50, 600), Color.White);
-
-            if (_pauseGame)
-            {
-                foreach (IGameParts gamePart in _gameParts)
-                {
-                    if (gamePart is MenuButton)
-                    {
-                        gamePart.Draw(gameTime, spritebatch);
-                    }
-                }
-                spritebatch.Draw(_mouseCursor, new Rectangle(x, y, _mouseCursor.Width, _mouseCursor.Height), null, Color.White, -2.0f, new Vector2(0, 0), SpriteEffects.None, 0f);
-                return;
-            }
-
-            if (_isGameOver == false)
-            {
-                foreach (IGameParts gamePart in _gameParts)
-                {
-                    gamePart.Draw(gameTime, spritebatch);
-                }
-            }
-            else
-            {
-                foreach (IGameParts gamePart in _gameParts)
-                {
-                    if (gamePart is MenuButton || gamePart is EndGameHandler)
-                    {
-                        gamePart.Draw(gameTime, spritebatch);
-                    }
-                }
-            }
-
-            spritebatch.Draw(_mouseCursor, new Rectangle(x, y, _mouseCursor.Width, _mouseCursor.Height), null, Color.White, -2.0f, new Vector2(0, 0), SpriteEffects.None, 0f);
-        }
-
         private void HandleBackToMenuButtonClicked(bool clicked)
         {
             _game1.ChangeState(new MenuState(_game1, _graphics, _content));
@@ -412,7 +421,7 @@ namespace Tower_Defence.States
                 TowerStartRange = towerStartRange
                 
         };
-
+            
 
             _gameParts.Add(newTower);
         }

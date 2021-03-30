@@ -423,7 +423,7 @@
 /processorParam:TextureFormat=Color
 /build:Towers/7.png;Towers/archerTower.png
 
-#begin Weapons/35.png
+#begin Weapons/14.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -433,7 +433,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Weapons/35.png;Weapons/archerWeapon.png
+/build:Weapons/14.png;Weapons/archerWeapon.png
 
 #begin Weapons/40.png
 /importer:TextureImporter

@@ -29,6 +29,12 @@ namespace Tower_Defence.States
         private Song _titleSong;
         private SoundEffect _buttonSound;
 
+        private Vector2 zeroPosition = new Vector2(0, 0);
+        private Vector2 _ropeSmallPosition_1 = new Vector2(1350, -70);
+        private Vector2 _ropeSmallPosition_2 = new Vector2(1400, -70);
+        private Vector2 _difficultyTextPosition = new Vector2(Game1.ScreenWidth - 300, Game1.ScreenHeight - 90);
+        private Rectangle _currentMouseRectangle = new Rectangle();
+
         private Texture2D _mouseCursor;
 
         private SpriteFont _menuFont;
@@ -111,9 +117,7 @@ namespace Tower_Defence.States
         }
 
         public override void Update(GameTime gameTime)
-        {
-            
-
+        {       
             foreach (IGameParts gamePart in _gameParts.ToArray())
             {
                 gamePart.Update(gameTime, _gameParts);
@@ -121,20 +125,25 @@ namespace Tower_Defence.States
         }
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(_menuBackground, new Vector2(0, 0), Color.White);
+            spriteBatch.Draw(_menuBackground, zeroPosition, Color.White);
 
             foreach (IGameParts gamePart in _gameParts)
             {
                 gamePart.Draw(gameTime, spriteBatch);
             }
 
-            spriteBatch.Draw(_ropeSmall, new Vector2(1350, -70), Color.White);
-            spriteBatch.Draw(_ropeSmall, new Vector2(1400, -70), Color.White);
+            spriteBatch.Draw(_ropeSmall, _ropeSmallPosition_1, Color.White);
+            spriteBatch.Draw(_ropeSmall, _ropeSmallPosition_2, Color.White);
             string text = $"Difficulty: {_difficulty}";
-            spriteBatch.DrawString(_menuFont, text, new Vector2(Game1.ScreenWidth - 300, Game1.ScreenHeight - 90), Color.White);
+            spriteBatch.DrawString(_menuFont, text, _difficultyTextPosition, Color.White);
 
             MouseState currentMouse = Mouse.GetState();
-            spriteBatch.Draw(_mouseCursor, new Rectangle(currentMouse.X, currentMouse.Y, _mouseCursor.Width, _mouseCursor.Height), null, Color.White, -2.0f, new Vector2(0,0), SpriteEffects.None, 0f);
+            _currentMouseRectangle.X = currentMouse.X;
+            _currentMouseRectangle.Y = currentMouse.Y;
+            _currentMouseRectangle.Width = _mouseCursor.Width;
+            _currentMouseRectangle.Height = _mouseCursor.Height;
+
+            spriteBatch.Draw(_mouseCursor, _currentMouseRectangle, null, Color.White, -2.0f, zeroPosition, SpriteEffects.None, 0f);
         }
         private void HandlePlayButtonClicked(bool clicked)
         {
@@ -208,8 +217,7 @@ namespace Tower_Defence.States
         }
         
         private void HandleDifficultyButtonClicked(Difficulty difficulty)
-        {
-            
+        {  
             _buttonSound.Play();
             this._difficulty = difficulty;
 

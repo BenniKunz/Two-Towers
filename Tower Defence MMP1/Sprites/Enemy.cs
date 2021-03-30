@@ -72,14 +72,17 @@ namespace Tower_Defence.Sprites
         }
         private void EnemyMovement(GameTime gameTime)
         {
+            float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+
             _timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+
             if (_timer > 0.01f)
             {
                 _timer = 0;
                 this._healthBar.Position = this.Position + _healthBarOffset;
                 this._healthBarBackground.Position = this.Position + _healthBarOffset;
 
-                if(this.Position.X >= 350 && this.Position.X < 700 && this.Position.Y >= 270)
+                if (this.Position.X >= 350 && this.Position.X < 700 && this.Position.Y >= 270)
                 {
                     Position += new Vector2(1, -1);
                     return;
@@ -92,6 +95,23 @@ namespace Tower_Defence.Sprites
 
                 Position += new Vector2(1, 0);
             }
+
+            //this._healthBar.Position = (this.Position + _healthBarOffset);
+            //this._healthBarBackground.Position = (this.Position + _healthBarOffset);
+
+            //if (this.Position.X >= 350 && this.Position.X < 700 && this.Position.Y >= 270)
+            //{
+            //    Position += new Vector2(100, -100) * deltaTime;
+            //    return;
+            //}
+            //if (this.Position.X >= 700 && this.Position.X <= 1000)
+            //{
+            //    Position += new Vector2(100, 100) * deltaTime;
+            //    return;
+            //}
+
+            //Position += new Vector2(100, 0) * deltaTime;
+
         }
     }
 }

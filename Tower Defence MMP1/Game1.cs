@@ -7,6 +7,7 @@ namespace Tower_Defence
 {
     public class Game1 : Game
     {
+        #region Fields
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private State _currentState;
@@ -14,24 +15,14 @@ namespace Tower_Defence
 
         public static int ScreenWidth;
         public static int ScreenHeight;
+        #endregion
 
-        public void ChangeState(State state)
-        {
-            _currentState = state;
-            _currentState.LoadContent();
-        }
 
-        public void QuitGame()
-        {
-            this.Exit();
-        }
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
-
-            
             
         }
 
@@ -74,6 +65,17 @@ namespace Tower_Defence
             _spriteBatch.End();
 
             base.Draw(gameTime);
+        }
+
+        public void ChangeState(State state)
+        {
+            _currentState = state;
+            _currentState.LoadContent();
+        }
+
+        public void QuitGame()
+        {
+            this.Exit();
         }
     }
 }

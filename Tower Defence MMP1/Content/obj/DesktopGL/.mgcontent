@@ -26,6 +26,7 @@
     <File>C:/Users/benni/OneDrive/Desktop/MMT/2.Semester/MMP1/Visual Studio/Tower Defence MMP1/Tower Defence MMP1/Content/MenuButtons/button_normal.png</File>
     <File>C:/Users/benni/OneDrive/Desktop/MMT/2.Semester/MMP1/Visual Studio/Tower Defence MMP1/Tower Defence MMP1/Content/MenuButtons/button_pause.png</File>
     <File>C:/Users/benni/OneDrive/Desktop/MMT/2.Semester/MMP1/Visual Studio/Tower Defence MMP1/Tower Defence MMP1/Content/MenuButtons/button_play.png</File>
+    <File>C:/Users/benni/OneDrive/Desktop/MMT/2.Semester/MMP1/Visual Studio/Tower Defence MMP1/Tower Defence MMP1/Content/MenuButtons/button_restart.png</File>
     <File>C:/Users/benni/OneDrive/Desktop/MMT/2.Semester/MMP1/Visual Studio/Tower Defence MMP1/Tower Defence MMP1/Content/MenuButtons/button_settings.png</File>
     <File>C:/Users/benni/OneDrive/Desktop/MMT/2.Semester/MMP1/Visual Studio/Tower Defence MMP1/Tower Defence MMP1/Content/MenuButtons/skull_arr.png</File>
     <File>C:/Users/benni/OneDrive/Desktop/MMT/2.Semester/MMP1/Visual Studio/Tower Defence MMP1/Tower Defence MMP1/Content/MenuFont/EndGameFont.spritefont</File>
@@ -40,7 +41,7 @@
     <File>C:/Users/benni/OneDrive/Desktop/MMT/2.Semester/MMP1/Visual Studio/Tower Defence MMP1/Tower Defence MMP1/Content/TowerButtons/ico_3.png</File>
     <File>C:/Users/benni/OneDrive/Desktop/MMT/2.Semester/MMP1/Visual Studio/Tower Defence MMP1/Tower Defence MMP1/Content/Towers/12.png</File>
     <File>C:/Users/benni/OneDrive/Desktop/MMT/2.Semester/MMP1/Visual Studio/Tower Defence MMP1/Tower Defence MMP1/Content/Towers/7.png</File>
-    <File>C:/Users/benni/OneDrive/Desktop/MMT/2.Semester/MMP1/Visual Studio/Tower Defence MMP1/Tower Defence MMP1/Content/Weapons/35.png</File>
+    <File>C:/Users/benni/OneDrive/Desktop/MMT/2.Semester/MMP1/Visual Studio/Tower Defence MMP1/Tower Defence MMP1/Content/Weapons/14.png</File>
     <File>C:/Users/benni/OneDrive/Desktop/MMT/2.Semester/MMP1/Visual Studio/Tower Defence MMP1/Tower Defence MMP1/Content/Weapons/40.png</File>
   </SourceFiles>
   <DestFiles>
@@ -66,6 +67,7 @@
     <File>MenuButtons/normalButton.png</File>
     <File>MenuButtons/pauseButton.png</File>
     <File>MenuButtons/playButton.png</File>
+    <File>MenuButtons/restartButton.png</File>
     <File>MenuButtons/settingsButton.png</File>
     <File>MenuButtons/mouse.png</File>
     <File>MenuFont/endGameFont.spritefont</File>

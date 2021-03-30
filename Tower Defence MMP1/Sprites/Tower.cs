@@ -23,6 +23,7 @@ namespace Tower_Defence.Sprites
 
         private List<Rectangle> _towerPlacableRectangles = new List<Rectangle>();
 
+        private Vector2 _tempTowerPosition = new Vector2();
         public Vector2 _weaponSpawnPoint;
 
         public float TowerMaxRange { get; set; }
@@ -70,7 +71,7 @@ namespace Tower_Defence.Sprites
                 };
             }
 
-            if (_weaponSpawnPoint == new Vector2(0, 0))
+            if (_weaponSpawnPoint == _zeroPosition)
             {
                 _weaponSpawnPoint = Position;
             }
@@ -83,7 +84,11 @@ namespace Tower_Defence.Sprites
             }
 
             if (isPreview)
-                Position = new Vector2(_currentMouse.X, _currentMouse.Y);
+            {
+                _tempTowerPosition.X = _currentMouse.X;
+                _tempTowerPosition.Y = _currentMouse.Y;
+                Position = _tempTowerPosition;
+            }
             
             if (!isPreview)
                 Color = Color.White;
@@ -142,7 +147,7 @@ namespace Tower_Defence.Sprites
                     //int y = (int)(_targetEnemy.Position.Y - this.Position.Y);
                     Vector2 enemyPosition = _targetEnemy._animationManager.AttackPosition;
 
-                    Vector2 directionVector = enemyPosition - this.Position;
+                    Vector2 directionVector = enemyPosition - this._weaponSpawnPoint;
 
                     Weapon weapon = new Weapon(this.weapon.Texture, _attackType)
                     {

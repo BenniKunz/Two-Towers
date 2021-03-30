@@ -13,6 +13,7 @@ namespace Tower_Defence.Sprites
         #region Fields
         protected Texture2D _texture;
         protected Vector2 _position;
+        protected Vector2 _zeroPosition = new Vector2(0, 0);
         //protected Vector2 _origin;
         protected Vector2 _direction;
         //protected float _rotation;

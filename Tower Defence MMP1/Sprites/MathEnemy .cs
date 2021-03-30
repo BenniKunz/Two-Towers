@@ -23,7 +23,15 @@ namespace Tower_Defence.Sprites
         private Random random = new Random();
         private SpriteFont _spriteFont;
         private MathOperation _mathOperation = MathOperation.subtraction;
-        private int[] healthPointsArray = new int[] { 7, 51, 49, 100, 66, 36, 3, 77, 16, 9, 81, 121, 90, 85, 55, 64, 69 };
+
+        private readonly Dictionary<Difficulty, int[]> healthPointsDictionary = new Dictionary<Difficulty, int[]>()
+        {
+            {Difficulty.easy,  new int[] { 7, 3, 21, 16, 9, 10, 15, 20, 30, 35, 4, 5} },
+            {Difficulty.normal, new int[] { 7, 51, 49, 100, 66, 36, 3, 77, 16, 9, 81, 121, 90, 85, 55, 64, 69 } },
+            {Difficulty.hard,  new int[] { 17, 29, 41, 53, 63, 122, 78, 89, 130, 145} },
+
+        };
+        
 
         #region Fields
         private float _timer;
@@ -44,28 +52,6 @@ namespace Tower_Defence.Sprites
             GameState.TowerButtonIsClicked += HandleTowerButtonClicked;
         }
 
-        private int RandomHealthPoints()
-        {
-            int num = random.Next(0, healthPointsArray.Length);
-
-            return healthPointsArray[num];
-        }
-
-        private void HandleMathOperationButtonIsClicked(MathOperation mathOperation, bool clicked)
-        {
-            MathOperationButtonIsClicked = clicked;
-        }
-
-        private void HandleTowerButtonClicked(bool isClicked)
-        {
-            TowerButtonIsClicked = isClicked;
-        }
-
-        private void HandleMathOperation(MathOperation mathoperation)
-        {
-            _mathOperation = mathoperation;
-        }
-
         public override void Update(GameTime gameTime, List<IGameParts> gameParts)
         {
             EnemyMovement(gameTime);
@@ -83,9 +69,16 @@ namespace Tower_Defence.Sprites
 
         }
 
+        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        {
+            _animationManager.Draw(spriteBatch);
+            spriteBatch.DrawString(_spriteFont, HealthPoints.ToString(), this.Position, Color);
+
+        }
+
         private void CheckMathEnemyClicked()
         {
-            if(!MathOperationButtonIsClicked) { return; }
+            if (!MathOperationButtonIsClicked) { return; }
 
             _previousMouse = _currentMouse;
             _currentMouse = Mouse.GetState();
@@ -115,16 +108,36 @@ namespace Tower_Defence.Sprites
             }
         }
 
-        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        private int RandomHealthPoints()
         {
-            _animationManager.Draw(spriteBatch);
-            spriteBatch.DrawString(_spriteFont, HealthPoints.ToString(), this.Position, Color);
+            int[] healthPointsArray = healthPointsDictionary[GameState._difficulty];
 
+            int num = random.Next(0, healthPointsArray.Length);
+
+            return healthPointsArray[num];
+        }
+
+        private void HandleMathOperationButtonIsClicked(MathOperation mathOperation, bool clicked)
+        {
+            MathOperationButtonIsClicked = clicked;
+        }
+
+        private void HandleTowerButtonClicked(bool isClicked)
+        {
+            TowerButtonIsClicked = isClicked;
+        }
+
+        private void HandleMathOperation(MathOperation mathoperation)
+        {
+            _mathOperation = mathoperation;
         }
 
 
         private void EnemyMovement(GameTime gameTime)
         {
+            float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            System.Diagnostics.Debug.WriteLine(deltaTime);
+
             _timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
             if (_timer > 0.01f)
             {
@@ -141,6 +154,20 @@ namespace Tower_Defence.Sprites
 
                 Position += new Vector2(1, 0);
             }
+
+            //if (this.Position.X >= 350 && this.Position.X < 700 && this.Position.Y >= 270)
+            //{
+            //    Position += new Vector2(100, -100) * deltaTime;
+            //    return;
+            //}
+            //if (this.Position.X >= 1000 && this.Position.X <= 1230)
+            //{
+            //    Position += new Vector2(100, -100) * deltaTime;
+            //    return;
+            //}
+
+            //Position += new Vector2(100, 0) * deltaTime;
+
         }
     }
 }
