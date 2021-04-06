@@ -9,6 +9,8 @@ using Tower_Defence.Sprites;
 using Microsoft.Xna.Framework.Input;
 using Tower_Defence.Enums;
 using Microsoft.Xna.Framework.Media;
+using Tower_Defence;
+
 
 namespace Tower_Defence.States
 {
@@ -20,12 +22,16 @@ namespace Tower_Defence.States
         private Texture2D _levelMap;
         private Texture2D _statsTable;
         private Texture2D _tableGUI;
+        private Texture2D _endTable;
+        private Texture2D _failed;
+        private Texture2D _win;
         private Texture2D _healthBar;
         private Texture2D _healthBarBackground;
         #endregion
 
         #region Buttons/Weapons textures
         private Texture2D _backToMenuButton;
+        private Texture2D _backButton;
         private Texture2D _pauseButton;
         private Texture2D _restartButton;
         private Texture2D _archerTowerButton;
@@ -58,7 +64,6 @@ namespace Tower_Defence.States
         private Texture2D _enemy02_walkTile;
         #endregion
 
-        private MathOperation _mathOperation;
         private MouseState _currentMouse;
         private Song _gameSong;
 
@@ -67,11 +72,14 @@ namespace Tower_Defence.States
 
         private Vector2 _zeroPosition = new Vector2(0, 0);
         private Vector2 _statsTablePosition = new Vector2(10, 200);
+        private Vector2 _endTablePosition;
+        private Vector2 _failedPosition;
         private Rectangle _tableGUIRectangle = new Rectangle(0, 0, Game1.ScreenWidth, 100);
         private Rectangle _currentMouseRectangle = new Rectangle();
 
         private bool _pauseGame;
         private bool _isGameOver;
+        private bool _gameWon;
 
         private List<IGameParts> _gameParts;
         private Texture2D[] _enemyTextureArray;
@@ -80,20 +88,18 @@ namespace Tower_Defence.States
 
         private EndGameHandler endgameHandler;
 
-        public static Difficulty _difficulty;
+        public static MathOperation _mathOperation;
         public static bool _towerButtonIsClicked;
         public static bool _mathOperationButtonIsClicked;
-
         public static event Action<bool> TowerButtonIsClicked;
-
-
 
         #endregion
 
         public GameState(Game1 game1, GraphicsDeviceManager graphics, ContentManager content, Difficulty difficulty) : base(game1, graphics, content)
         {
-            _difficulty = difficulty;
-            _mathOperation = MathOperation.subtraction;
+            GameManager.GameManagerInstance.Difficulty = difficulty;
+            
+            _mathOperation = MathOperation.setDefault;
         }
         public List<IGameParts> GetGamePartsList()
         {
@@ -106,10 +112,14 @@ namespace Tower_Defence.States
             _levelMap = _content.Load<Texture2D>("Background/levelMap");
             _statsTable = _content.Load<Texture2D>("GameItems/statsTable");
             _tableGUI = _content.Load<Texture2D>("GameItems/tableGUI");
+            _endTable = _content.Load<Texture2D>("GameItems/table");
+            _failed = _content.Load<Texture2D>("GameItems/failed");
+            _win = _content.Load<Texture2D>("GameItems/win");
 
             _backToMenuButton = _content.Load<Texture2D>("MenuButtons/closeButton");
             _pauseButton = _content.Load<Texture2D>("MenuButtons/pauseButton");
             _restartButton = _content.Load<Texture2D>("MenuButtons/restartButton");
+            _backButton = _content.Load<Texture2D>("MenuButtons/backButton");
 
             _archerTowerButton = _content.Load<Texture2D>("TowerButtons/buildTower");
             _fireTowerButton = _content.Load<Texture2D>("TowerButtons/fireTowerButton");
@@ -136,9 +146,11 @@ namespace Tower_Defence.States
             _mouseCursorSquareRoot = _content.Load<Texture2D>("GameItems/squareMouse");
             _gameSong = _content.Load<Song>("GameSound/gameSong");
 
-            MediaPlayer.Play(_gameSong);
-            MediaPlayer.IsRepeating = true;
+            //MediaPlayer.Play(_gameSong);
+            //MediaPlayer.IsRepeating = true;
             _mouseCursor = _mouseCursorStandard;
+            _endTablePosition = new Vector2(Game1.ScreenWidth / 2 - _endTable.Width / 2, Game1.ScreenHeight / 2 - _endTable.Height / 2);
+            _failedPosition = new Vector2(_endTablePosition.X + _failed.Width / 3, _endTablePosition.Y);
 
             _towerTextures.Add(AttackType.archer, _archerTower);
             _towerTextures.Add(AttackType.fire, _fireTower);
@@ -166,6 +178,14 @@ namespace Tower_Defence.States
             };
 
             backToMenuButton.menuButtonEventHandler += HandleBackToMenuButtonClicked;
+
+            MenuButton backButton = new MenuButton(_backButton, _menuFont)
+            {
+                Position = new Vector2(Game1.ScreenWidth - _backButton.Width - 350, 30),
+                Scale = 0.7f
+            };
+
+            backButton.menuButtonEventHandler += HandleBackToMenuButtonClicked;
 
             MenuButton pauseButton = new MenuButton(_pauseButton, _gameFont)
             {
@@ -236,11 +256,12 @@ namespace Tower_Defence.States
             EnemySpawner enemySpawner = new EnemySpawner(_enemyTextureArray, _healthBar, _healthBarBackground, _menuFont);
             endgameHandler = new EndGameHandler(_gameFont, _menuFont);
 
-            endgameHandler.gameOverHandler += HandleGameOver;
+            endgameHandler.endGameHandler += HandleEndGame;
 
             _gameParts = new List<IGameParts>()
             {
                 backToMenuButton,
+                backButton,
                 pauseButton,
                 archerButton,
                 fireButton,
@@ -277,23 +298,9 @@ namespace Tower_Defence.States
 
         public override void Draw(GameTime gameTime, SpriteBatch spritebatch)
         {
-            var x = Mouse.GetState().X;
-            var y = Mouse.GetState().Y;
-            _currentMouseRectangle.X = x;
-            _currentMouseRectangle.Y = y;
-            _currentMouseRectangle.Width = _mouseCursor.Width;
-            _currentMouseRectangle.Height = _mouseCursor.Height;
 
-            spritebatch.Draw(_levelMap, _zeroPosition, Color.White);
-            spritebatch.Draw(_tableGUI, _tableGUIRectangle, Color.White);
-            spritebatch.Draw(
-                _statsTable,
-                _statsTablePosition,
-                null, Color.White,
-                0f,
-                _zeroPosition,
-                0.7f,
-                SpriteEffects.None, 0f);
+            int x, y;
+            DrawUI(spritebatch, out x, out y);
 
             spritebatch.DrawString(_menuFont, $"{x}:{y}", new Vector2(50, 600), Color.White);
 
@@ -317,8 +324,14 @@ namespace Tower_Defence.States
                     gamePart.Draw(gameTime, spritebatch);
                 }
             }
-            else
+            else if(_gameWon || _isGameOver)
             {
+               
+                Texture2D header;
+                header = (!_gameWon) ? _failed : _win;
+                spritebatch.Draw(_endTable, _endTablePosition, Color.White);
+                spritebatch.Draw(header, _failedPosition, Color.White);
+
                 foreach (IGameParts gamePart in _gameParts)
                 {
                     if (gamePart is MenuButton || gamePart is EndGameHandler)
@@ -326,13 +339,36 @@ namespace Tower_Defence.States
                         gamePart.Draw(gameTime, spritebatch);
                     }
                 }
+
             }
 
             spritebatch.Draw(_mouseCursor, _currentMouseRectangle, null, Color.White, -2.0f, _zeroPosition, SpriteEffects.None, 0f);
         }
 
+        private void DrawUI(SpriteBatch spritebatch, out int x, out int y)
+        {
+            x = Mouse.GetState().X;
+            y = Mouse.GetState().Y;
+            _currentMouseRectangle.X = x;
+            _currentMouseRectangle.Y = y;
+            _currentMouseRectangle.Width = _mouseCursor.Width;
+            _currentMouseRectangle.Height = _mouseCursor.Height;
+
+            spritebatch.Draw(_levelMap, _zeroPosition, Color.White);
+            spritebatch.Draw(_tableGUI, _tableGUIRectangle, Color.White);
+            spritebatch.Draw(
+                _statsTable,
+                _statsTablePosition,
+                null, Color.White,
+                0f,
+                _zeroPosition,
+                0.7f,
+                SpriteEffects.None, 0f);
+        }
+
         private void HandleMathOperationButtonIsClicked(MathOperation mathOperation, bool clicked)
         {
+            _mathOperation = mathOperation;
             _mathOperationButtonIsClicked = clicked;
             if (clicked)
             {
@@ -349,20 +385,28 @@ namespace Tower_Defence.States
             _gameParts.Remove(enemy);
             _gameParts.Remove(enemy._healthBar);
             _gameParts.Remove(enemy._healthBarBackground);
-            endgameHandler.SetStoppedEnemies();
+            //endgameHandler.SetStoppedEnemies();
 
         }
 
         private void HandleMathEnemyDeath(MathEnemy enemy)
         {
             _gameParts.Remove(enemy);
-            endgameHandler.SetStoppedEnemies();
+            //endgameHandler.SetStoppedEnemies();
 
         }
 
-        private void HandleGameOver()
+        private void HandleEndGame(bool won)
         {
-            _isGameOver = true;
+            if(!won)
+            {
+                _isGameOver = true;
+            }
+            else
+            {
+                _gameWon = true;
+                _isGameOver = true;
+            }
 
             MenuButton restartButton = new MenuButton(_restartButton, _menuFont)
             {
@@ -376,11 +420,11 @@ namespace Tower_Defence.States
 
         private void HandleRestartButtonClicked(bool clicked)
         {
-            _game1.ChangeState(new GameState(_game1, _graphics, _content, _difficulty));
+            _game1.ChangeState(new GameState(_game1, _graphics, _content, GameManager.GameManagerInstance.Difficulty));
         }
         private void HandleBackToMenuButtonClicked(bool clicked)
         {
-            _game1.ChangeState(new MenuState(_game1, _graphics, _content));
+            _game1.ChangeState(new MenuState(_game1, _graphics, _content, GameManager.GameManagerInstance.Difficulty));
            
         }
 

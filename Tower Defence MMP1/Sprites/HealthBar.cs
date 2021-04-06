@@ -14,11 +14,12 @@ namespace Tower_Defence.Sprites
         public HealthBar(Texture2D texture = null) : base(texture)
         {
             Offset = 1f;
-            sourceRectangle = new Rectangle(0, 0, (int)(_texture.Width * Offset), _texture.Height);
+            
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
+            Rectangle sourceRectangle = new Rectangle(0, 0, (int)(_texture.Width * Offset), _texture.Height);
             //System.Diagnostics.Debug.WriteLine("DamagePercent:" + Offset);
 
             //spriteBatch.Draw(_texture, Position, null, Color.White, 0f, new Vector2(0, 0), 0.15f, SpriteEffects.None, 0f);

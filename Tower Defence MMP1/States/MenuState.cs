@@ -24,7 +24,10 @@ namespace Tower_Defence.States
         private Texture2D _easyButton;
         private Texture2D _normalButton;
         private Texture2D _hardButton;
+        private Texture2D _manualButton;
         private Texture2D _ropeSmall;
+        private Texture2D _descriptionBubble;
+        private string _manualText = "Read the manual\nbefore your first\nbattle.";
         private Difficulty _difficulty;
         private Song _titleSong;
         private SoundEffect _buttonSound;
@@ -32,6 +35,8 @@ namespace Tower_Defence.States
         private Vector2 zeroPosition = new Vector2(0, 0);
         private Vector2 _ropeSmallPosition_1 = new Vector2(1350, -70);
         private Vector2 _ropeSmallPosition_2 = new Vector2(1400, -70);
+        private Vector2 _descriptionBubblePosition = new Vector2(250, 500);
+        private Vector2 _descriptionBubbleTextPosition = new Vector2(300, 550);
         private Vector2 _difficultyTextPosition = new Vector2(Game1.ScreenWidth - 300, Game1.ScreenHeight - 90);
         private Rectangle _currentMouseRectangle = new Rectangle();
 
@@ -42,9 +47,9 @@ namespace Tower_Defence.States
         private List<IGameParts> _gameParts;
 
         #endregion
-        public MenuState(Game1 game1, GraphicsDeviceManager graphics, ContentManager content) : base(game1, graphics, content)
+        public MenuState(Game1 game1, GraphicsDeviceManager graphics, ContentManager content, Difficulty difficulty) : base(game1, graphics, content)
         {
-
+            _difficulty = difficulty;
         }
 
         #region Methods
@@ -63,15 +68,15 @@ namespace Tower_Defence.States
             _easyButton = _content.Load<Texture2D>("MenuButtons/easyButton");
             _normalButton = _content.Load<Texture2D>("MenuButtons/normalButton");
             _hardButton = _content.Load<Texture2D>("MenuButtons/hardButton");
+            _manualButton = _content.Load<Texture2D>("MenuButtons/manualButton");
             _mouseCursor = _content.Load<Texture2D>("MenuButtons/mouse");
+            _descriptionBubble = _content.Load<Texture2D>("MenuItems/descriptionBubble");
 
             _buttonSound = _content.Load<SoundEffect>("MenuSound/buttonSound");
 
             _titleSong = _content.Load<Song>("MenuSound/titleSong");
-            MediaPlayer.Play(_titleSong);
-            MediaPlayer.IsRepeating = true;
-
-            _difficulty = Difficulty.easy;
+            //MediaPlayer.Play(_titleSong);
+            //MediaPlayer.IsRepeating = true;
 
             MenuButton playButton = new MenuButton(_playButton, _menuFont)
             {
@@ -107,13 +112,27 @@ namespace Tower_Defence.States
 
             musicButton.musicButtonEventHandler += HandleMusicButtonClicked;
 
+            MenuButton manualButton = new MenuButton(_manualButton, _menuFont)
+            {
+                Position = new Vector2(150, 800),
+
+            };
+
+            manualButton.menuButtonEventHandler += HandleManualButtonClicked;
+
             _gameParts = new List<IGameParts>()
             {
                 playButton,
                 closeGameButton,
                 settingsButton,
-                musicButton
+                musicButton,
+                manualButton
             };
+        }
+
+        private void HandleManualButtonClicked(bool clicked)
+        {
+            _game1.ChangeState(new ManualState(_game1, _graphics, _content, _difficulty));
         }
 
         public override void Update(GameTime gameTime)
@@ -134,6 +153,8 @@ namespace Tower_Defence.States
 
             spriteBatch.Draw(_ropeSmall, _ropeSmallPosition_1, Color.White);
             spriteBatch.Draw(_ropeSmall, _ropeSmallPosition_2, Color.White);
+            spriteBatch.Draw(_descriptionBubble, _descriptionBubblePosition,null, Color.White, 0f, zeroPosition, 0.7f, SpriteEffects.None, 0f);
+            spriteBatch.DrawString(_menuFont, _manualText, _descriptionBubbleTextPosition, Color.Black);
             string text = $"Difficulty: {_difficulty}";
             spriteBatch.DrawString(_menuFont, text, _difficultyTextPosition, Color.White);
 

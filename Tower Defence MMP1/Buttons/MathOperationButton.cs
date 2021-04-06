@@ -74,6 +74,7 @@ namespace Tower_Defence.Buttons
                 {
                     Clicked = false;
                     mathOperationButtonIsClicked?.Invoke(this._mathOperation, Clicked);
+                    
                 }
             }
 

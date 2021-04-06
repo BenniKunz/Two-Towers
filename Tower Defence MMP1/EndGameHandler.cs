@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using Tower_Defence.Enums;
 using Tower_Defence.Sprites;
+using Tower_Defence.States;
 
 namespace Tower_Defence
 {
@@ -16,28 +17,54 @@ namespace Tower_Defence
         private int _maxLifes;
         private int _stoppedEnemies;
         private bool _died;
-        private string _looseGameText = "You LOST to silly Monsters!!!";
+        private bool _won;
+        private bool _allEnemiesSpawned;
+
+        private Dictionary<Difficulty, int> _maxLifesDictionary = new Dictionary<Difficulty, int>()
+        {
+            { Difficulty.easy, 5 },
+            { Difficulty.normal, 4 },
+            { Difficulty.hard, 2 }
+        };
 
         #endregion
 
-        public event Action gameOverHandler;
+        public event Action<bool> endGameHandler;
 
         public EndGameHandler(SpriteFont spriteFont, SpriteFont menuFont)
         {
             _menuFont = menuFont;
             _gameFont = spriteFont;
-            _maxLifes = 1;
+            _maxLifes = GetMaxLifes();
             _stoppedEnemies = 0;
+
+            EnemySpawner.AllEnemiesSpawned += HandleAllEnemiesSpawned;
         }
 
-        public void SetStoppedEnemies()
+        private int GetMaxLifes()
         {
-            _stoppedEnemies++;
+            return _maxLifesDictionary[GameManager.GameManagerInstance.Difficulty];
         }
+
+        private void HandleAllEnemiesSpawned()
+        {
+            _allEnemiesSpawned = true;
+        }
+
+        //public void SetStoppedEnemies()
+        //{
+        //    _stoppedEnemies++;
+        //}
 
 
         public void Update(GameTime gameTime, List<IGameParts> gameParts)
         {
+            _stoppedEnemies = GameManager.GameManagerInstance.StoppedEnemies;
+
+            if(_allEnemiesSpawned & !_won)
+            {
+                CheckIfEnemiesLeft(gameParts);
+            }
 
             foreach (IGameParts gamePart in gameParts.ToArray())
             {
@@ -66,21 +93,24 @@ namespace Tower_Defence
             {
                 _died = true;
                 _maxLifes = 0;
-                gameOverHandler?.Invoke();
+                endGameHandler?.Invoke(_won);
             }
         }
+
+        private void CheckIfEnemiesLeft(List<IGameParts> gameParts)
+        {
+            foreach (IGameParts gamePart in gameParts)
+            {
+                if(gamePart is Enemy || gamePart is MathEnemy) { return; }
+            }
+            _won = true;
+            endGameHandler?.Invoke(_won);
+        }
+
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            spriteBatch.DrawString(_menuFont, $"{_maxLifes} Lifes", new Vector2(30, 220), Color.White);
-            spriteBatch.DrawString(_menuFont, $"{_stoppedEnemies} Kills", new Vector2(230, 220), Color.White);
-
-            if (_maxLifes <= 0)
-            {
-                spriteBatch.DrawString(
-                    _gameFont, _looseGameText,
-                    new Vector2(Game1.ScreenWidth / 2 - _gameFont.MeasureString(_looseGameText).X /2, 300),
-                    Color.Red);
-            }
+            spriteBatch.DrawString(_menuFont, $"{_maxLifes} Lifes", new Vector2(40, 220), Color.White);
+            spriteBatch.DrawString(_menuFont, $"{_stoppedEnemies} Kills", new Vector2(40, 300), Color.White);
         }
     }
 }

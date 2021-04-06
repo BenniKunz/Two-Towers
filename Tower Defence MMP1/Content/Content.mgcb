@@ -79,6 +79,30 @@
 /processorParam:TextureFormat=Color
 /build:GameItems/button_minus.png;GameItems/subtractionMouse.png
 
+#begin GameItems/header_failed.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:GameItems/header_failed.png;GameItems/failed.png
+
+#begin GameItems/header_win.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:GameItems/header_win.png;GameItems/win.png
+
 #begin GameItems/health_bar-04.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -151,6 +175,18 @@
 /processorParam:TextureFormat=Color
 /build:GameItems/star.png;GameItems/divisionMouse.png
 
+#begin GameItems/table.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:GameItems/table.png
+
 #begin GameItems/table_down.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -204,6 +240,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:MenuButtons/button_hard.png;MenuButtons/hardButton.png
+
+#begin MenuButtons/button_left.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:MenuButtons/button_left.png;MenuButtons/backButton.png
 
 #begin MenuButtons/button_music.png
 /importer:TextureImporter
@@ -289,6 +337,18 @@
 /processorParam:TextureFormat=Color
 /build:MenuButtons/button_settings.png;MenuButtons/settingsButton.png
 
+#begin MenuButtons/ico_3.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:MenuButtons/ico_3.png;MenuButtons/manualButton.png
+
 #begin MenuButtons/skull_arr.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -308,6 +368,13 @@
 /processorParam:TextureFormat=Compressed
 /build:MenuFont/EndGameFont.spritefont;MenuFont/endGameFont.spritefont
 
+#begin MenuFont/File.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:MenuFont/File.spritefont;MenuFont/explanationFont.spritefont
+
 #begin MenuFont/menuFont.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
@@ -326,6 +393,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:MenuItems/rope_small.png;MenuItems/ropeSmall.png
+
+#begin MenuItems/table_2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:MenuItems/table_2.png;MenuItems/descriptionBubble.png
 
 #begin MenuSound/buttonSound.wav
 /importer:WavImporter

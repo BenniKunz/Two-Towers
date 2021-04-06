@@ -10,6 +10,7 @@ using Tower_Defence.Enums;
 using Tower_Defence.Interfaces;
 using Tower_Defence.States;
 
+
 namespace Tower_Defence.Sprites
 {
     public class MathEnemy : Sprite, IReachable
@@ -19,10 +20,12 @@ namespace Tower_Defence.Sprites
         public bool HasReachedTarget { get; set; }
         public bool TowerButtonIsClicked { get; set; }
         public bool MathOperationButtonIsClicked { get; set; }
+        public bool idle { get; set; }
 
         private Random random = new Random();
         private SpriteFont _spriteFont;
-        private MathOperation _mathOperation = MathOperation.subtraction;
+        private Vector2 _healthPointsOffset = new Vector2(50,0);
+        private MathOperation _mathOperation;
 
         private readonly Dictionary<Difficulty, int[]> healthPointsDictionary = new Dictionary<Difficulty, int[]>()
         {
@@ -50,13 +53,20 @@ namespace Tower_Defence.Sprites
             MathOperationButton.changeMathOperationHandler += HandleMathOperation;
             MathOperationButton.mathOperationButtonIsClicked += HandleMathOperationButtonIsClicked;
             GameState.TowerButtonIsClicked += HandleTowerButtonClicked;
+            _mathOperation = GameState._mathOperation;
         }
 
         public override void Update(GameTime gameTime, List<IGameParts> gameParts)
         {
-            EnemyMovement(gameTime);
+
+            if(!idle)
+            {
+                EnemyMovement(gameTime);
+            }
+
             _animationManager.Update(gameTime);
 
+            System.Diagnostics.Debug.WriteLine(_mathOperation);
             if (TowerButtonIsClicked == false)
             {
                 CheckMathEnemyClicked();
@@ -65,6 +75,7 @@ namespace Tower_Defence.Sprites
             if (HealthPoints <= 0)
             {
                 MathEnemyDeathHandler?.Invoke(this);
+                GameManager.GameManagerInstance.StoppedEnemies++;
             }
 
         }
@@ -72,7 +83,7 @@ namespace Tower_Defence.Sprites
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             _animationManager.Draw(spriteBatch);
-            spriteBatch.DrawString(_spriteFont, HealthPoints.ToString(), this.Position, Color);
+            spriteBatch.DrawString(_spriteFont, HealthPoints.ToString(), this.Position + _healthPointsOffset, Color);
 
         }
 
@@ -84,34 +95,52 @@ namespace Tower_Defence.Sprites
             _currentMouse = Mouse.GetState();
             var mouseRec = new Rectangle(_currentMouse.X, _currentMouse.Y, 1, 1);
 
+            
             if (mouseRec.X > Position.X + 50f && mouseRec.X < (Position.X + 200f) && mouseRec.Y > Position.Y + 50f && _currentMouse.LeftButton == ButtonState.Released && _previousMouse.LeftButton == ButtonState.Pressed)
             {
-                switch (_mathOperation)
+                if(_mathOperation == MathOperation.addition)
                 {
-                    case MathOperation.addition:
-                        this.HealthPoints++;
-                        break;
-                    case MathOperation.subtraction:
-                        this.HealthPoints--;
-                        break;
-                    case MathOperation.division:
-                        this.HealthPoints /= 2;
+                    this.HealthPoints++;
+                }
+                else if (_mathOperation == MathOperation.subtraction)
+                {
+                    this.HealthPoints--;
+                }
+                else if (_mathOperation == MathOperation.division)
+                {
+                    if(HealthPoints % 2 == 0)
+                    {
+                        HealthPoints /= 2 ;
                         MathOperationUsedHandler?.Invoke(_mathOperation);
-                        break;
-                    case MathOperation.squareroot:
+                    }
+                }
+                else if(_mathOperation == MathOperation.squareroot)
+                {
+                    double result = Math.Sqrt(HealthPoints);
+                    bool isSquare = result % 1 == 0;
+                    if(isSquare)
+                    {
                         this.HealthPoints = (int)Math.Sqrt(this.HealthPoints);
                         MathOperationUsedHandler?.Invoke(_mathOperation);
-                        break;
-                    default:
-                        break;
+                    }
                 }
             }
         }
 
         private int RandomHealthPoints()
         {
-            int[] healthPointsArray = healthPointsDictionary[GameState._difficulty];
+            int[] healthPointsArray = null;
 
+            if (GameManager.GameManagerInstance.Difficulty != 0)
+            {
+              healthPointsArray = healthPointsDictionary[GameManager.GameManagerInstance.Difficulty];
+            }
+            else
+            {
+                healthPointsArray = new int[] { 100 };
+            }
+
+         
             int num = random.Next(0, healthPointsArray.Length);
 
             return healthPointsArray[num];
@@ -136,7 +165,7 @@ namespace Tower_Defence.Sprites
         private void EnemyMovement(GameTime gameTime)
         {
             float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            System.Diagnostics.Debug.WriteLine(deltaTime);
+            
 
             _timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
             if (_timer > 0.01f)

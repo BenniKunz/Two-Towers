@@ -11,7 +11,6 @@ namespace Tower_Defence.Animations
         private Animation _animation;
 
         private float _timer;
-        private float _deltaTime;
 
         public Vector2 Position { get; set; }
         public Vector2 AttackPosition { get { return Position + new Vector2(_animation.FrameWidth / 2, _animation.FrameHeight / 2); } }
@@ -25,7 +24,6 @@ namespace Tower_Defence.Animations
         public void Update(GameTime gameTime)
         {
             _timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
-            //_deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
 
             if (_timer > _animation.FrameSpeed)

@@ -41,7 +41,7 @@ namespace Tower_Defence.Sprites
             {
                 gameParts.Remove(this);
             }
-
+            
 
             foreach (IGameParts gamePart in gameParts.ToArray())
             {
@@ -50,11 +50,12 @@ namespace Tower_Defence.Sprites
                     bool collided = AnimatedSpriteCollision(Rectangle, null, _texture, enemy._animationManager.destinationRectangle, enemy._animationManager.sourceRectangle, enemy.Texture);
                     if (collided)
                     {
+                        
                         gameParts.Remove(this);
                         enemy.DealDamage(_damagePoints, _attackType);
-
+                        
                         float damagePercent = MathF.Round((float)_damagePoints / enemy.StartHealth, 2);
-                        //System.Diagnostics.Debug.WriteLine("EnemyPosition:" + damagePercent);
+                        System.Diagnostics.Debug.WriteLine("EnemyPosition:" + damagePercent);
                         enemy._healthBar.Offset -= damagePercent;
                     }
                 }

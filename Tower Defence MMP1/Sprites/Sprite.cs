@@ -14,9 +14,7 @@ namespace Tower_Defence.Sprites
         protected Texture2D _texture;
         protected Vector2 _position;
         protected Vector2 _zeroPosition = new Vector2(0, 0);
-        //protected Vector2 _origin;
         protected Vector2 _direction;
-        //protected float _rotation;
         protected MouseState _currentMouse;
         protected MouseState _previousMouse;
 
@@ -41,9 +39,9 @@ namespace Tower_Defence.Sprites
                 }
             }
         }
-        public Vector2 Origin { get; set; }
+       
         public Vector2 Direction { get; set; }
-        //public float Rotation { get; set; }
+        
         #endregion
 
 
@@ -51,8 +49,6 @@ namespace Tower_Defence.Sprites
         {
             _texture = texture;
 
-            if (texture != null)
-                Origin = new Vector2(_texture.Width / 2, _texture.Height / 2);
         }
 
         public Rectangle Rectangle

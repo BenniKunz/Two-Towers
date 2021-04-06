@@ -4,7 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Tower_Defence.Animations;
+using Tower_Defence.Enums;
 using Tower_Defence.Interfaces;
+using Tower_Defence.States;
 
 namespace Tower_Defence.Sprites
 {
@@ -13,16 +15,24 @@ namespace Tower_Defence.Sprites
 
         #region Fields
         private float _timer;
+        private Vector2 _healthBarOffset;
         #endregion
         public SpriteFont font;
 
         public int HealthPoints { get; set; }
         public int StartHealth { get; set; }
         public bool HasReachedTarget { get ; set ; }
+        public bool idle { get; set; }
 
         public HealthBar _healthBar;
         public HealthBar _healthBarBackground;
-        private Vector2 _healthBarOffset;
+
+        private Dictionary<Difficulty, int> healthPointsDictionary = new Dictionary<Difficulty, int>()
+        {
+            { Difficulty.easy, 120 },
+            { Difficulty.normal, 140 },
+            { Difficulty.hard, 160}
+        };
         
         public static event Action<Enemy> EnemyDeathHandler;
 
@@ -30,9 +40,9 @@ namespace Tower_Defence.Sprites
         {
             _animation = new Animation(texture, tileRowCount, tileColumnCount);
             _animationManager = new AnimationManager(_animation);
-            
-            HealthPoints = 100;
-            StartHealth = 100;
+
+            HealthPoints = GetHealthPoints();
+            StartHealth = GetHealthPoints();
 
             _healthBar = new HealthBar(healthBar)
             {
@@ -48,10 +58,22 @@ namespace Tower_Defence.Sprites
 
         }
 
+        private int GetHealthPoints()
+        {
+           if(GameManager.GameManagerInstance.Difficulty != 0)
+            {
+                return healthPointsDictionary[GameManager.GameManagerInstance.Difficulty];
+            }
+
+            return 0;
+        }
 
         public override void Update(GameTime gameTime, List<IGameParts> gameParts)
         {
-            EnemyMovement(gameTime);
+            if(!idle)
+            {
+                EnemyMovement(gameTime);
+            }
             _animationManager.Update(gameTime);
             
         }
@@ -68,6 +90,7 @@ namespace Tower_Defence.Sprites
             if(HealthPoints <= 0)
             {
                 EnemyDeathHandler?.Invoke(this);
+                GameManager.GameManagerInstance.StoppedEnemies++;
             }
         }
         private void EnemyMovement(GameTime gameTime)

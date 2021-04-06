@@ -33,9 +33,9 @@ namespace Tower_Defence
 
             _graphics.ApplyChanges();
 
-            _currentState = new MenuState(this, _graphics, Content);
             ScreenWidth = _graphics.PreferredBackBufferWidth;
             ScreenHeight = _graphics.PreferredBackBufferHeight;
+            _currentState = new MenuState(this, _graphics, Content, Enums.Difficulty.easy);
             
 
             base.Initialize();
