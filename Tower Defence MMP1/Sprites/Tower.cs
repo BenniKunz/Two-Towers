@@ -32,11 +32,11 @@ namespace Tower_Defence.Sprites
         public bool isPreview = true;
         public bool isPlacable = false;
         public bool isPlaced = false;
+        private bool _isFirstShot = true;
         AttackType _attackType;
 
         public Weapon weapon;
         private float _timer;
-        private float _lifeSpanTimer;
 
         public Tower(Texture2D texture = null) : base(texture)
         {
@@ -81,6 +81,7 @@ namespace Tower_Defence.Sprites
             {
                 SetTarget(gameParts);
                 Shoot(gameTime, gameParts);
+                Color = Color.White;
             }
 
             if (isPreview)
@@ -88,41 +89,37 @@ namespace Tower_Defence.Sprites
                 _tempTowerPosition.X = _currentMouse.X;
                 _tempTowerPosition.Y = _currentMouse.Y;
                 Position = _tempTowerPosition;
-            }
-            
-            if (!isPreview)
-                Color = Color.White;
 
-
-            foreach (var gamePart in gameParts)
-            {
-                if(gamePart == this) { continue; }
-                if(gamePart is Tower tower)
+                foreach (var gamePart in gameParts)
                 {
-                    if(this.Rectangle.Intersects(tower.Rectangle) && !this.isPlacable)
+                    if (gamePart == this) { continue; }
+                    if (gamePart is Tower tower)
                     {
-                        this.Color = Color.Red;
-                        isPlacable = false;
-                        return;
+                        if (this.Rectangle.Intersects(tower.Rectangle) && !this.isPlacable)
+                        {
+                            this.Color = Color.Red;
+                            isPlacable = false;
+                            return;
+                        }
                     }
                 }
-            }
 
-            foreach (Rectangle towerPlacableRectangle in _towerPlacableRectangles)
-            {
-                if(this.isPlaced) { return; }
-
-                var mouseRectangle = new Rectangle(_currentMouse.X, _currentMouse.Y, 1, 1);
-                if (!mouseRectangle.Intersects(towerPlacableRectangle))
+                foreach (Rectangle towerPlacableRectangle in _towerPlacableRectangles)
                 {
-                    this.Color = Color.Peru;
-                    isPlacable = false;
-                }
-                else if (mouseRectangle.Intersects(towerPlacableRectangle))
-                {       
-                            this.Color = Color.Green;
-                            isPlacable = true;
-                            return;
+                    if (this.isPlaced) { return; }
+
+                    var mouseRectangle = new Rectangle(_currentMouse.X, _currentMouse.Y, 1, 1);
+                    if (!mouseRectangle.Intersects(towerPlacableRectangle))
+                    {
+                        this.Color = Color.Peru;
+                        isPlacable = false;
+                    }
+                    else if (mouseRectangle.Intersects(towerPlacableRectangle))
+                    {
+                        this.Color = Color.Green;
+                        isPlacable = true;
+                        return;
+                    }
                 }
             }
         }
@@ -141,12 +138,10 @@ namespace Tower_Defence.Sprites
                     return;
                 }
 
-                if (_timer >= 2f)
+                if (_timer >= 2f || _isFirstShot == true)
                 {
-                    //int x = (int)(_targetEnemy.Position.X - this.Position.X);
-                    //int y = (int)(_targetEnemy.Position.Y - this.Position.Y);
+                    _isFirstShot = false;
                     Vector2 enemyPosition = _targetEnemy._animationManager.AttackPosition;
-
                     Vector2 directionVector = enemyPosition - this._weaponSpawnPoint;
 
                     Weapon weapon = new Weapon(this.weapon.Texture, _attackType)
@@ -168,14 +163,14 @@ namespace Tower_Defence.Sprites
             if (_targetEnemy != null)
             {
                 Vector2 enemyPosition = _targetEnemy._animationManager.AttackPosition;
-                //System.Diagnostics.Debug.WriteLine(_targetEnemy.Position);
-                //System.Diagnostics.Debug.WriteLine(_targetEnemy._animationManager.AttackPosition);
                 Vector2 directionVector = enemyPosition - towerPosition;
+
                 float distance = MathF.Sqrt(directionVector.X * directionVector.X + directionVector.Y * directionVector.Y);
 
                 if (distance > TowerMaxRange || distance < TowerStartRange)
                 {
                     _targetEnemy = null;
+                    _isFirstShot = true;
                 }
             }
 
@@ -194,13 +189,6 @@ namespace Tower_Defence.Sprites
                        
                         if (distance > TowerMaxRange || distance < TowerStartRange) { continue; }
                         _targetEnemy = (Enemy)(gamePart);
-
-                        Weapon weapon = new Weapon(this.weapon.Texture, _attackType)
-                        {
-                            Position = _weaponSpawnPoint,
-                            Direction = Vector2.Normalize(directionVector)
-                        };
-                        gameParts.Add(weapon);
                         return;
                     }
                 }

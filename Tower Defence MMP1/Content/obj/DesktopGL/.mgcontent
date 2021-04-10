@@ -4,7 +4,9 @@
   <Platform>DesktopGL</Platform>
   <Config />
   <SourceFiles>
+    <File>C:/Users/benni/OneDrive/Desktop/MMT/2.Semester/MMP1/Visual Studio/Tower Defence MMP1/Tower Defence MMP1/Content/MenuFont/File.spritefont</File>
     <File>C:/Users/benni/OneDrive/Desktop/MMT/2.Semester/MMP1/Visual Studio/Tower Defence MMP1/Tower Defence MMP1/Content/../../../../gameSong.mp3</File>
+    <File>C:/Users/benni/OneDrive/Desktop/MMT/2.Semester/MMP1/Visual Studio/Tower Defence MMP1/Tower Defence MMP1/Content/../../../../Tower Defence Pack/title.png</File>
     <File>C:/Users/benni/OneDrive/Desktop/MMT/2.Semester/MMP1/Visual Studio/Tower Defence MMP1/Tower Defence MMP1/Content/Background/bg.png</File>
     <File>C:/Users/benni/OneDrive/Desktop/MMT/2.Semester/MMP1/Visual Studio/Tower Defence MMP1/Tower Defence MMP1/Content/Background/game_background_1.png</File>
     <File>C:/Users/benni/OneDrive/Desktop/MMT/2.Semester/MMP1/Visual Studio/Tower Defence MMP1/Tower Defence MMP1/Content/Enemies/enemy01_walkTile.png</File>
@@ -35,7 +37,6 @@
     <File>C:/Users/benni/OneDrive/Desktop/MMT/2.Semester/MMP1/Visual Studio/Tower Defence MMP1/Tower Defence MMP1/Content/MenuButtons/ico_3.png</File>
     <File>C:/Users/benni/OneDrive/Desktop/MMT/2.Semester/MMP1/Visual Studio/Tower Defence MMP1/Tower Defence MMP1/Content/MenuButtons/skull_arr.png</File>
     <File>C:/Users/benni/OneDrive/Desktop/MMT/2.Semester/MMP1/Visual Studio/Tower Defence MMP1/Tower Defence MMP1/Content/MenuFont/EndGameFont.spritefont</File>
-    <File>C:/Users/benni/OneDrive/Desktop/MMT/2.Semester/MMP1/Visual Studio/Tower Defence MMP1/Tower Defence MMP1/Content/MenuFont/File.spritefont</File>
     <File>C:/Users/benni/OneDrive/Desktop/MMT/2.Semester/MMP1/Visual Studio/Tower Defence MMP1/Tower Defence MMP1/Content/MenuFont/menuFont.spritefont</File>
     <File>C:/Users/benni/OneDrive/Desktop/MMT/2.Semester/MMP1/Visual Studio/Tower Defence MMP1/Tower Defence MMP1/Content/MenuItems/rope_small.png</File>
     <File>C:/Users/benni/OneDrive/Desktop/MMT/2.Semester/MMP1/Visual Studio/Tower Defence MMP1/Tower Defence MMP1/Content/MenuItems/table_2.png</File>
@@ -52,10 +53,11 @@
     <File>C:/Users/benni/OneDrive/Desktop/MMT/2.Semester/MMP1/Visual Studio/Tower Defence MMP1/Tower Defence MMP1/Content/Weapons/40.png</File>
   </SourceFiles>
   <DestFiles>
+    <File>MenuFont/explanationFont.spritefont</File>
     <File>GameSound/gameSong.mp3</File>
+    <File>MenuItems/title.png</File>
     <File>Background/menuBackground.png</File>
     <File>Background/levelMap.png</File>
-    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File>GameItems/subtractionMouse.png</File>
     <File>GameItems/failed.png</File>
@@ -66,9 +68,7 @@
     <File>GameItems/squareMouse.png</File>
     <File>GameItems/statsTable.png</File>
     <File>GameItems/divisionMouse.png</File>
-    <File xsi:nil="true" />
     <File>GameItems/tableGUI.png</File>
-    <File xsi:nil="true" />
     <File>MenuButtons/closeButton.png</File>
     <File>MenuButtons/easyButton.png</File>
     <File>MenuButtons/hardButton.png</File>
@@ -83,12 +83,8 @@
     <File>MenuButtons/manualButton.png</File>
     <File>MenuButtons/mouse.png</File>
     <File>MenuFont/endGameFont.spritefont</File>
-    <File>MenuFont/explanationFont.spritefont</File>
-    <File xsi:nil="true" />
     <File>MenuItems/ropeSmall.png</File>
     <File>MenuItems/descriptionBubble.png</File>
-    <File xsi:nil="true" />
-    <File xsi:nil="true" />
     <File>Tower/fireTower.png</File>
     <File>Tower/archerTower.png</File>
     <File>TowerButtons/buildTower.png</File>

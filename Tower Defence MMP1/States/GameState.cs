@@ -9,12 +9,12 @@ using Tower_Defence.Sprites;
 using Microsoft.Xna.Framework.Input;
 using Tower_Defence.Enums;
 using Microsoft.Xna.Framework.Media;
-using Tower_Defence;
+using Tower_Defence.Interfaces;
 
 
 namespace Tower_Defence.States
 {
-    public class GameState : State
+    public class GameState : State, IUnsubscribable
     {
         #region Fields
 
@@ -77,6 +77,11 @@ namespace Tower_Defence.States
         private Rectangle _tableGUIRectangle = new Rectangle(0, 0, Game1.ScreenWidth, 100);
         private Rectangle _currentMouseRectangle = new Rectangle();
 
+        private float _towerStartRangeArcher = 250f;
+        private float _towerMaxRangeArcher = 520f;
+        private float _towerStartRangeFire = 0f;
+        private float _towerMaxRangeFire = 350f;
+
         private bool _pauseGame;
         private bool _isGameOver;
         private bool _gameWon;
@@ -93,6 +98,18 @@ namespace Tower_Defence.States
         public static bool _mathOperationButtonIsClicked;
         public static event Action<bool> TowerButtonIsClicked;
 
+        #endregion
+
+        #region Buttons
+        MenuButton backToMenuButton;
+        MenuButton backButton;
+        MenuButton pauseButton;
+        TowerButton archerButton;
+        TowerButton fireButton;
+        MathOperationButton subtractionButton;
+        MathOperationButton additionButton;
+        MathOperationButton divisionButton;
+        MathOperationButton squareRootButton;
         #endregion
 
         public GameState(Game1 game1, GraphicsDeviceManager graphics, ContentManager content, Difficulty difficulty) : base(game1, graphics, content)
@@ -146,8 +163,8 @@ namespace Tower_Defence.States
             _mouseCursorSquareRoot = _content.Load<Texture2D>("GameItems/squareMouse");
             _gameSong = _content.Load<Song>("GameSound/gameSong");
 
-            //MediaPlayer.Play(_gameSong);
-            //MediaPlayer.IsRepeating = true;
+            MediaPlayer.Play(_gameSong);
+            MediaPlayer.IsRepeating = true;
             _mouseCursor = _mouseCursorStandard;
             _endTablePosition = new Vector2(Game1.ScreenWidth / 2 - _endTable.Width / 2, Game1.ScreenHeight / 2 - _endTable.Height / 2);
             _failedPosition = new Vector2(_endTablePosition.X + _failed.Width / 3, _endTablePosition.Y);
@@ -172,14 +189,14 @@ namespace Tower_Defence.States
             MathEnemy.MathEnemyDeathHandler += HandleMathEnemyDeath;
             MathOperationButton.mathOperationButtonIsClicked += HandleMathOperationButtonIsClicked;
 
-            MenuButton backToMenuButton = new MenuButton(_backToMenuButton, _gameFont)
+            backToMenuButton = new MenuButton(_backToMenuButton, _gameFont)
             {
                 Position = new Vector2(Game1.ScreenWidth - _backToMenuButton.Width, 0)
             };
 
             backToMenuButton.menuButtonEventHandler += HandleBackToMenuButtonClicked;
 
-            MenuButton backButton = new MenuButton(_backButton, _menuFont)
+            backButton = new MenuButton(_backButton, _menuFont)
             {
                 Position = new Vector2(Game1.ScreenWidth - _backButton.Width - 350, 30),
                 Scale = 0.7f
@@ -187,7 +204,7 @@ namespace Tower_Defence.States
 
             backButton.menuButtonEventHandler += HandleBackToMenuButtonClicked;
 
-            MenuButton pauseButton = new MenuButton(_pauseButton, _gameFont)
+            pauseButton = new MenuButton(_pauseButton, _gameFont)
             {
                 Position = new Vector2(Game1.ScreenWidth - 300, 30),
                 Scale = 0.7f
@@ -195,7 +212,7 @@ namespace Tower_Defence.States
 
             pauseButton.menuButtonEventHandler += HandlePauseButtonClicked;
 
-            TowerButton archerButton = new TowerButton(_archerTowerButton, AttackType.archer)
+            archerButton = new TowerButton(_archerTowerButton, AttackType.archer)
             {
                 Position = new Vector2(50, 30),
                 Scale = 0.7f
@@ -205,7 +222,7 @@ namespace Tower_Defence.States
             archerButton.PlaceTowerEventHandler += HandlePlaceTower;
             archerButton.TurnTowerPreviewOffEventHandler += HandleTurnPreviewOff;
 
-            TowerButton fireButton = new TowerButton(_fireTowerButton, AttackType.fire)
+            fireButton = new TowerButton(_fireTowerButton, AttackType.fire)
             {
                 Position = new Vector2(250, 30),
                 Scale = 0.7f,
@@ -216,7 +233,7 @@ namespace Tower_Defence.States
             fireButton.PlaceTowerEventHandler += HandlePlaceTower;
             fireButton.TurnTowerPreviewOffEventHandler += HandleTurnPreviewOff;
 
-            MathOperationButton subtractionButton = new MathOperationButton(_mathOperationButton, MathOperation.subtraction)
+            subtractionButton = new MathOperationButton(_mathOperationButton, MathOperation.subtraction)
             {
                 Position = new Vector2(450, 30),
                 Scale = 0.7f,
@@ -225,7 +242,7 @@ namespace Tower_Defence.States
 
             };
 
-            MathOperationButton divisionButton = new MathOperationButton(_mathOperationButton, MathOperation.division)
+            divisionButton = new MathOperationButton(_mathOperationButton, MathOperation.division)
             {
                 Position = new Vector2(650, 30),
                 Scale = 0.7f,
@@ -235,7 +252,7 @@ namespace Tower_Defence.States
 
             };
 
-            MathOperationButton additionButton = new MathOperationButton(_mathOperationButton, MathOperation.addition)
+            additionButton = new MathOperationButton(_mathOperationButton, MathOperation.addition)
             {
                 Position = new Vector2(850, 30),
                 Scale = 0.7f,
@@ -243,7 +260,7 @@ namespace Tower_Defence.States
                 MathButtonText = "+1"
             };
 
-            MathOperationButton squareRootButton = new MathOperationButton(_mathOperationButton, MathOperation.squareroot)
+            squareRootButton = new MathOperationButton(_mathOperationButton, MathOperation.squareroot)
             {
                 Position = new Vector2(1050, 30),
                 Scale = 0.7f,
@@ -385,14 +402,12 @@ namespace Tower_Defence.States
             _gameParts.Remove(enemy);
             _gameParts.Remove(enemy._healthBar);
             _gameParts.Remove(enemy._healthBarBackground);
-            //endgameHandler.SetStoppedEnemies();
 
         }
 
         private void HandleMathEnemyDeath(MathEnemy enemy)
         {
             _gameParts.Remove(enemy);
-            //endgameHandler.SetStoppedEnemies();
 
         }
 
@@ -420,10 +435,12 @@ namespace Tower_Defence.States
 
         private void HandleRestartButtonClicked(bool clicked)
         {
+            Unsubscribe();
             _game1.ChangeState(new GameState(_game1, _graphics, _content, GameManager.GameManagerInstance.Difficulty));
         }
         private void HandleBackToMenuButtonClicked(bool clicked)
         {
+            Unsubscribe();
             _game1.ChangeState(new MenuState(_game1, _graphics, _content, GameManager.GameManagerInstance.Difficulty));
            
         }
@@ -447,14 +464,14 @@ namespace Tower_Defence.States
 
             if (towerType == AttackType.archer)
             {
-               towerStartRange = 450f;
-               towerMaxRange = 1500f;
+                towerStartRange = _towerStartRangeArcher;
+                towerMaxRange = _towerMaxRangeArcher;
 
              }
             else if(towerType == AttackType.fire)
             {
-                towerStartRange = 0f;
-                towerMaxRange = 350f;
+                towerStartRange = _towerStartRangeFire;
+                towerMaxRange = _towerMaxRangeFire;
             }
 
             Tower newTower = new Tower(towerTexture)
@@ -506,6 +523,24 @@ namespace Tower_Defence.States
                 var removeTower = _towerQueue.Dequeue();
                 _gameParts.Remove(removeTower);
             }
+
+        }
+
+        public void Unsubscribe()
+        {
+            Enemy.EnemyDeathHandler -= HandleEnemyDeath;
+            MathEnemy.MathEnemyDeathHandler -= HandleMathEnemyDeath;
+            MathOperationButton.mathOperationButtonIsClicked -= HandleMathOperationButtonIsClicked;
+            endgameHandler.endGameHandler -= HandleEndGame;
+            backToMenuButton.menuButtonEventHandler -= HandleBackToMenuButtonClicked;
+            backButton.menuButtonEventHandler -= HandleBackToMenuButtonClicked;
+            pauseButton.menuButtonEventHandler -= HandlePauseButtonClicked;
+            archerButton.PreviewTowerEventHandler -= HandleTowerPreview;
+            archerButton.PlaceTowerEventHandler -= HandlePlaceTower;
+            archerButton.TurnTowerPreviewOffEventHandler -= HandleTurnPreviewOff;
+            fireButton.PreviewTowerEventHandler -= HandleTowerPreview;
+            fireButton.PlaceTowerEventHandler -= HandlePlaceTower;
+            fireButton.TurnTowerPreviewOffEventHandler -= HandleTurnPreviewOff;
 
         }
     }

@@ -9,10 +9,11 @@ using System.Collections.Generic;
 using System.Text;
 using Tower_Defence.Buttons;
 using Tower_Defence.Enums;
+using Tower_Defence.Interfaces;
 
 namespace Tower_Defence.States
 {
-    public class MenuState : State
+    public class MenuState : State, IUnsubscribable
     {
         #region Fields
         private Texture2D _menuBackground;
@@ -27,6 +28,7 @@ namespace Tower_Defence.States
         private Texture2D _manualButton;
         private Texture2D _ropeSmall;
         private Texture2D _descriptionBubble;
+        private Texture2D _title;
         private string _manualText = "Read the manual\nbefore your first\nbattle.";
         private Difficulty _difficulty;
         private Song _titleSong;
@@ -36,7 +38,7 @@ namespace Tower_Defence.States
         private Vector2 _ropeSmallPosition_1 = new Vector2(1350, -70);
         private Vector2 _ropeSmallPosition_2 = new Vector2(1400, -70);
         private Vector2 _descriptionBubblePosition = new Vector2(250, 500);
-        private Vector2 _descriptionBubbleTextPosition = new Vector2(300, 550);
+        private Vector2 _descriptionBubbleTextPosition = new Vector2(330, 550);
         private Vector2 _difficultyTextPosition = new Vector2(Game1.ScreenWidth - 300, Game1.ScreenHeight - 90);
         private Rectangle _currentMouseRectangle = new Rectangle();
 
@@ -45,6 +47,14 @@ namespace Tower_Defence.States
         private SpriteFont _menuFont;
 
         private List<IGameParts> _gameParts;
+
+        #region Buttons
+        MenuButton playButton;
+        MenuButton closeGameButton;
+        MenuButton settingsButton;
+        MenuButton musicButton;
+        MenuButton manualButton;
+        #endregion
 
         #endregion
         public MenuState(Game1 game1, GraphicsDeviceManager graphics, ContentManager content, Difficulty difficulty) : base(game1, graphics, content)
@@ -71,14 +81,15 @@ namespace Tower_Defence.States
             _manualButton = _content.Load<Texture2D>("MenuButtons/manualButton");
             _mouseCursor = _content.Load<Texture2D>("MenuButtons/mouse");
             _descriptionBubble = _content.Load<Texture2D>("MenuItems/descriptionBubble");
+            _title = _content.Load<Texture2D>("MenuItems/title");
 
             _buttonSound = _content.Load<SoundEffect>("MenuSound/buttonSound");
 
             _titleSong = _content.Load<Song>("MenuSound/titleSong");
-            //MediaPlayer.Play(_titleSong);
-            //MediaPlayer.IsRepeating = true;
+            MediaPlayer.Play(_titleSong);
+            MediaPlayer.IsRepeating = true;
 
-            MenuButton playButton = new MenuButton(_playButton, _menuFont)
+            playButton = new MenuButton(_playButton, _menuFont)
             {
                 Position = new Vector2(
                     Game1.ScreenWidth / 2 - _playButton.Width / 2,
@@ -87,14 +98,14 @@ namespace Tower_Defence.States
 
             playButton.menuButtonEventHandler += HandlePlayButtonClicked;
 
-            MenuButton closeGameButton = new MenuButton(_closeGameButton, _menuFont)
+            closeGameButton = new MenuButton(_closeGameButton, _menuFont)
             {
                 Position = new Vector2(Game1.ScreenWidth - _closeGameButton.Width, 0)
             };
 
             closeGameButton.menuButtonEventHandler += HandleCloseButtonClicked;
 
-            MenuButton settingsButton = new MenuButton(_settingsButton, _menuFont)
+            settingsButton = new MenuButton(_settingsButton, _menuFont)
             {
                 Position = new Vector2(1300, 210)
 
@@ -102,7 +113,7 @@ namespace Tower_Defence.States
 
             settingsButton.menuButtonEventHandler += HandleSettingsButtonClicked;
 
-            MenuButton musicButton = new MenuButton(_musicButton, _menuFont)
+            musicButton = new MenuButton(_musicButton, _menuFont)
             {
                 Position = new Vector2(10, 50),
                 IsMusicButton = true,
@@ -112,7 +123,7 @@ namespace Tower_Defence.States
 
             musicButton.musicButtonEventHandler += HandleMusicButtonClicked;
 
-            MenuButton manualButton = new MenuButton(_manualButton, _menuFont)
+            manualButton = new MenuButton(_manualButton, _menuFont)
             {
                 Position = new Vector2(150, 800),
 
@@ -130,10 +141,6 @@ namespace Tower_Defence.States
             };
         }
 
-        private void HandleManualButtonClicked(bool clicked)
-        {
-            _game1.ChangeState(new ManualState(_game1, _graphics, _content, _difficulty));
-        }
 
         public override void Update(GameTime gameTime)
         {       
@@ -145,6 +152,7 @@ namespace Tower_Defence.States
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(_menuBackground, zeroPosition, Color.White);
+            spriteBatch.Draw(_title, new Vector2(200, 20), Color.White);
 
             foreach (IGameParts gamePart in _gameParts)
             {
@@ -166,14 +174,21 @@ namespace Tower_Defence.States
 
             spriteBatch.Draw(_mouseCursor, _currentMouseRectangle, null, Color.White, -2.0f, zeroPosition, SpriteEffects.None, 0f);
         }
+        private void HandleManualButtonClicked(bool clicked)
+        {
+            Unsubscribe();
+            _game1.ChangeState(new ManualState(_game1, _graphics, _content, _difficulty));
+        }
         private void HandlePlayButtonClicked(bool clicked)
         {
             MediaPlayer.Stop();
+            Unsubscribe();
             _game1.ChangeState(new GameState(_game1, _graphics, _content, _difficulty));
         }
 
         private void HandleCloseButtonClicked(bool clicked)
         {
+            Unsubscribe();
             _game1.QuitGame();
         }
 
@@ -242,6 +257,15 @@ namespace Tower_Defence.States
             _buttonSound.Play();
             this._difficulty = difficulty;
 
+        }
+
+        public void Unsubscribe()
+        {
+            playButton.menuButtonEventHandler -= HandlePlayButtonClicked;
+            closeGameButton.menuButtonEventHandler -= HandleCloseButtonClicked;
+            settingsButton.menuButtonEventHandler -= HandleSettingsButtonClicked;
+            musicButton.musicButtonEventHandler -= HandleMusicButtonClicked;
+            manualButton.menuButtonEventHandler -= HandleManualButtonClicked;
         }
 
         #endregion

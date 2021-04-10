@@ -19,6 +19,18 @@
 /processorParam:Quality=Best
 /build:../../../../gameSong.mp3;GameSound/gameSong.mp3
 
+#begin ../../../../Tower Defence Pack/title.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:../../../../Tower Defence Pack/title.png;MenuItems/title.png
+
 #begin Background/bg.png
 /importer:TextureImporter
 /processor:TextureProcessor

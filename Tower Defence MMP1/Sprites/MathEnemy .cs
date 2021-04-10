@@ -13,7 +13,7 @@ using Tower_Defence.States;
 
 namespace Tower_Defence.Sprites
 {
-    public class MathEnemy : Sprite, IReachable
+    public class MathEnemy : Sprite, IReachable, IUnsubscribable
     {
 
         public int HealthPoints { get; set; }
@@ -74,6 +74,7 @@ namespace Tower_Defence.Sprites
 
             if (HealthPoints <= 0)
             {
+                Unsubscribe();
                 MathEnemyDeathHandler?.Invoke(this);
                 GameManager.GameManagerInstance.StoppedEnemies++;
             }
@@ -197,6 +198,13 @@ namespace Tower_Defence.Sprites
 
             //Position += new Vector2(100, 0) * deltaTime;
 
+        }
+
+        public void Unsubscribe()
+        {
+            MathOperationButton.changeMathOperationHandler -= HandleMathOperation;
+            MathOperationButton.mathOperationButtonIsClicked -= HandleMathOperationButtonIsClicked;
+            GameState.TowerButtonIsClicked -= HandleTowerButtonClicked;
         }
     }
 }

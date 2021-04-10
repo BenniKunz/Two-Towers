@@ -51,12 +51,6 @@ namespace Tower_Defence
             _allEnemiesSpawned = true;
         }
 
-        //public void SetStoppedEnemies()
-        //{
-        //    _stoppedEnemies++;
-        //}
-
-
         public void Update(GameTime gameTime, List<IGameParts> gameParts)
         {
             _stoppedEnemies = GameManager.GameManagerInstance.StoppedEnemies;

@@ -33,8 +33,8 @@ namespace Tower_Defence.States
 
         private string _standardTowerText = "High range Tower with a minimum range.\nCan't hit enemies too close to the tower\nUse this tower against standard Enemies.";
         private string _fireTowerText = "Low range tower without a minimum range.\nCan hit enemies very close to the tower.\nUse this tower against standard Enemies.";
-        private string _mathOperation = "Mathematical operations:\n +1, -1, /2, and square root.\nUse these operations to attack math enemies.";
-        private string _enemyText = "Standard enemy.\nAttack it with either the high or low range tower.";
+        private string _mathOperation = "Mathematical operations:\n +1, -1, /2, and square root.\nUse these operations to\n attack math enemies.";
+        private string _enemyText = "Standard enemy.\nAttack it with either the high\n or low range tower.";
         private string _explanation = "Left click: Select/place tower or math operation.\nRight click: Deselect tower or math operation.";
         private string _mathEnemyText = "Math enemy.\nTowers are useless here.\nUse mathematical operations to attack this foe.";
 
@@ -56,9 +56,9 @@ namespace Tower_Defence.States
         private Vector2 _mathButtonPosition = new Vector2(710, 90);
         private Vector2 _standardTextPosition = new Vector2(270, 90);
         private Vector2 _fireTextPosition = new Vector2(270, 390);
-        private Vector2 _enemyTexPosition = new Vector2(250, 700);
-        private Vector2 _mathButtonTextPosition = new Vector2(880, 90);
-        private Vector2 _explanationTextPosition = new Vector2(740, 450);
+        private Vector2 _enemyTexPosition = new Vector2(270, 700);
+        private Vector2 _mathButtonTextPosition = new Vector2(900, 90);
+        private Vector2 _explanationTextPosition = new Vector2(740, 400);
         private Vector2 _mathEnemyTextPosition = new Vector2(850, 700);
         private Vector2 _difficultyTextPosition = new Vector2(Game1.ScreenWidth - 300, Game1.ScreenHeight - 90);
 
