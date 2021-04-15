@@ -30,6 +30,7 @@ namespace Tower_Defence
         {
             _graphics.PreferredBackBufferWidth = 1920;  // set this value to the desired width of your window
             _graphics.PreferredBackBufferHeight = 1080;   // set this value to the desired height of your window
+            _graphics.IsFullScreen = true;
 
             _graphics.ApplyChanges();
 

@@ -4,12 +4,13 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Tower_Defence.Enums;
+using Tower_Defence.Interfaces;
 using Tower_Defence.Sprites;
 using Tower_Defence.States;
 
 namespace Tower_Defence
 {
-    public class EndGameHandler : IGameParts
+    public class EndGameHandler : IGameParts, IUnsubscribable
     {
         #region Fields
         private SpriteFont _gameFont;
@@ -105,6 +106,11 @@ namespace Tower_Defence
         {
             spriteBatch.DrawString(_menuFont, $"{_maxLifes} Lifes", new Vector2(40, 220), Color.White);
             spriteBatch.DrawString(_menuFont, $"{_stoppedEnemies} Kills", new Vector2(40, 300), Color.White);
+        }
+
+        public void Unsubscribe()
+        {
+            EnemySpawner.AllEnemiesSpawned -= HandleAllEnemiesSpawned;
         }
     }
 }

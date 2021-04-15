@@ -21,7 +21,9 @@
     <File>C:/Users/benni/OneDrive/Desktop/MMT/2.Semester/MMP1/Visual Studio/Tower Defence MMP1/Tower Defence MMP1/Content/GameItems/star.png</File>
     <File>C:/Users/benni/OneDrive/Desktop/MMT/2.Semester/MMP1/Visual Studio/Tower Defence MMP1/Tower Defence MMP1/Content/GameItems/table.png</File>
     <File>C:/Users/benni/OneDrive/Desktop/MMT/2.Semester/MMP1/Visual Studio/Tower Defence MMP1/Tower Defence MMP1/Content/GameItems/table_down.png</File>
+    <File>C:/Users/benni/OneDrive/Desktop/MMT/2.Semester/MMP1/Visual Studio/Tower Defence MMP1/Tower Defence MMP1/Content/GameSound/enemyHitSound.wav</File>
     <File>C:/Users/benni/OneDrive/Desktop/MMT/2.Semester/MMP1/Visual Studio/Tower Defence MMP1/Tower Defence MMP1/Content/GameSound/gameSong.mp3</File>
+    <File>C:/Users/benni/OneDrive/Desktop/MMT/2.Semester/MMP1/Visual Studio/Tower Defence MMP1/Tower Defence MMP1/Content/GameSound/mathOperationSound.wav</File>
     <File>C:/Users/benni/OneDrive/Desktop/MMT/2.Semester/MMP1/Visual Studio/Tower Defence MMP1/Tower Defence MMP1/Content/MenuButtons/button_close.png</File>
     <File>C:/Users/benni/OneDrive/Desktop/MMT/2.Semester/MMP1/Visual Studio/Tower Defence MMP1/Tower Defence MMP1/Content/MenuButtons/button_easy.png</File>
     <File>C:/Users/benni/OneDrive/Desktop/MMT/2.Semester/MMP1/Visual Studio/Tower Defence MMP1/Tower Defence MMP1/Content/MenuButtons/button_hard.png</File>
@@ -70,6 +72,8 @@
     <File>GameItems/divisionMouse.png</File>
     <File xsi:nil="true" />
     <File>GameItems/tableGUI.png</File>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File>MenuButtons/closeButton.png</File>
     <File>MenuButtons/easyButton.png</File>

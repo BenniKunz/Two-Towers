@@ -37,7 +37,7 @@ namespace Tower_Defence.Buttons
         {
             spriteBatch.Draw(_texture, Position, null, Colour, 0f, new Vector2(0, 0), Scale, SpriteEffects.None, 0f);
             spriteBatch.DrawString(Font, MathButtonText, new Vector2(Rectangle.X + 40, Rectangle.Y + 40), PenColour);
-            //System.Diagnostics.Debug.WriteLine(this.Rectangle.X);
+            
         }
 
         public void Update(GameTime gameTime, List<IGameParts> gameParts)
@@ -67,7 +67,7 @@ namespace Tower_Defence.Buttons
                     Clicked = true;
                     changeMathOperationHandler?.Invoke(this._mathOperation);
                     mathOperationButtonIsClicked?.Invoke(this._mathOperation, Clicked);
-                    System.Diagnostics.Debug.WriteLine("clicked");
+                    
                 }
 
                 if (_currentMouse.LeftButton == ButtonState.Released && _previousMouse.RightButton == ButtonState.Pressed)
@@ -78,7 +78,7 @@ namespace Tower_Defence.Buttons
                 }
             }
 
-            if(_mathOperationIsUsed)
+            if(_mathOperationIsUsed && (_mathOperation == MathOperation.division || _mathOperation == MathOperation.squareroot))
             {
                _coolDownTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
                 Colour = Color.Red;

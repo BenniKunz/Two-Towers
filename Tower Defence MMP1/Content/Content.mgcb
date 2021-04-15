@@ -211,11 +211,23 @@
 /processorParam:TextureFormat=Color
 /build:GameItems/table_down.png;GameItems/tableGUI.png
 
+#begin GameSound/enemyHitSound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:GameSound/enemyHitSound.wav
+
 #begin GameSound/gameSong.mp3
 /importer:Mp3Importer
 /processor:SongProcessor
 /processorParam:Quality=Best
 /build:GameSound/gameSong.mp3
+
+#begin GameSound/mathOperationSound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:GameSound/mathOperationSound.wav
 
 #begin MenuButtons/button_close.png
 /importer:TextureImporter

@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Input;
 using Tower_Defence.Enums;
 using Microsoft.Xna.Framework.Media;
 using Tower_Defence.Interfaces;
-
+using Microsoft.Xna.Framework.Audio;
 
 namespace Tower_Defence.States
 {
@@ -66,6 +66,8 @@ namespace Tower_Defence.States
 
         private MouseState _currentMouse;
         private Song _gameSong;
+        private SoundEffect _mathOperationSound;
+        private SoundEffect _enemyHitSound;
 
         private SpriteFont _gameFont;
         private SpriteFont _menuFont;
@@ -87,6 +89,7 @@ namespace Tower_Defence.States
         private bool _gameWon;
 
         private List<IGameParts> _gameParts;
+        private List<Tower> _backgroundTowers = new List<Tower>();
         private Texture2D[] _enemyTextureArray;
 
         private Queue<Tower> _towerQueue = new Queue<Tower>();
@@ -162,6 +165,8 @@ namespace Tower_Defence.States
             _mouseCursorDivision = _content.Load<Texture2D>("GameItems/divisionMouse");
             _mouseCursorSquareRoot = _content.Load<Texture2D>("GameItems/squareMouse");
             _gameSong = _content.Load<Song>("GameSound/gameSong");
+            _mathOperationSound = _content.Load<SoundEffect>("GameSound/mathOperationSound");
+            _enemyHitSound = _content.Load<SoundEffect>("GameSound/enemyHitSound");
 
             MediaPlayer.Play(_gameSong);
             MediaPlayer.IsRepeating = true;
@@ -295,7 +300,7 @@ namespace Tower_Defence.States
         {
             if (_pauseGame || _isGameOver)
             {
-                foreach (IGameParts gamePart in _gameParts)
+                foreach (IGameParts gamePart in _gameParts.ToArray())
                 {
                     if (gamePart is MenuButton)
                         gamePart.Update(gameTime, _gameParts);
@@ -305,11 +310,20 @@ namespace Tower_Defence.States
             }
             if(_isGameOver == false)
             {
+                if (_backgroundTowers.Count > 0)
+                {
+                    foreach (Tower tower in _backgroundTowers)
+                    {
+                        tower.Update(gameTime, _gameParts);
+                    }
+                }
+
                 foreach (IGameParts gamePart in _gameParts.ToArray())
                 {
                     gamePart.Update(gameTime, _gameParts);
                 }
-
+                CheckIfMathOperationUsed();
+                CheckIfEnemyIsHit();
             }
         }
 
@@ -336,6 +350,14 @@ namespace Tower_Defence.States
 
             if (_isGameOver == false)
             {
+                if(_backgroundTowers.Count > 0)
+                {
+                    foreach (Tower tower in _backgroundTowers)
+                    {
+                        tower.Draw(gameTime, spritebatch);
+                    }
+                }
+
                 foreach (IGameParts gamePart in _gameParts)
                 {
                     gamePart.Draw(gameTime, spritebatch);
@@ -360,6 +382,24 @@ namespace Tower_Defence.States
             }
 
             spritebatch.Draw(_mouseCursor, _currentMouseRectangle, null, Color.White, -2.0f, _zeroPosition, SpriteEffects.None, 0f);
+        }
+
+        private void CheckIfEnemyIsHit()
+        {
+            if (GameManager.GameManagerInstance.EnemyIsHit)
+            {
+                _enemyHitSound.Play();
+                GameManager.GameManagerInstance.EnemyIsHit = false;
+            }
+        }
+
+        private void CheckIfMathOperationUsed()
+        {
+            if (GameManager.GameManagerInstance.MathOperationIsUsed)
+            {
+                _mathOperationSound.Play();
+                GameManager.GameManagerInstance.MathOperationIsUsed = false;
+            }
         }
 
         private void DrawUI(SpriteBatch spritebatch, out int x, out int y)
@@ -436,11 +476,29 @@ namespace Tower_Defence.States
         private void HandleRestartButtonClicked(bool clicked)
         {
             Unsubscribe();
+            UnsubscribeListElements();
+            _gameParts.Clear();
+            GameManager.GameManagerInstance.StoppedEnemies = 0;
             _game1.ChangeState(new GameState(_game1, _graphics, _content, GameManager.GameManagerInstance.Difficulty));
         }
+
+        private void UnsubscribeListElements()
+        {
+            foreach (IGameParts gamePart in _gameParts)
+            {
+                if(gamePart is IUnsubscribable iUnsubsribable)
+                {
+                    iUnsubsribable.Unsubscribe();
+                }
+            }
+        }
+
         private void HandleBackToMenuButtonClicked(bool clicked)
         {
             Unsubscribe();
+            _gameParts.Clear();
+            endgameHandler.Unsubscribe();
+            GameManager.GameManagerInstance.StoppedEnemies = 0;
             _game1.ChangeState(new MenuState(_game1, _graphics, _content, GameManager.GameManagerInstance.Difficulty));
            
         }
@@ -507,9 +565,16 @@ namespace Tower_Defence.States
                 tower.isPreview = false;
                 tower.isPlaced = true;
 
+                if(tower.CheckIfTowerIsBackgroundTower())
+                {
+                    _gameParts.Remove(tower);
+                    _backgroundTowers.Add(tower);
+                }
+
                 CheckNumberOfTowers(tower);
                 TowerButtonIsClicked?.Invoke(false);
                 _towerButtonIsClicked = false;
+
                 return;
             }
             towerButton.isPreviewOn = true;
@@ -521,7 +586,14 @@ namespace Tower_Defence.States
             if (_towerQueue.Count > 2)
             {
                 var removeTower = _towerQueue.Dequeue();
-                _gameParts.Remove(removeTower);
+                if(_gameParts.Contains(removeTower))
+                {
+                    _gameParts.Remove(removeTower);
+                }
+                else if (_backgroundTowers.Contains(removeTower))
+                {
+                    _backgroundTowers.Remove(removeTower);
+                }
             }
 
         }

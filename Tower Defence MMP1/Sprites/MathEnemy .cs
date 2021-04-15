@@ -66,7 +66,7 @@ namespace Tower_Defence.Sprites
 
             _animationManager.Update(gameTime);
 
-            System.Diagnostics.Debug.WriteLine(_mathOperation);
+            
             if (TowerButtonIsClicked == false)
             {
                 CheckMathEnemyClicked();
@@ -102,10 +102,12 @@ namespace Tower_Defence.Sprites
                 if(_mathOperation == MathOperation.addition)
                 {
                     this.HealthPoints++;
+                    GameManager.GameManagerInstance.MathOperationIsUsed = true;
                 }
                 else if (_mathOperation == MathOperation.subtraction)
                 {
                     this.HealthPoints--;
+                    GameManager.GameManagerInstance.MathOperationIsUsed = true;
                 }
                 else if (_mathOperation == MathOperation.division)
                 {
@@ -113,6 +115,7 @@ namespace Tower_Defence.Sprites
                     {
                         HealthPoints /= 2 ;
                         MathOperationUsedHandler?.Invoke(_mathOperation);
+                        GameManager.GameManagerInstance.MathOperationIsUsed = true;
                     }
                 }
                 else if(_mathOperation == MathOperation.squareroot)
@@ -123,6 +126,7 @@ namespace Tower_Defence.Sprites
                     {
                         this.HealthPoints = (int)Math.Sqrt(this.HealthPoints);
                         MathOperationUsedHandler?.Invoke(_mathOperation);
+                        GameManager.GameManagerInstance.MathOperationIsUsed = true;
                     }
                 }
             }

@@ -24,6 +24,7 @@ namespace Tower_Defence.Sprites
         private List<Rectangle> _towerPlacableRectangles = new List<Rectangle>();
 
         private Vector2 _tempTowerPosition = new Vector2();
+
         public Vector2 _weaponSpawnPoint;
 
         public float TowerMaxRange { get; set; }
@@ -54,7 +55,7 @@ namespace Tower_Defence.Sprites
 
         public override void Update(GameTime gameTime, List<IGameParts> gameParts)
         {
-            
+
             if (_towerPlacableRectangles.Count == 0)
             {
                 _towerPlacableRectangles = new List<Rectangle>
@@ -122,6 +123,15 @@ namespace Tower_Defence.Sprites
                     }
                 }
             }
+        }
+
+        public bool CheckIfTowerIsBackgroundTower()
+        {
+            if (this.Rectangle.Intersects(towerPlacableRectangleFour) || this.Rectangle.Intersects(towerPlacableRectangleFive))
+            {
+                return true;
+            }
+            return false;
         }
 
         private void Shoot(GameTime gameTime, List<IGameParts> gameParts)

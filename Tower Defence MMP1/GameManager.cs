@@ -12,6 +12,8 @@ namespace Tower_Defence
 
         public Difficulty Difficulty { get; set; }
         public int StoppedEnemies { get; set; }
+        public bool MathOperationIsUsed { get; set; }
+        public bool EnemyIsHit { get; set; }
         private GameManager()
         {
             
