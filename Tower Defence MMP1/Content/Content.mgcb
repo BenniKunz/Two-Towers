@@ -79,6 +79,18 @@
 /processorParam:TextureFormat=Color
 /build:Enemies/enemy02_walkTile.png
 
+#begin Enemies/enemy03_walkTile.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Enemies/enemy03_walkTile.png
+
 #begin GameItems/button_minus.png
 /importer:TextureImporter
 /processor:TextureProcessor

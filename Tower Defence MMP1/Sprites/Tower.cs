@@ -19,6 +19,7 @@ namespace Tower_Defence.Sprites
         private Rectangle towerPlacableRectangleSeven;
         private Rectangle towerPlacableRectangleEight;
         private Rectangle towerPlacableRectangleNine;
+        private int _towerPlacableOffset = 100;
         private Enemy _targetEnemy = null;
 
         private List<Rectangle> _towerPlacableRectangles = new List<Rectangle>();
@@ -41,15 +42,15 @@ namespace Tower_Defence.Sprites
 
         public Tower(Texture2D texture = null) : base(texture)
         {
-            towerPlacableRectangleOne = new Rectangle(80, 1050 - _texture.Height, _texture.Width, _texture.Height);
-            towerPlacableRectangleTwo = new Rectangle(478, 1050 - _texture.Height, _texture.Width, _texture.Height);
-            towerPlacableRectangleThree = new Rectangle(730, 700 - _texture.Height, _texture.Width, _texture.Height);
-            towerPlacableRectangleFour = new Rectangle(965, 480 - _texture.Height, _texture.Width, _texture.Height);
-            towerPlacableRectangleFive = new Rectangle(1110, 740 - _texture.Height, _texture.Width, _texture.Height);
-            towerPlacableRectangleSix = new Rectangle(1330, 435 - _texture.Height, _texture.Width, _texture.Height);
-            towerPlacableRectangleSeven = new Rectangle(1660, 515 - _texture.Height, _texture.Width, _texture.Height);
-            towerPlacableRectangleEight = new Rectangle(1220, 1050 - _texture.Height, _texture.Width, _texture.Height);
-            towerPlacableRectangleNine = new Rectangle(1615, 1050 - _texture.Height, _texture.Width, _texture.Height);
+            towerPlacableRectangleOne = new Rectangle(80, 1050 - _texture.Height, _texture.Width, _texture.Height - _towerPlacableOffset);
+            towerPlacableRectangleTwo = new Rectangle(478, 1050 - _texture.Height, _texture.Width, _texture.Height - _towerPlacableOffset);
+            towerPlacableRectangleThree = new Rectangle(730, 700 - _texture.Height, _texture.Width, _texture.Height - _towerPlacableOffset);
+            towerPlacableRectangleFour = new Rectangle(965, 480 - _texture.Height, _texture.Width, _texture.Height - _towerPlacableOffset);
+            towerPlacableRectangleFive = new Rectangle(1110, 740 - _texture.Height, _texture.Width, _texture.Height - _towerPlacableOffset);
+            towerPlacableRectangleSix = new Rectangle(1330, 435 - _texture.Height, _texture.Width, _texture.Height - _towerPlacableOffset);
+            towerPlacableRectangleSeven = new Rectangle(1660, 515 - _texture.Height, _texture.Width, _texture.Height - _towerPlacableOffset);
+            towerPlacableRectangleEight = new Rectangle(1220, 1050 - _texture.Height, _texture.Width, _texture.Height - _towerPlacableOffset);
+            towerPlacableRectangleNine = new Rectangle(1615, 1050 - _texture.Height, _texture.Width, _texture.Height - _towerPlacableOffset);
 
         }
 

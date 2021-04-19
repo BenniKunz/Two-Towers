@@ -85,7 +85,7 @@ namespace Tower_Defence
 
         private MathEnemy SpawnMathEnemy(GameTime gameTime)
         {
-            int num = random.Next(0, 2);
+            int num = random.Next(0, _levelOneEnemyList.Count);
 
             MathEnemy mathEnemy = null;
             if (num == 0)
@@ -121,7 +121,7 @@ namespace Tower_Defence
         private Enemy SpawnEnemies(GameTime gameTime)
         {
             
-            int num = random.Next(0, 2);
+            int num = random.Next(0, _levelOneEnemyList.Count);
 
             Enemy enemy = null;
             if (num == 0)
@@ -134,6 +134,13 @@ namespace Tower_Defence
             else if( num == 1)
             {
                 enemy = new Enemy(_levelOneEnemyList[1], 2, 5, _healthBarTexture, _healthBarBackgroundTexture)
+                {
+                    Position = _enemySpawnPoint
+                };
+            }
+            else if (num == 2)
+            {
+                enemy = new Enemy(_levelOneEnemyList[2], 2, 5, _healthBarTexture, _healthBarBackgroundTexture)
                 {
                     Position = _enemySpawnPoint
                 };

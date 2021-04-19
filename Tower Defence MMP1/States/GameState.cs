@@ -62,6 +62,7 @@ namespace Tower_Defence.States
         #region EnemyTextures
         private Texture2D _enemy01_walkTile;
         private Texture2D _enemy02_walkTile;
+        private Texture2D _enemy03_walkTile;
         #endregion
 
         private MouseState _currentMouse;
@@ -155,6 +156,7 @@ namespace Tower_Defence.States
 
             _enemy01_walkTile = _content.Load<Texture2D>("Enemies/enemy01_walkTile");
             _enemy02_walkTile = _content.Load<Texture2D>("Enemies/enemy02_walkTile");
+            _enemy03_walkTile = _content.Load<Texture2D>("Enemies/enemy03_walkTile");
 
             _gameFont = _content.Load<SpriteFont>("MenuFont/endGameFont");
             _menuFont = _content.Load<SpriteFont>("MenuFont/menuFont");
@@ -187,7 +189,8 @@ namespace Tower_Defence.States
 
             _enemyTextureArray = new Texture2D[]
             { _enemy01_walkTile,
-              _enemy02_walkTile
+              _enemy02_walkTile,
+              _enemy03_walkTile
             };
 
             Enemy.EnemyDeathHandler += HandleEnemyDeath;
@@ -320,6 +323,7 @@ namespace Tower_Defence.States
 
                 foreach (IGameParts gamePart in _gameParts.ToArray())
                 {
+                    if (gamePart is null) { continue; }
                     gamePart.Update(gameTime, _gameParts);
                 }
                 CheckIfMathOperationUsed();
@@ -360,6 +364,7 @@ namespace Tower_Defence.States
 
                 foreach (IGameParts gamePart in _gameParts)
                 {
+                    if(gamePart is null) { continue;}
                     gamePart.Draw(gameTime, spritebatch);
                 }
             }
@@ -477,7 +482,7 @@ namespace Tower_Defence.States
         {
             Unsubscribe();
             UnsubscribeListElements();
-            _gameParts.Clear();
+            //_gameParts.Clear();
             GameManager.GameManagerInstance.StoppedEnemies = 0;
             _game1.ChangeState(new GameState(_game1, _graphics, _content, GameManager.GameManagerInstance.Difficulty));
         }
@@ -496,7 +501,7 @@ namespace Tower_Defence.States
         private void HandleBackToMenuButtonClicked(bool clicked)
         {
             Unsubscribe();
-            _gameParts.Clear();
+            //_gameParts.Clear();
             endgameHandler.Unsubscribe();
             GameManager.GameManagerInstance.StoppedEnemies = 0;
             _game1.ChangeState(new MenuState(_game1, _graphics, _content, GameManager.GameManagerInstance.Difficulty));
