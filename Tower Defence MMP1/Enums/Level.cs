@@ -7,7 +7,8 @@ namespace Tower_Defence_MMP1.Enums
     public enum Level
     {
         LevelOne,
-        LevelTwo
+        LevelTwo,
+        LevelThree
 
     }
 }
