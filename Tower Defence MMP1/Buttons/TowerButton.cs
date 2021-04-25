@@ -22,12 +22,20 @@ namespace Tower_Defence.Buttons
             _texture = texture;
             PenColour = Color.White;
             TowerType = InputTowerType;
-            GameState.TowerButtonIsClicked += HandleTowerButtonIsClicked;
+            if(GameManager.GameManagerInstance.CurrentLevel == Tower_Defence_MMP1.Enums.Level.LevelOne)
+            {
+                GameStateOne.TowerButtonIsClicked += HandleTowerButtonIsClicked;
+            }
+            else if(GameManager.GameManagerInstance.CurrentLevel == Tower_Defence_MMP1.Enums.Level.LevelTwo)
+            {
+                GameStateTwo.TowerButtonIsClicked += HandleTowerButtonIsClicked;
+            }
         }
 
         private void HandleTowerButtonIsClicked(bool isClicked)
         {
             Clicked = isClicked;
+            
         }
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
@@ -68,7 +76,8 @@ namespace Tower_Defence.Buttons
                 TurnTowerPreviewOffEventHandler?.Invoke();
             }
 
-            if(Clicked) { return; }
+            System.Diagnostics.Debug.WriteLine(Clicked);
+            if (Clicked) { return; }
 
             if (_isHovering)
             {
@@ -84,6 +93,7 @@ namespace Tower_Defence.Buttons
                     isPreviewOn = true;
                     Clicked = true;
                     PreviewTowerEventHandler?.Invoke(this.TowerType);
+                    
                 }
             }
         }

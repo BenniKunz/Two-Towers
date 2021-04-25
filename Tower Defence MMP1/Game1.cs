@@ -71,6 +71,7 @@ namespace Tower_Defence
         public void ChangeState(State state)
         {
             _currentState = state;
+            
             _currentState.LoadContent();
         }
 

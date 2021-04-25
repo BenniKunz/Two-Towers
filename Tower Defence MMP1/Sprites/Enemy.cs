@@ -99,25 +99,51 @@ namespace Tower_Defence.Sprites
 
             _timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            if (_timer > 0.01f)
+            if(GameManager.GameManagerInstance.CurrentLevel == Tower_Defence_MMP1.Enums.Level.LevelOne)
             {
-                _timer = 0;
-                this._healthBar.Position = this.Position + _healthBarOffset;
-                this._healthBarBackground.Position = this.Position + _healthBarOffset;
-
-                if (this.Position.X >= 350 && this.Position.X < 700 && this.Position.Y >= 270)
+                if (_timer > 0.01f)
                 {
-                    Position += new Vector2(1, -1);
-                    return;
-                }
-                if (this.Position.X >= 700 && this.Position.X <= 1000)
-                {
-                    Position += new Vector2(1, 1);
-                    return;
-                }
+                    _timer = 0;
+                    this._healthBar.Position = this.Position + _healthBarOffset;
+                    this._healthBarBackground.Position = this.Position + _healthBarOffset;
 
-                Position += new Vector2(1, 0);
+                    if (this.Position.X >= 350 && this.Position.X < 700 && this.Position.Y >= 270)
+                    {
+                        Position += new Vector2(1, -1);
+                        return;
+                    }
+                    if (this.Position.X >= 700 && this.Position.X <= 1000)
+                    {
+                        Position += new Vector2(1, 1);
+                        return;
+                    }
+
+                    Position += new Vector2(1, 0);
+                }
             }
+            else if (GameManager.GameManagerInstance.CurrentLevel == Tower_Defence_MMP1.Enums.Level.LevelTwo)
+            {
+                if (_timer > 0.01f)
+                {
+                    _timer = 0;
+                    this._healthBar.Position = this.Position + _healthBarOffset;
+                    this._healthBarBackground.Position = this.Position + _healthBarOffset;
+                    
+                    if (this.Position.X >= 1050 && this.Position.X <= 1150)
+                    {
+                        Position += new Vector2(1, 1);
+                        return;
+                    }
+                    if (this.Position.X >= 1280 && this.Position.X <= 1600)
+                    {
+                        Position += new Vector2(1, -1);
+                        return;
+                    }
+
+                    Position += new Vector2(1, 0);
+                }
+            }
+
 
             //this._healthBar.Position = (this.Position + _healthBarOffset);
             //this._healthBarBackground.Position = (this.Position + _healthBarOffset);

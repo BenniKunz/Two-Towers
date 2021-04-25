@@ -11,10 +11,11 @@ using Tower_Defence.Enums;
 using Microsoft.Xna.Framework.Media;
 using Tower_Defence.Interfaces;
 using Microsoft.Xna.Framework.Audio;
+using Tower_Defence_MMP1.Enums;
 
 namespace Tower_Defence.States
 {
-    public class GameState : State, IUnsubscribable
+    public class GameStateTwo : State, IUnsubscribable
     {
         #region Fields
 
@@ -34,6 +35,7 @@ namespace Tower_Defence.States
         private Texture2D _backButton;
         private Texture2D _pauseButton;
         private Texture2D _restartButton;
+        private Texture2D _nextLevelButton;
         private Texture2D _archerTowerButton;
         private Texture2D _archerTower;
         private Texture2D _archerWeapon;
@@ -116,7 +118,7 @@ namespace Tower_Defence.States
         MathOperationButton squareRootButton;
         #endregion
 
-        public GameState(Game1 game1, GraphicsDeviceManager graphics, ContentManager content, Difficulty difficulty) : base(game1, graphics, content)
+        public GameStateTwo(Game1 game1, GraphicsDeviceManager graphics, ContentManager content, Difficulty difficulty) : base(game1, graphics, content)
         {
             GameManager.GameManagerInstance.Difficulty = difficulty;
             
@@ -130,7 +132,7 @@ namespace Tower_Defence.States
         public override void LoadContent()
         {
 
-            _levelMap = _content.Load<Texture2D>("Background/levelMap");
+            _levelMap = _content.Load<Texture2D>("Background/levelMapTwo");
             _statsTable = _content.Load<Texture2D>("GameItems/statsTable");
             _tableGUI = _content.Load<Texture2D>("GameItems/tableGUI");
             _endTable = _content.Load<Texture2D>("GameItems/table");
@@ -141,6 +143,7 @@ namespace Tower_Defence.States
             _pauseButton = _content.Load<Texture2D>("MenuButtons/pauseButton");
             _restartButton = _content.Load<Texture2D>("MenuButtons/restartButton");
             _backButton = _content.Load<Texture2D>("MenuButtons/backButton");
+            _nextLevelButton = _content.Load<Texture2D>("MenuButtons/nextLevelButton");
 
             _archerTowerButton = _content.Load<Texture2D>("TowerButtons/buildTower");
             _fireTowerButton = _content.Load<Texture2D>("TowerButtons/fireTowerButton");
@@ -196,6 +199,8 @@ namespace Tower_Defence.States
             Enemy.EnemyDeathHandler += HandleEnemyDeath;
             MathEnemy.MathEnemyDeathHandler += HandleMathEnemyDeath;
             MathOperationButton.mathOperationButtonIsClicked += HandleMathOperationButtonIsClicked;
+
+            GameManager.GameManagerInstance.CurrentLevel = Level.LevelTwo;
 
             backToMenuButton = new MenuButton(_backToMenuButton, _gameFont)
             {
@@ -475,8 +480,24 @@ namespace Tower_Defence.States
 
             restartButton.menuButtonEventHandler += HandleRestartButtonClicked;
 
+            //MenuButton nextLevelButton = new MenuButton(_nextLevelButton, _menuFont)
+            //{
+            //    Position = new Vector2(Game1.ScreenWidth / 2 - _restartButton.Width / 2, Game1.ScreenHeight / 2 - _restartButton.Height / 2)
+            //};
+
+            //nextLevelButton.menuButtonEventHandler += HandleNextLevelButtonClicked;
+
             _gameParts.Add(restartButton);
+            //_gameParts.Add(nextLevelButton);
         }
+
+        //private void HandleNextLevelButtonClicked(bool obj)
+        //{
+        //    Unsubscribe();
+        //    UnsubscribeListElements();
+        //    GameManager.GameManagerInstance.StoppedEnemies = 0;
+        //    _game1.ChangeState(new GameStateOne(_game1, _graphics, _content, GameManager.GameManagerInstance.Difficulty));
+        //}
 
         private void HandleRestartButtonClicked(bool clicked)
         {
@@ -484,7 +505,7 @@ namespace Tower_Defence.States
             UnsubscribeListElements();
             //_gameParts.Clear();
             GameManager.GameManagerInstance.StoppedEnemies = 0;
-            _game1.ChangeState(new GameState(_game1, _graphics, _content, GameManager.GameManagerInstance.Difficulty));
+            _game1.ChangeState(new GameStateTwo(_game1, _graphics, _content, GameManager.GameManagerInstance.Difficulty));
         }
 
         private void UnsubscribeListElements()

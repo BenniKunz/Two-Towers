@@ -88,6 +88,7 @@ namespace Tower_Defence.States
             _titleSong = _content.Load<Song>("MenuSound/titleSong");
             MediaPlayer.Play(_titleSong);
             MediaPlayer.IsRepeating = true;
+            
 
             playButton = new MenuButton(_playButton, _menuFont)
             {
@@ -183,7 +184,7 @@ namespace Tower_Defence.States
         {
             MediaPlayer.Stop();
             Unsubscribe();
-            _game1.ChangeState(new GameState(_game1, _graphics, _content, _difficulty));
+            _game1.ChangeState(new GameStateOne(_game1, _graphics, _content, _difficulty));
         }
 
         private void HandleCloseButtonClicked(bool clicked)

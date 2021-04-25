@@ -29,7 +29,7 @@ namespace Tower_Defence.Buttons
             _mathOperation = mathOperation;
             PenColour = Color.Black;
 
-            GameState.TowerButtonIsClicked += HandleTowerButtonIsClicked;
+            GameStateOne.TowerButtonIsClicked += HandleTowerButtonIsClicked;
             MathEnemy.MathOperationUsedHandler += HandleMathOperationUsed;
         }
 

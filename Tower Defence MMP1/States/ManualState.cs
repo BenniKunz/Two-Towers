@@ -215,7 +215,7 @@ namespace Tower_Defence.States
         private void HandlePlayButtonClicked(bool clicked)
         {
             MediaPlayer.Stop();
-            _game1.ChangeState(new GameState(_game1, _graphics, _content, _difficulty));
+            _game1.ChangeState(new GameStateOne(_game1, _graphics, _content, _difficulty));
         }
 
         private void HandleCloseButtonClicked(bool clicked)

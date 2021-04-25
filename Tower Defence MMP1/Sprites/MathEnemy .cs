@@ -52,8 +52,8 @@ namespace Tower_Defence.Sprites
             Color = Color.White;
             MathOperationButton.changeMathOperationHandler += HandleMathOperation;
             MathOperationButton.mathOperationButtonIsClicked += HandleMathOperationButtonIsClicked;
-            GameState.TowerButtonIsClicked += HandleTowerButtonClicked;
-            _mathOperation = GameState._mathOperation;
+            GameStateOne.TowerButtonIsClicked += HandleTowerButtonClicked;
+            _mathOperation = GameStateOne._mathOperation;
         }
 
         public override void Update(GameTime gameTime, List<IGameParts> gameParts)
@@ -173,21 +173,48 @@ namespace Tower_Defence.Sprites
             
 
             _timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
-            if (_timer > 0.01f)
-            {
-                if (this.Position.X >= 350 && this.Position.X < 700 && this.Position.Y >= 270)
-                {
-                    Position += new Vector2(1, -1);
-                    return;
-                }
-                if (this.Position.X >= 1000 && this.Position.X <= 1230)
-                {
-                    Position += new Vector2(1, -1);
-                    return;
-                }
 
-                Position += new Vector2(1, 0);
+            if (GameManager.GameManagerInstance.CurrentLevel == Tower_Defence_MMP1.Enums.Level.LevelOne)
+            {
+                if (_timer > 0.01f)
+                {
+                    _timer = 0;
+
+                    if (this.Position.X >= 350 && this.Position.X < 700 && this.Position.Y >= 270)
+                    {
+                        Position += new Vector2(1, -1);
+                        return;
+                    }
+                    if (this.Position.X >= 1000 && this.Position.X <= 1230)
+                    {
+                        Position += new Vector2(1, -1);
+                        return;
+                    }
+
+                    Position += new Vector2(1, 0);
+                }
             }
+            else if (GameManager.GameManagerInstance.CurrentLevel == Tower_Defence_MMP1.Enums.Level.LevelTwo)
+            {
+                if (_timer > 0.01f)
+                {
+                    _timer = 0;
+
+                    if (this.Position.X >= 1050 && this.Position.X <= 1150)
+                    {
+                        Position += new Vector2(1, 1);
+                        return;
+                    }
+                    if (this.Position.X >= 1280 && this.Position.X <= 1600)
+                    {
+                        Position += new Vector2(1, -1);
+                        return;
+                    }
+
+                    Position += new Vector2(1, 0);
+                }
+            }
+
 
             //if (this.Position.X >= 350 && this.Position.X < 700 && this.Position.Y >= 270)
             //{
@@ -208,7 +235,7 @@ namespace Tower_Defence.Sprites
         {
             MathOperationButton.changeMathOperationHandler -= HandleMathOperation;
             MathOperationButton.mathOperationButtonIsClicked -= HandleMathOperationButtonIsClicked;
-            GameState.TowerButtonIsClicked -= HandleTowerButtonClicked;
+            GameStateOne.TowerButtonIsClicked -= HandleTowerButtonClicked;
         }
     }
 }

@@ -6,6 +6,7 @@ using System.Text;
 using Tower_Defence.Enums;
 using Tower_Defence.Sprites;
 using Tower_Defence.States;
+using Tower_Defence_MMP1.Enums;
 
 namespace Tower_Defence
 {
@@ -17,7 +18,8 @@ namespace Tower_Defence
         private float _mathEnemySpawnTime;
         private bool _startEnemySpawned;
         private int _enemyCounter;
-        private Vector2 _enemySpawnPoint = new Vector2(0, 600);
+        private Vector2 _enemySpawnPointOne = new Vector2(0, 600);
+        private Vector2 _enemySpawnPointTwo = new Vector2(0, 350);
         private List<Texture2D> _levelOneEnemyList = new List<Texture2D>();
 
         private Texture2D _healthBarTexture;
@@ -36,6 +38,8 @@ namespace Tower_Defence
 
         };
 
+        private Dictionary<Level, Vector2> _spawnPointDictionary = new Dictionary<Level, Vector2>();
+
         public EnemySpawner(Texture2D[] enemyTextureArray, Texture2D healthBar, Texture2D healthBarBackground, SpriteFont spriteFont)
         {
             foreach (Texture2D texture in enemyTextureArray)
@@ -47,6 +51,9 @@ namespace Tower_Defence
             _healthBarTexture = healthBar;
             _healthBarBackgroundTexture = healthBarBackground;
             _spriteFont = spriteFont;
+
+            _spawnPointDictionary.Add(Level.LevelOne, _enemySpawnPointOne);
+            _spawnPointDictionary.Add(Level.LevelTwo, _enemySpawnPointTwo);
         }
         public void Update(GameTime gameTime, List<IGameParts> gameParts)
         {
@@ -92,9 +99,9 @@ namespace Tower_Defence
             {
                 mathEnemy = new MathEnemy(_levelOneEnemyList[0], 5, 4, _healthBarTexture, _healthBarBackgroundTexture, _spriteFont)
                 {
-                    Position = _enemySpawnPoint,
-                    TowerButtonIsClicked = GameState._towerButtonIsClicked,
-                    MathOperationButtonIsClicked = GameState._mathOperationButtonIsClicked
+                    Position = _spawnPointDictionary[GameManager.GameManagerInstance.CurrentLevel],
+                    TowerButtonIsClicked = GameStateOne._towerButtonIsClicked,
+                    MathOperationButtonIsClicked = GameStateOne._mathOperationButtonIsClicked
                 };
 
             }
@@ -102,10 +109,20 @@ namespace Tower_Defence
             {
                 mathEnemy = new MathEnemy(_levelOneEnemyList[1], 2, 5, _healthBarTexture, _healthBarBackgroundTexture, _spriteFont)
                 {
-                    Position = _enemySpawnPoint,
-                    TowerButtonIsClicked = GameState._towerButtonIsClicked,
-                    MathOperationButtonIsClicked = GameState._mathOperationButtonIsClicked
+                    Position = _spawnPointDictionary[GameManager.GameManagerInstance.CurrentLevel],
+                    TowerButtonIsClicked = GameStateOne._towerButtonIsClicked,
+                    MathOperationButtonIsClicked = GameStateOne._mathOperationButtonIsClicked
                     
+                };
+            }
+            else if (num == 2)
+            {
+                mathEnemy = new MathEnemy(_levelOneEnemyList[2], 2, 5, _healthBarTexture, _healthBarBackgroundTexture, _spriteFont)
+                {
+                    Position = _spawnPointDictionary[GameManager.GameManagerInstance.CurrentLevel],
+                    TowerButtonIsClicked = GameStateOne._towerButtonIsClicked,
+                    MathOperationButtonIsClicked = GameStateOne._mathOperationButtonIsClicked
+
                 };
             }
 
@@ -128,21 +145,21 @@ namespace Tower_Defence
             {
                 enemy = new Enemy(_levelOneEnemyList[0], 5, 4, _healthBarTexture, _healthBarBackgroundTexture)
                 {
-                    Position = _enemySpawnPoint
+                    Position = _spawnPointDictionary[GameManager.GameManagerInstance.CurrentLevel]
                 };
             }
             else if( num == 1)
             {
                 enemy = new Enemy(_levelOneEnemyList[1], 2, 5, _healthBarTexture, _healthBarBackgroundTexture)
                 {
-                    Position = _enemySpawnPoint
+                    Position = _spawnPointDictionary[GameManager.GameManagerInstance.CurrentLevel]
                 };
             }
             else if (num == 2)
             {
                 enemy = new Enemy(_levelOneEnemyList[2], 2, 5, _healthBarTexture, _healthBarBackgroundTexture)
                 {
-                    Position = _enemySpawnPoint
+                    Position = _spawnPointDictionary[GameManager.GameManagerInstance.CurrentLevel]
                 };
             }
             return enemy;
