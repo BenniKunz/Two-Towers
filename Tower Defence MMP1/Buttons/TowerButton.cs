@@ -76,7 +76,7 @@ namespace Tower_Defence.Buttons
                 TurnTowerPreviewOffEventHandler?.Invoke();
             }
 
-            System.Diagnostics.Debug.WriteLine(Clicked);
+            //System.Diagnostics.Debug.WriteLine(Clicked);
             if (Clicked) { return; }
 
             if (_isHovering)

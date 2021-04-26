@@ -19,6 +19,10 @@ namespace Tower_Defence.Sprites
         private Rectangle towerPlacableRectangleSeven;
         private Rectangle towerPlacableRectangleEight;
         private Rectangle towerPlacableRectangleNine;
+        private Rectangle towerPlacableRectangleTen;
+        private Rectangle towerPlacableRectangleEleven;
+        private Rectangle towerPlacableRectangleTwelve;
+        private Rectangle towerPlacableRectangleThirteen;
         private int _towerPlacableOffset = 100;
         private Enemy _targetEnemy = null;
 
@@ -42,6 +46,7 @@ namespace Tower_Defence.Sprites
 
         public Tower(Texture2D texture = null) : base(texture)
         {
+            //Level One
             towerPlacableRectangleOne = new Rectangle(80, 1050 - _texture.Height, _texture.Width, _texture.Height - _towerPlacableOffset);
             towerPlacableRectangleTwo = new Rectangle(478, 1050 - _texture.Height, _texture.Width, _texture.Height - _towerPlacableOffset);
             towerPlacableRectangleThree = new Rectangle(730, 700 - _texture.Height, _texture.Width, _texture.Height - _towerPlacableOffset);
@@ -52,26 +57,16 @@ namespace Tower_Defence.Sprites
             towerPlacableRectangleEight = new Rectangle(1220, 1050 - _texture.Height, _texture.Width, _texture.Height - _towerPlacableOffset);
             towerPlacableRectangleNine = new Rectangle(1615, 1050 - _texture.Height, _texture.Width, _texture.Height - _towerPlacableOffset);
 
+            //Level Two
+            towerPlacableRectangleTen = new Rectangle(530, 450 - _texture.Height, _texture.Width, _texture.Height - _towerPlacableOffset);
+            towerPlacableRectangleEleven = new Rectangle(350, 780 - _texture.Height, _texture.Width, _texture.Height - _towerPlacableOffset);
+            towerPlacableRectangleTwelve = new Rectangle(765, 790 - _texture.Height, _texture.Width, _texture.Height - _towerPlacableOffset);
+            towerPlacableRectangleThirteen = new Rectangle(1240, 540 - _texture.Height, _texture.Width, _texture.Height - _towerPlacableOffset);
         }
 
         public override void Update(GameTime gameTime, List<IGameParts> gameParts)
         {
-
-            if (_towerPlacableRectangles.Count == 0)
-            {
-                _towerPlacableRectangles = new List<Rectangle>
-                {
-                    towerPlacableRectangleOne,
-                    towerPlacableRectangleTwo,
-                    towerPlacableRectangleThree,
-                    towerPlacableRectangleFour,
-                    towerPlacableRectangleFive,
-                    towerPlacableRectangleSix,
-                    towerPlacableRectangleSeven,
-                    towerPlacableRectangleEight,
-                    towerPlacableRectangleNine
-                };
-            }
+            AddTowerPlacableRectangles();
 
             if (_weaponSpawnPoint == _zeroPosition)
             {
@@ -126,11 +121,52 @@ namespace Tower_Defence.Sprites
             }
         }
 
+        private void AddTowerPlacableRectangles()
+        {
+            if (_towerPlacableRectangles.Count == 0 && GameManager.GameManagerInstance.CurrentLevel == Tower_Defence_MMP1.Enums.Level.LevelOne)
+            {
+                _towerPlacableRectangles = new List<Rectangle>
+                {
+                    towerPlacableRectangleOne,
+                    towerPlacableRectangleTwo,
+                    towerPlacableRectangleThree,
+                    towerPlacableRectangleFour,
+                    towerPlacableRectangleFive,
+                    towerPlacableRectangleSix,
+                    towerPlacableRectangleSeven,
+                    towerPlacableRectangleEight,
+                    towerPlacableRectangleNine
+                };
+            }
+            else if (_towerPlacableRectangles.Count == 0 && GameManager.GameManagerInstance.CurrentLevel == Tower_Defence_MMP1.Enums.Level.LevelTwo)
+            {
+                _towerPlacableRectangles = new List<Rectangle>
+                {
+                    towerPlacableRectangleTen,
+                    towerPlacableRectangleEleven,
+                    towerPlacableRectangleTwelve,
+                    towerPlacableRectangleThirteen,
+
+                };
+            }
+        }
+
         public bool CheckIfTowerIsBackgroundTower()
         {
-            if (this.Rectangle.Intersects(towerPlacableRectangleFour) || this.Rectangle.Intersects(towerPlacableRectangleFive))
+            if(GameManager.GameManagerInstance.CurrentLevel == Tower_Defence_MMP1.Enums.Level.LevelOne)
             {
-                return true;
+
+                if (this.Rectangle.Intersects(towerPlacableRectangleFour) || this.Rectangle.Intersects(towerPlacableRectangleFive))
+                {
+                    return true;
+                }  
+            }
+            else if (GameManager.GameManagerInstance.CurrentLevel == Tower_Defence_MMP1.Enums.Level.LevelTwo)
+            {
+                if (this.Rectangle.Intersects(towerPlacableRectangleTen) || this.Rectangle.Intersects(towerPlacableRectangleThirteen))
+                {
+                    return true;
+                }
             }
             return false;
         }
