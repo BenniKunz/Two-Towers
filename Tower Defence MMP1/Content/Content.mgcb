@@ -19,13 +19,7 @@
 /processorParam:Quality=Best
 /build:../../../../gameSong.mp3;GameSound/gameSong.mp3
 
-#begin ../../../../titleSong.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
-/processorParam:Quality=Best
-/build:../../../../titleSong.mp3;MenuSound/titleSong.mp3
-
-#begin ../../../../Tower Defence Pack/title.png
+#begin ../../../../title.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -35,7 +29,13 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:../../../../Tower Defence Pack/title.png;MenuItems/title.png
+/build:../../../../title.png;MenuItems/title.png
+
+#begin ../../../../titleSong.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:../../../../titleSong.mp3;MenuSound/titleSong.mp3
 
 #begin Background/bg.png
 /importer:TextureImporter

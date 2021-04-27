@@ -4,6 +4,7 @@
   <Platform>DesktopGL</Platform>
   <Config />
   <SourceFiles>
+    <File>C:/Users/benni/OneDrive/Desktop/MMT/2.Semester/MMP1/Visual Studio/Tower Defence MMP1/Tower Defence MMP1/Content/../../../../title.png</File>
     <File>C:/Users/benni/OneDrive/Desktop/MMT/2.Semester/MMP1/Visual Studio/Tower Defence MMP1/Tower Defence MMP1/Content/Background/game_background_2.png</File>
     <File>C:/Users/benni/OneDrive/Desktop/MMT/2.Semester/MMP1/Visual Studio/Tower Defence MMP1/Tower Defence MMP1/Content/Background/game_background_1.png</File>
     <File>C:/Users/benni/OneDrive/Desktop/MMT/2.Semester/MMP1/Visual Studio/Tower Defence MMP1/Tower Defence MMP1/Content/MenuButtons/button_right.png</File>
@@ -58,12 +59,12 @@
     <File>C:/Users/benni/OneDrive/Desktop/MMT/2.Semester/MMP1/Visual Studio/Tower Defence MMP1/Tower Defence MMP1/Content/Weapons/40.png</File>
   </SourceFiles>
   <DestFiles>
+    <File>MenuItems/title.png</File>
     <File>Background/levelMapTwo.png</File>
     <File>Background/levelMap.png</File>
     <File>MenuButtons/nextLevelButton.png</File>
     <File>GameSound/gameSong.mp3</File>
     <File>MenuSound/titleSong.mp3</File>
-    <File>MenuItems/title.png</File>
     <File>Background/menuBackground.png</File>
     <File xsi:nil="true" />
     <File>GameItems/subtractionMouse.png</File>

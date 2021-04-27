@@ -31,7 +31,7 @@ namespace Tower_Defence.States
         private Texture2D _healthBar;
         private Texture2D _healthBarBackground;
 
-        private string _standardTowerText = "High range Tower with a minimum range.\nCan't hit enemies too close to the tower\nUse this tower against standard enemies.";
+        private string _standardTowerText = "High range Tower with a minimum range.\nCan't hit enemies too close to the tower.\nUse this tower against standard enemies.";
         private string _fireTowerText = "Low range tower without a minimum range.\nCan hit enemies very close to the tower.\nUse this tower against standard enemies.";
         private string _mathOperation = "Mathematical operations:\n +1, -1, /2, and square root.\nUse these operations to\n attack math enemies.";
         private string _enemyText = "Standard enemy.\nAttack it with either the high\n or low range tower.";

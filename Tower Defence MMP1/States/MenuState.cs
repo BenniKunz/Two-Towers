@@ -153,7 +153,7 @@ namespace Tower_Defence.States
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(_menuBackground, zeroPosition, Color.White);
-            spriteBatch.Draw(_title, new Vector2(200, 20), Color.White);
+            spriteBatch.Draw(_title, new Vector2(-10, -180), Color.White);
 
             foreach (IGameParts gamePart in _gameParts)
             {

@@ -5,8 +5,8 @@
   <Config />
   <SourceFiles>
     <File>C:/Users/benni/OneDrive/Desktop/MMT/2.Semester/MMP1/Visual Studio/Tower Defence MMP1/Tower Defence MMP1/Content/../../../../gameSong.mp3</File>
+    <File>C:/Users/benni/OneDrive/Desktop/MMT/2.Semester/MMP1/Visual Studio/Tower Defence MMP1/Tower Defence MMP1/Content/../../../../title.png</File>
     <File>C:/Users/benni/OneDrive/Desktop/MMT/2.Semester/MMP1/Visual Studio/Tower Defence MMP1/Tower Defence MMP1/Content/../../../../titleSong.mp3</File>
-    <File>C:/Users/benni/OneDrive/Desktop/MMT/2.Semester/MMP1/Visual Studio/Tower Defence MMP1/Tower Defence MMP1/Content/../../../../Tower Defence Pack/title.png</File>
     <File>C:/Users/benni/OneDrive/Desktop/MMT/2.Semester/MMP1/Visual Studio/Tower Defence MMP1/Tower Defence MMP1/Content/Background/bg.png</File>
     <File>C:/Users/benni/OneDrive/Desktop/MMT/2.Semester/MMP1/Visual Studio/Tower Defence MMP1/Tower Defence MMP1/Content/Background/game_background_1.png</File>
     <File>C:/Users/benni/OneDrive/Desktop/MMT/2.Semester/MMP1/Visual Studio/Tower Defence MMP1/Tower Defence MMP1/Content/Background/game_background_2.png</File>
@@ -59,8 +59,8 @@
   </SourceFiles>
   <DestFiles>
     <File>GameSound/gameSong.mp3</File>
-    <File>MenuSound/titleSong.mp3</File>
     <File>MenuItems/title.png</File>
+    <File>MenuSound/titleSong.mp3</File>
     <File>Background/menuBackground.png</File>
     <File>Background/levelMap.png</File>
     <File>Background/levelMapTwo.png</File>
