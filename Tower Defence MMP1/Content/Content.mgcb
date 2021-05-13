@@ -13,12 +13,6 @@
 
 #---------------------------------- Content ---------------------------------#
 
-#begin ../../../../gameSong.mp3
-/importer:Mp3Importer
-/processor:SongProcessor
-/processorParam:Quality=Best
-/build:../../../../gameSong.mp3;GameSound/gameSong.mp3
-
 #begin ../../../../title.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -253,6 +247,18 @@
 /processorParam:Quality=Best
 /build:GameSound/gameSong.mp3
 
+#begin GameSound/levelOneSong.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:GameSound/levelOneSong.mp3
+
+#begin GameSound/levelTwoSong.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:GameSound/levelTwoSong.mp3
+
 #begin GameSound/mathOperationSound.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -306,6 +312,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:MenuButtons/button_left.png;MenuButtons/backButton.png
+
+#begin MenuButtons/button_menu.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:MenuButtons/button_menu.png;MenuButtons/impressumButton.png
 
 #begin MenuButtons/button_music.png
 /importer:TextureImporter

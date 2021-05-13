@@ -1,6 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿//MultiMediaTechnology 
+//FHS 45891
+//MultiMediaProjekt 1
+//Benjamin Kunz
 
 namespace Tower_Defence.Interfaces
 {

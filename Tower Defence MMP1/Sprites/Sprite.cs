@@ -1,4 +1,9 @@
-﻿using Microsoft.Xna.Framework;
+﻿//MultiMediaTechnology 
+//FHS 45891
+//MultiMediaProjekt 1
+//Benjamin Kunz
+
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
@@ -67,7 +72,7 @@ namespace Tower_Defence.Sprites
                 new Rectangle((int)Position.X, (int)Position.Y, _texture.Width, _texture.Height);
             }
         }
-        public virtual void Update(GameTime gameTime, List<IGameParts> gameParts)
+        public virtual void Update(GameTime gameTime, List<IGameParts> gameParts, List<Tower> backgroundTower)
         {
 
         }

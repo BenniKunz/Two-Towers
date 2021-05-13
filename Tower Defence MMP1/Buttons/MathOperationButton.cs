@@ -1,4 +1,9 @@
-﻿using Microsoft.Xna.Framework;
+﻿//MultiMediaTechnology 
+//FHS 45891
+//MultiMediaProjekt 1
+//Benjamin Kunz
+
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
@@ -29,7 +34,15 @@ namespace Tower_Defence.Buttons
             _mathOperation = mathOperation;
             PenColour = Color.Black;
 
-            GameStateOne.TowerButtonIsClicked += HandleTowerButtonIsClicked;
+            if (GameManager.GameManagerInstance.CurrentLevel == Tower_Defence_MMP1.Enums.Level.LevelOne)
+            {
+                GameStateOne.TowerButtonIsClicked += HandleTowerButtonIsClicked;
+            }
+            else if (GameManager.GameManagerInstance.CurrentLevel == Tower_Defence_MMP1.Enums.Level.LevelTwo)
+            {
+                GameStateTwo.TowerButtonIsClicked += HandleTowerButtonIsClicked;
+            }
+
             MathEnemy.MathOperationUsedHandler += HandleMathOperationUsed;
         }
 
@@ -40,8 +53,9 @@ namespace Tower_Defence.Buttons
             
         }
 
-        public void Update(GameTime gameTime, List<IGameParts> gameParts)
+        public void Update(GameTime gameTime, List<IGameParts> gameParts, List<Tower> backgroundTowers)
         {
+            
             _previousMouse = _currentMouse;
             _currentMouse = Mouse.GetState();
 
@@ -64,9 +78,12 @@ namespace Tower_Defence.Buttons
 
                 if (_isHovering && _currentMouse.LeftButton == ButtonState.Released && _previousMouse.LeftButton == ButtonState.Pressed)
                 {
+                    
                     Clicked = true;
+                    
                     changeMathOperationHandler?.Invoke(this._mathOperation);
                     mathOperationButtonIsClicked?.Invoke(this._mathOperation, Clicked);
+                    
                     
                 }
 
@@ -75,6 +92,7 @@ namespace Tower_Defence.Buttons
                     Clicked = false;
                     mathOperationButtonIsClicked?.Invoke(this._mathOperation, Clicked);
                     
+
                 }
             }
 
@@ -87,6 +105,7 @@ namespace Tower_Defence.Buttons
                 {
                     Clicked = false;
                     mathOperationButtonIsClicked?.Invoke(this._mathOperation, Clicked);
+                    
                     counter++;
                 }
 

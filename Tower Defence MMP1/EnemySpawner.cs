@@ -1,4 +1,9 @@
-﻿using Microsoft.Xna.Framework;
+﻿//MultiMediaTechnology 
+//FHS 45891
+//MultiMediaProjekt 1
+//Benjamin Kunz
+
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -33,8 +38,8 @@ namespace Tower_Defence
         private Dictionary<Difficulty, int> _numberOfEnemies = new Dictionary<Difficulty, int>()
         {
             { Difficulty.easy, 20 },
-            { Difficulty.normal, 40 },
-            { Difficulty.hard, 60 },
+            { Difficulty.normal, 25 },
+            { Difficulty.hard, 30 },
 
         };
 
@@ -55,7 +60,7 @@ namespace Tower_Defence
             _spawnPointDictionary.Add(Level.LevelOne, _enemySpawnPointOne);
             _spawnPointDictionary.Add(Level.LevelTwo, _enemySpawnPointTwo);
         }
-        public void Update(GameTime gameTime, List<IGameParts> gameParts)
+        public void Update(GameTime gameTime, List<IGameParts> gameParts, List<Tower> backgroundTowers)
         {
             _timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
             _mathTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -100,8 +105,7 @@ namespace Tower_Defence
                 mathEnemy = new MathEnemy(_levelOneEnemyList[0], 5, 4, _healthBarTexture, _healthBarBackgroundTexture, _spriteFont)
                 {
                     Position = _spawnPointDictionary[GameManager.GameManagerInstance.CurrentLevel],
-                    TowerButtonIsClicked = GameStateOne._towerButtonIsClicked,
-                    MathOperationButtonIsClicked = GameStateOne._mathOperationButtonIsClicked
+                    
                 };
 
             }
@@ -109,9 +113,8 @@ namespace Tower_Defence
             {
                 mathEnemy = new MathEnemy(_levelOneEnemyList[1], 2, 5, _healthBarTexture, _healthBarBackgroundTexture, _spriteFont)
                 {
-                    Position = _spawnPointDictionary[GameManager.GameManagerInstance.CurrentLevel],
-                    TowerButtonIsClicked = GameStateOne._towerButtonIsClicked,
-                    MathOperationButtonIsClicked = GameStateOne._mathOperationButtonIsClicked
+                    Position = _spawnPointDictionary[GameManager.GameManagerInstance.CurrentLevel],                 
+                    
                     
                 };
             }
@@ -120,8 +123,7 @@ namespace Tower_Defence
                 mathEnemy = new MathEnemy(_levelOneEnemyList[2], 2, 5, _healthBarTexture, _healthBarBackgroundTexture, _spriteFont)
                 {
                     Position = _spawnPointDictionary[GameManager.GameManagerInstance.CurrentLevel],
-                    TowerButtonIsClicked = GameStateOne._towerButtonIsClicked,
-                    MathOperationButtonIsClicked = GameStateOne._mathOperationButtonIsClicked
+                          
 
                 };
             }

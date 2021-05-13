@@ -1,4 +1,9 @@
-﻿using Microsoft.Xna.Framework;
+﻿//MultiMediaTechnology 
+//FHS 45891
+//MultiMediaProjekt 1
+//Benjamin Kunz
+
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -26,20 +31,27 @@ namespace Tower_Defence.States
         private Texture2D _normalButton;
         private Texture2D _hardButton;
         private Texture2D _manualButton;
+        private Texture2D _impressumButton;
         private Texture2D _ropeSmall;
         private Texture2D _descriptionBubble;
         private Texture2D _title;
+        private Texture2D _impressumTable;
         private string _manualText = "Read the manual\nbefore your first\nbattle.";
+        private string _impressumText = "MultiMediaTechnology\nFHS 45891\nMultiMediaProjekt 1\n\nBenjamin Kunz\n\nAssets:\nhttps://craftpix.net";
         private Difficulty _difficulty;
         private Song _titleSong;
         private SoundEffect _buttonSound;
+        private bool _impressumOn;
 
         private Vector2 zeroPosition = new Vector2(0, 0);
-        private Vector2 _ropeSmallPosition_1 = new Vector2(1350, -70);
-        private Vector2 _ropeSmallPosition_2 = new Vector2(1400, -70);
+        private Vector2 _ropeSmallPosition_1 = new Vector2(1400, -70);
+        private Vector2 _ropeSmallPosition_2 = new Vector2(1450, -70);
+        private Vector2 _ropeSmallPosition_3 = new Vector2(1600, -70);
+        private Vector2 _ropeSmallPosition_4 = new Vector2(1650, -70);
         private Vector2 _descriptionBubblePosition = new Vector2(250, 500);
         private Vector2 _descriptionBubbleTextPosition = new Vector2(330, 550);
         private Vector2 _difficultyTextPosition = new Vector2(Game1.ScreenWidth - 300, Game1.ScreenHeight - 90);
+        private Vector2 _impressumTextPosition;
         private Rectangle _currentMouseRectangle = new Rectangle();
 
         private Texture2D _mouseCursor;
@@ -54,6 +66,7 @@ namespace Tower_Defence.States
         MenuButton settingsButton;
         MenuButton musicButton;
         MenuButton manualButton;
+        MenuButton impressumButton;
         #endregion
 
         #endregion
@@ -79,16 +92,21 @@ namespace Tower_Defence.States
             _normalButton = _content.Load<Texture2D>("MenuButtons/normalButton");
             _hardButton = _content.Load<Texture2D>("MenuButtons/hardButton");
             _manualButton = _content.Load<Texture2D>("MenuButtons/manualButton");
+            _impressumButton = _content.Load<Texture2D>("MenuButtons/impressumButton");
             _mouseCursor = _content.Load<Texture2D>("MenuButtons/mouse");
             _descriptionBubble = _content.Load<Texture2D>("MenuItems/descriptionBubble");
             _title = _content.Load<Texture2D>("MenuItems/title");
+            _impressumTable = _content.Load<Texture2D>("GameItems/table");
 
             _buttonSound = _content.Load<SoundEffect>("MenuSound/buttonSound");
 
             _titleSong = _content.Load<Song>("MenuSound/titleSong");
+
             MediaPlayer.Play(_titleSong);
             MediaPlayer.IsRepeating = true;
-            
+
+            _impressumTextPosition = new Vector2(Game1.ScreenWidth / 2 - _menuFont.MeasureString(_impressumText).X / 2, 350);
+
 
             playButton = new MenuButton(_playButton, _menuFont)
             {
@@ -108,7 +126,7 @@ namespace Tower_Defence.States
 
             settingsButton = new MenuButton(_settingsButton, _menuFont)
             {
-                Position = new Vector2(1300, 210)
+                Position = new Vector2(1350, 210)
 
             };
 
@@ -132,19 +150,26 @@ namespace Tower_Defence.States
 
             manualButton.menuButtonEventHandler += HandleManualButtonClicked;
 
+            impressumButton = new MenuButton(_impressumButton, _menuFont)
+            {
+                Position = new Vector2(1550, 210),
+            };
+            impressumButton.menuButtonEventHandler += HandleImpressumButtonClicked;
+
             _gameParts = new List<IGameParts>()
             {
                 playButton,
                 closeGameButton,
                 settingsButton,
                 musicButton,
-                manualButton
-            };
+                manualButton,
+                impressumButton
+    };
         }
 
 
         public override void Update(GameTime gameTime)
-        {       
+        {
             foreach (IGameParts gamePart in _gameParts.ToArray())
             {
                 gamePart.Update(gameTime, _gameParts);
@@ -153,7 +178,7 @@ namespace Tower_Defence.States
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(_menuBackground, zeroPosition, Color.White);
-            spriteBatch.Draw(_title, new Vector2(-10, -180), Color.White);
+            spriteBatch.Draw(_title, new Vector2(180, 30), null, Color.White, 0f, new Vector2(0, 0), 0.7f, SpriteEffects.None, 0f);
 
             foreach (IGameParts gamePart in _gameParts)
             {
@@ -162,7 +187,9 @@ namespace Tower_Defence.States
 
             spriteBatch.Draw(_ropeSmall, _ropeSmallPosition_1, Color.White);
             spriteBatch.Draw(_ropeSmall, _ropeSmallPosition_2, Color.White);
-            spriteBatch.Draw(_descriptionBubble, _descriptionBubblePosition,null, Color.White, 0f, zeroPosition, 0.7f, SpriteEffects.None, 0f);
+            spriteBatch.Draw(_ropeSmall, _ropeSmallPosition_3, Color.White);
+            spriteBatch.Draw(_ropeSmall, _ropeSmallPosition_4, Color.White);
+            spriteBatch.Draw(_descriptionBubble, _descriptionBubblePosition, null, Color.White, 0f, zeroPosition, 0.7f, SpriteEffects.None, 0f);
             spriteBatch.DrawString(_menuFont, _manualText, _descriptionBubbleTextPosition, Color.Black);
             string text = $"Difficulty: {_difficulty}";
             spriteBatch.DrawString(_menuFont, text, _difficultyTextPosition, Color.White);
@@ -171,9 +198,20 @@ namespace Tower_Defence.States
             _currentMouseRectangle.X = currentMouse.X;
             _currentMouseRectangle.Y = currentMouse.Y;
             _currentMouseRectangle.Width = _mouseCursor.Width;
-            _currentMouseRectangle.Height = _mouseCursor.Height;
+            _currentMouseRectangle.Height = _mouseCursor.Height; 
+
+            if (_impressumOn)
+            {
+                spriteBatch.Draw(_impressumTable, new Vector2(Game1.ScreenWidth / 2 - _impressumTable.Width / 2, 200), Color.White);
+                spriteBatch.DrawString(_menuFont, _impressumText, _impressumTextPosition, Color.White);
+            }
 
             spriteBatch.Draw(_mouseCursor, _currentMouseRectangle, null, Color.White, -2.0f, zeroPosition, SpriteEffects.None, 0f);
+        }
+
+        private void HandleImpressumButtonClicked(bool clicked)
+        {
+            _impressumOn = !_impressumOn;
         }
         private void HandleManualButtonClicked(bool clicked)
         {
@@ -245,16 +283,17 @@ namespace Tower_Defence.States
             }
             foreach (IGameParts gamePart in _gameParts.ToArray())
             {
-                if(gamePart is MenuButton)
+                if (gamePart is MenuButton)
                 {
-                    if(((MenuButton)gamePart).Difficulty == 0) { continue; }
+                    if (((MenuButton)gamePart).Difficulty == 0) { continue; }
                     _gameParts.Remove(gamePart);
                 }
             }
+
         }
-        
+
         private void HandleDifficultyButtonClicked(Difficulty difficulty)
-        {  
+        {
             _buttonSound.Play();
             this._difficulty = difficulty;
 

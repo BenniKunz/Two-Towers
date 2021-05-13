@@ -1,9 +1,15 @@
-﻿using Microsoft.Xna.Framework;
+﻿//MultiMediaTechnology 
+//FHS 45891
+//MultiMediaProjekt 1
+//Benjamin Kunz
+
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using Tower_Defence.Enums;
+using Tower_Defence.Sprites;
 
 namespace Tower_Defence.Buttons
 {
@@ -33,7 +39,7 @@ namespace Tower_Defence.Buttons
             Scale = 1f;
         }
         
-        public void Update(GameTime gameTime, List<IGameParts> gameParts)
+        public void Update(GameTime gameTime, List<IGameParts> gameParts, List<Tower> backgroundTowers)
         {
             _previousMouse = _currentMouse;
             _currentMouse = Mouse.GetState();

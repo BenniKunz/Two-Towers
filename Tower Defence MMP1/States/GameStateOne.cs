@@ -1,4 +1,9 @@
-﻿using Microsoft.Xna.Framework;
+﻿//MultiMediaTechnology 
+//FHS 45891
+//MultiMediaProjekt 1
+//Benjamin Kunz
+
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -169,7 +174,7 @@ namespace Tower_Defence.States
             _mouseCursorAddition = _content.Load<Texture2D>("GameItems/additionMouse");
             _mouseCursorDivision = _content.Load<Texture2D>("GameItems/divisionMouse");
             _mouseCursorSquareRoot = _content.Load<Texture2D>("GameItems/squareMouse");
-            _gameSong = _content.Load<Song>("GameSound/gameSong");
+            _gameSong = _content.Load<Song>("GameSound/levelOneSong");
             _mathOperationSound = _content.Load<SoundEffect>("GameSound/mathOperationSound");
             _enemyHitSound = _content.Load<SoundEffect>("GameSound/enemyHitSound");
 
@@ -329,14 +334,14 @@ namespace Tower_Defence.States
                 {
                     foreach (Tower tower in _backgroundTowers)
                     {
-                        tower.Update(gameTime, _gameParts);
+                        tower.Update(gameTime, _gameParts, _backgroundTowers);
                     }
                 }
 
                 foreach (IGameParts gamePart in _gameParts.ToArray())
                 {
                     if (gamePart is null) { continue; }
-                    gamePart.Update(gameTime, _gameParts);
+                    gamePart.Update(gameTime, _gameParts, _backgroundTowers);
                 }
                 CheckIfMathOperationUsed();
                 CheckIfEnemyIsHit();
@@ -349,7 +354,7 @@ namespace Tower_Defence.States
             int x, y;
             DrawUI(spritebatch, out x, out y);
 
-            spritebatch.DrawString(_menuFont, $"{x}:{y}", new Vector2(50, 600), Color.White);
+            //spritebatch.DrawString(_menuFont, $"{x}:{y}", new Vector2(50, 600), Color.White);
 
             if (_pauseGame)
             {
@@ -487,15 +492,18 @@ namespace Tower_Defence.States
 
             restartButton.menuButtonEventHandler += HandleRestartButtonClicked;
 
-            MenuButton nextLevelButton = new MenuButton(_nextLevelButton, _menuFont)
+            if(won)
             {
-                Position = new Vector2(Game1.ScreenWidth / 2 - _nextLevelButton.Width / 2, Game1.ScreenHeight / 2 - _nextLevelButton.Height + 300)
-            };
-
-            nextLevelButton.menuButtonEventHandler += HandleNextLevelButtonClicked;
-
+                MenuButton nextLevelButton = new MenuButton(_nextLevelButton, _menuFont)
+                {
+                    Position = new Vector2(Game1.ScreenWidth / 2 - _nextLevelButton.Width / 2, Game1.ScreenHeight / 2 - _nextLevelButton.Height + 300)
+                };
+                nextLevelButton.menuButtonEventHandler += HandleNextLevelButtonClicked;
+                _gameParts.Add(nextLevelButton);
+            }
+           
             _gameParts.Add(restartButton);
-            _gameParts.Add(nextLevelButton);
+            
         }
 
         private void HandleNextLevelButtonClicked(bool obj)

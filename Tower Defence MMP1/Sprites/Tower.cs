@@ -1,4 +1,9 @@
-﻿using Microsoft.Xna.Framework;
+﻿//MultiMediaTechnology 
+//FHS 45891
+//MultiMediaProjekt 1
+//Benjamin Kunz
+
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -25,6 +30,8 @@ namespace Tower_Defence.Sprites
         private Rectangle towerPlacableRectangleThirteen;
         private int _towerPlacableOffset = 100;
         private Enemy _targetEnemy = null;
+        private float _timer;
+        private Vector2 _weaponOffset;
 
         private List<Rectangle> _towerPlacableRectangles = new List<Rectangle>();
 
@@ -42,7 +49,7 @@ namespace Tower_Defence.Sprites
         AttackType _attackType;
 
         public Weapon weapon;
-        private float _timer;
+        
 
         public Tower(Texture2D texture = null) : base(texture)
         {
@@ -62,15 +69,17 @@ namespace Tower_Defence.Sprites
             towerPlacableRectangleEleven = new Rectangle(350, 780 - _texture.Height, _texture.Width, _texture.Height - _towerPlacableOffset);
             towerPlacableRectangleTwelve = new Rectangle(765, 790 - _texture.Height, _texture.Width, _texture.Height - _towerPlacableOffset);
             towerPlacableRectangleThirteen = new Rectangle(1240, 540 - _texture.Height, _texture.Width, _texture.Height - _towerPlacableOffset);
+
+            _weaponOffset = new Vector2(this._texture.Width / 2, this._texture.Height / 4);
         }
 
-        public override void Update(GameTime gameTime, List<IGameParts> gameParts)
+        public override void Update(GameTime gameTime, List<IGameParts> gameParts, List<Tower> backgroundTowers)
         {
             AddTowerPlacableRectangles();
 
             if (_weaponSpawnPoint == _zeroPosition)
             {
-                _weaponSpawnPoint = Position;
+                _weaponSpawnPoint = Position + _weaponOffset; ;
             }
             _currentMouse = Mouse.GetState();
 
@@ -100,6 +109,22 @@ namespace Tower_Defence.Sprites
                         }
                     }
                 }
+                if(backgroundTowers != null)
+                {
+                    foreach (var backgroundTower in backgroundTowers)
+                    {
+                        if (backgroundTower == this) { continue; }
+                        
+                            if (this.Rectangle.Intersects(backgroundTower.Rectangle) && !this.isPlacable)
+                            {
+                                this.Color = Color.Red;
+                                isPlacable = false;
+                                return;
+                            }
+      
+                    }
+                }
+                
 
                 foreach (Rectangle towerPlacableRectangle in _towerPlacableRectangles)
                 {
@@ -205,7 +230,7 @@ namespace Tower_Defence.Sprites
 
         private void SetTarget(List<IGameParts> gameParts)
         {
-            Vector2 towerPosition = this.Position;
+            Vector2 towerPosition = this.Position + _weaponOffset;
 
             if (_targetEnemy != null)
             {

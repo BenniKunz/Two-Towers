@@ -1,4 +1,9 @@
-﻿using Microsoft.Xna.Framework;
+﻿//MultiMediaTechnology 
+//FHS 45891
+//MultiMediaProjekt 1
+//Benjamin Kunz
+
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
@@ -29,9 +34,9 @@ namespace Tower_Defence.Sprites
 
         private readonly Dictionary<Difficulty, int[]> healthPointsDictionary = new Dictionary<Difficulty, int[]>()
         {
-            {Difficulty.easy,  new int[] { 7, 3, 21, 16, 9, 10, 15, 20, 30, 35, 4, 5} },
-            {Difficulty.normal, new int[] { 7, 51, 49, 100, 66, 36, 3, 77, 16, 9, 81, 121, 90, 85, 55, 64, 69 } },
-            {Difficulty.hard,  new int[] { 17, 29, 41, 53, 63, 122, 78, 89, 130, 145} },
+            {Difficulty.easy,  new int[] { 21, 16, 9, 10, 15, 20, 30, 35, 40, 50, 49, 64, 81} },
+            {Difficulty.normal, new int[] { 70, 51, 49, 100, 66, 36, 63, 77, 16, 91, 81, 121, 90, 85, 55, 64, 69, 102, 105 } },
+            {Difficulty.hard,  new int[] { 88, 99, 98, 53, 63, 122, 78, 89, 130, 145, 1000, 1001} },
 
         };
         
@@ -52,14 +57,27 @@ namespace Tower_Defence.Sprites
             Color = Color.White;
             MathOperationButton.changeMathOperationHandler += HandleMathOperation;
             MathOperationButton.mathOperationButtonIsClicked += HandleMathOperationButtonIsClicked;
-            GameStateOne.TowerButtonIsClicked += HandleTowerButtonClicked;
-            _mathOperation = GameStateOne._mathOperation;
+
+            if (GameManager.GameManagerInstance.CurrentLevel == Tower_Defence_MMP1.Enums.Level.LevelOne)
+            {
+                GameStateOne.TowerButtonIsClicked += HandleTowerButtonClicked;
+                _mathOperation = GameStateOne._mathOperation;
+                MathOperationButtonIsClicked = GameStateOne._mathOperationButtonIsClicked;
+                TowerButtonIsClicked = GameStateOne._towerButtonIsClicked;
+            }
+            else if (GameManager.GameManagerInstance.CurrentLevel == Tower_Defence_MMP1.Enums.Level.LevelTwo)
+            {
+                GameStateTwo.TowerButtonIsClicked += HandleTowerButtonClicked;
+                _mathOperation = GameStateTwo._mathOperation;
+                MathOperationButtonIsClicked = GameStateTwo._mathOperationButtonIsClicked;
+                TowerButtonIsClicked = GameStateTwo._towerButtonIsClicked;
+            }
         }
 
-        public override void Update(GameTime gameTime, List<IGameParts> gameParts)
+        public override void Update(GameTime gameTime, List<IGameParts> gameParts, List<Tower> backgroundTowers)
         {
-
-            if(!idle)
+           
+            if (!idle)
             {
                 EnemyMovement(gameTime);
             }
@@ -90,6 +108,7 @@ namespace Tower_Defence.Sprites
 
         private void CheckMathEnemyClicked()
         {
+         
             if (!MathOperationButtonIsClicked) { return; }
 
             _previousMouse = _currentMouse;

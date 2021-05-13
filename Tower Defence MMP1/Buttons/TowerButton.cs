@@ -1,9 +1,15 @@
-﻿using Microsoft.Xna.Framework;
+﻿//MultiMediaTechnology 
+//FHS 45891
+//MultiMediaProjekt 1
+//Benjamin Kunz
+
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Tower_Defence.Sprites;
 using Tower_Defence.States;
 
 namespace Tower_Defence.Buttons
@@ -43,7 +49,7 @@ namespace Tower_Defence.Buttons
             spriteBatch.Draw(_texture, Position, null, PenColour, 0f, new Vector2(0, 0), Scale, SpriteEffects.None, 0f);
         }
 
-        public void Update(GameTime gameTime, List<IGameParts> gameParts)
+        public void Update(GameTime gameTime, List<IGameParts> gameParts, List<Tower> backgroundTowers)
         {
             _previousMouse = _currentMouse;
             _currentMouse = Mouse.GetState();
@@ -76,7 +82,7 @@ namespace Tower_Defence.Buttons
                 TurnTowerPreviewOffEventHandler?.Invoke();
             }
 
-            //System.Diagnostics.Debug.WriteLine(Clicked);
+            
             if (Clicked) { return; }
 
             if (_isHovering)

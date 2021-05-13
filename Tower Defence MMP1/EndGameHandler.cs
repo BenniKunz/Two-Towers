@@ -1,4 +1,9 @@
-﻿using Microsoft.Xna.Framework;
+﻿//MultiMediaTechnology 
+//FHS 45891
+//MultiMediaProjekt 1
+//Benjamin Kunz
+
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -52,7 +57,7 @@ namespace Tower_Defence
             _allEnemiesSpawned = true;
         }
 
-        public void Update(GameTime gameTime, List<IGameParts> gameParts)
+        public void Update(GameTime gameTime, List<IGameParts> gameParts, List<Tower> backgroundTowers)
         {
             _stoppedEnemies = GameManager.GameManagerInstance.StoppedEnemies;
 
