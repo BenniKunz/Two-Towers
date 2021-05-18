@@ -31,6 +31,8 @@ namespace Tower_Defence.Sprites
         private SpriteFont _spriteFont;
         private Vector2 _healthPointsOffset = new Vector2(50,0);
         private MathOperation _mathOperation;
+        private float Speed;
+        private float _timer;
 
         private readonly Dictionary<Difficulty, int[]> healthPointsDictionary = new Dictionary<Difficulty, int[]>()
         {
@@ -40,10 +42,6 @@ namespace Tower_Defence.Sprites
 
         };
         
-
-        #region Fields
-        private float _timer;
-        #endregion
 
         public static event Action<MathEnemy> MathEnemyDeathHandler;
         public static event Action<MathOperation> MathOperationUsedHandler;
@@ -57,6 +55,7 @@ namespace Tower_Defence.Sprites
             Color = Color.White;
             MathOperationButton.changeMathOperationHandler += HandleMathOperation;
             MathOperationButton.mathOperationButtonIsClicked += HandleMathOperationButtonIsClicked;
+            Speed = 65;
 
             if (GameManager.GameManagerInstance.CurrentLevel == Tower_Defence_MMP1.Enums.Level.LevelOne)
             {
@@ -201,16 +200,16 @@ namespace Tower_Defence.Sprites
 
                     if (this.Position.X >= 350 && this.Position.X < 700 && this.Position.Y >= 270)
                     {
-                        Position += new Vector2(1, -1);
+                        Position += new Vector2(1, -1) * Speed * deltaTime;
                         return;
                     }
                     if (this.Position.X >= 1000 && this.Position.X <= 1230)
                     {
-                        Position += new Vector2(1, -1);
+                        Position += new Vector2(1, -1) * Speed * deltaTime;
                         return;
                     }
 
-                    Position += new Vector2(1, 0);
+                    Position += new Vector2(1, 0) * Speed * deltaTime;
                 }
             }
             else if (GameManager.GameManagerInstance.CurrentLevel == Tower_Defence_MMP1.Enums.Level.LevelTwo)
@@ -221,16 +220,16 @@ namespace Tower_Defence.Sprites
 
                     if (this.Position.X >= 1050 && this.Position.X <= 1150)
                     {
-                        Position += new Vector2(1, 1);
+                        Position += new Vector2(1, 1) * Speed * deltaTime;
                         return;
                     }
                     if (this.Position.X >= 1280 && this.Position.X <= 1600)
                     {
-                        Position += new Vector2(1, -1);
+                        Position += new Vector2(1, -1) * Speed * deltaTime;
                         return;
                     }
 
-                    Position += new Vector2(1, 0);
+                    Position += new Vector2(1, 0) * Speed * deltaTime;
                 }
             }
 

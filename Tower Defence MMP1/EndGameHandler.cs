@@ -70,7 +70,8 @@ namespace Tower_Defence
             {
                 if (gamePart is Enemy enemy)
                 {
-                    if (enemy.Position.X == Game1.ScreenWidth && !enemy.HasReachedTarget)
+                    //System.Diagnostics.Debug.WriteLine(enemy.Position);
+                    if (enemy.Position.X >= Game1.ScreenWidth && !enemy.HasReachedTarget)
                     {
                         enemy.HasReachedTarget = true;
                         _maxLifes--;
@@ -81,7 +82,7 @@ namespace Tower_Defence
                 }
                 if (gamePart is MathEnemy mathEnemy)
                 {
-                    if (mathEnemy.Position.X == Game1.ScreenWidth && !mathEnemy.HasReachedTarget)
+                    if (mathEnemy.Position.X >= Game1.ScreenWidth && !mathEnemy.HasReachedTarget)
                     {
                         mathEnemy.HasReachedTarget = true;
                         _maxLifes--;

@@ -21,6 +21,7 @@ namespace Tower_Defence.Sprites
         #region Fields
         private float _timer;
         private Vector2 _healthBarOffset;
+        private float Speed;
         #endregion
         public SpriteFont font;
 
@@ -57,7 +58,7 @@ namespace Tower_Defence.Sprites
             {
                 Position = this.Position
             };
-
+            Speed = 60;
             Color = Color.White;
             _healthBarOffset = new Vector2(50, 0);
 
@@ -114,16 +115,16 @@ namespace Tower_Defence.Sprites
 
                     if (this.Position.X >= 350 && this.Position.X < 700 && this.Position.Y >= 270)
                     {
-                        Position += new Vector2(1, -1);
+                        Position += new Vector2(1, -1) * Speed * deltaTime;
                         return;
                     }
                     if (this.Position.X >= 700 && this.Position.X <= 1000)
                     {
-                        Position += new Vector2(1, 1);
+                        Position += new Vector2(1, 1) * Speed * deltaTime;
                         return;
                     }
 
-                    Position += new Vector2(1, 0);
+                    Position += new Vector2(1, 0) * Speed * deltaTime;
                 }
             }
             else if (GameManager.GameManagerInstance.CurrentLevel == Tower_Defence_MMP1.Enums.Level.LevelTwo)
@@ -136,35 +137,18 @@ namespace Tower_Defence.Sprites
                     
                     if (this.Position.X >= 1050 && this.Position.X <= 1150)
                     {
-                        Position += new Vector2(1, 1);
+                        Position += new Vector2(1, 1) * Speed * deltaTime;
                         return;
                     }
                     if (this.Position.X >= 1280 && this.Position.X <= 1600)
                     {
-                        Position += new Vector2(1, -1);
+                        Position += new Vector2(1, -1) * Speed * deltaTime;
                         return;
                     }
 
-                    Position += new Vector2(1, 0);
+                    Position += new Vector2(1, 0) * Speed * deltaTime;
                 }
             }
-
-
-            //this._healthBar.Position = (this.Position + _healthBarOffset);
-            //this._healthBarBackground.Position = (this.Position + _healthBarOffset);
-
-            //if (this.Position.X >= 350 && this.Position.X < 700 && this.Position.Y >= 270)
-            //{
-            //    Position += new Vector2(100, -100) * deltaTime;
-            //    return;
-            //}
-            //if (this.Position.X >= 700 && this.Position.X <= 1000)
-            //{
-            //    Position += new Vector2(100, 100) * deltaTime;
-            //    return;
-            //}
-
-            //Position += new Vector2(100, 0) * deltaTime;
 
         }
 

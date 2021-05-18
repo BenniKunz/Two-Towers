@@ -36,6 +36,8 @@ namespace Tower_Defence.States
         private Texture2D _descriptionBubble;
         private Texture2D _title;
         private Texture2D _impressumTable;
+        private Texture2D _fullScreenOn;
+        private Texture2D _fullScreenOff;
         private string _manualText = "Read the manual\nbefore your first\nbattle.";
         private string _impressumText = "MultiMediaTechnology\nFHS 45891\nMultiMediaProjekt 1\n\nBenjamin Kunz\n\nAssets:\nhttps://craftpix.net";
         private Difficulty _difficulty;
@@ -67,6 +69,7 @@ namespace Tower_Defence.States
         MenuButton musicButton;
         MenuButton manualButton;
         MenuButton impressumButton;
+        MenuButton fullScreenButton;
         #endregion
 
         #endregion
@@ -97,6 +100,8 @@ namespace Tower_Defence.States
             _descriptionBubble = _content.Load<Texture2D>("MenuItems/descriptionBubble");
             _title = _content.Load<Texture2D>("MenuItems/title");
             _impressumTable = _content.Load<Texture2D>("GameItems/table");
+            _fullScreenOn = _content.Load<Texture2D>("MenuItems/fullScreenOn");
+            _fullScreenOff = _content.Load<Texture2D>("MenuItems/fullScreenOff");
 
             _buttonSound = _content.Load<SoundEffect>("MenuSound/buttonSound");
 
@@ -156,6 +161,13 @@ namespace Tower_Defence.States
             };
             impressumButton.menuButtonEventHandler += HandleImpressumButtonClicked;
 
+            fullScreenButton = new MenuButton(_fullScreenOn, _menuFont)
+            {
+                Position = _difficultyTextPosition -new Vector2(300,50)
+            };
+
+            fullScreenButton.menuButtonEventHandler += HandleFullScreenButtonClicked;
+
             _gameParts = new List<IGameParts>()
             {
                 playButton,
@@ -163,13 +175,17 @@ namespace Tower_Defence.States
                 settingsButton,
                 musicButton,
                 manualButton,
-                impressumButton
+                impressumButton,
+                fullScreenButton
     };
         }
 
+        
 
         public override void Update(GameTime gameTime)
         {
+            //System.Diagnostics.Debug.WriteLine(_graphics.IsFullScreen);
+
             foreach (IGameParts gamePart in _gameParts.ToArray())
             {
                 gamePart.Update(gameTime, _gameParts);
@@ -206,9 +222,26 @@ namespace Tower_Defence.States
                 spriteBatch.DrawString(_menuFont, _impressumText, _impressumTextPosition, Color.White);
             }
 
+            spriteBatch.DrawString(_menuFont, "Fullscreen", _difficultyTextPosition - new Vector2(300, 0), Color.White);
             spriteBatch.Draw(_mouseCursor, _currentMouseRectangle, null, Color.White, -2.0f, zeroPosition, SpriteEffects.None, 0f);
         }
-
+        private void HandleFullScreenButtonClicked(bool obj)
+        {
+            if(_graphics.IsFullScreen)
+            {
+                _graphics.PreferredBackBufferWidth = 1910;  // set this value to the desired width of your window
+                _graphics.PreferredBackBufferHeight = 1070;   // set this value to the desired height of your window
+                fullScreenButton.Texture = _fullScreenOff;
+            }
+            else
+            {
+                fullScreenButton.Texture = _fullScreenOn;
+                _graphics.PreferredBackBufferWidth = 1920;  // set this value to the desired width of your window
+                _graphics.PreferredBackBufferHeight = 1080;   // set this value to the desired height of your window
+            }
+            _graphics.ToggleFullScreen();
+            
+        }
         private void HandleImpressumButtonClicked(bool clicked)
         {
             _impressumOn = !_impressumOn;

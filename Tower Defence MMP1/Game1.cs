@@ -16,7 +16,6 @@ namespace Tower_Defence
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private State _currentState;
-        private State _nextState;
 
         public static int ScreenWidth;
         public static int ScreenHeight;

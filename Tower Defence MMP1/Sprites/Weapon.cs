@@ -26,7 +26,7 @@ namespace Tower_Defence.Sprites
             Color = Color.White;
             _lifeSpan = 2f;
             _damagePoints = 10;
-            Speed = 10;
+            Speed = 500;
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
@@ -37,9 +37,9 @@ namespace Tower_Defence.Sprites
 
         public override void Update(GameTime gameTime, List<IGameParts> gameParts, List<Tower> backgroundTowers)
         {
-            //float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            float deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            Position += Direction * Speed;
+            Position += Direction * Speed * deltaTime;
 
             _lifeSpanTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
             if (_lifeSpanTimer >= _lifeSpan)
