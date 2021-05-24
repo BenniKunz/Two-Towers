@@ -79,6 +79,7 @@ namespace Tower_Defence.States
 
         private SpriteFont _gameFont;
         private SpriteFont _menuFont;
+        private SpriteFont _countdownFont;
 
         private Vector2 _zeroPosition = new Vector2(0, 0);
         private Vector2 _statsTablePosition = new Vector2(10, 200);
@@ -168,6 +169,7 @@ namespace Tower_Defence.States
 
             _gameFont = _content.Load<SpriteFont>("MenuFont/endGameFont");
             _menuFont = _content.Load<SpriteFont>("MenuFont/menuFont");
+            _countdownFont = _content.Load<SpriteFont>("MenuFont/countdownFont");
 
             _mouseCursorStandard = _content.Load<Texture2D>("MenuButtons/mouse");
             _mouseCursorSubtraction = _content.Load<Texture2D>("GameItems/subtractionMouse");
@@ -288,7 +290,7 @@ namespace Tower_Defence.States
 
             };
 
-            EnemySpawner enemySpawner = new EnemySpawner(_enemyTextureArray, _healthBar, _healthBarBackground, _menuFont);
+            EnemySpawner enemySpawner = new EnemySpawner(_enemyTextureArray, _healthBar, _healthBarBackground, _menuFont, _countdownFont);
             endgameHandler = new EndGameHandler(_gameFont, _menuFont);
 
             endgameHandler.endGameHandler += HandleEndGame;

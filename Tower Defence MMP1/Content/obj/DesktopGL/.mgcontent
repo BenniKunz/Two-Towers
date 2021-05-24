@@ -4,6 +4,13 @@
   <Platform>DesktopGL</Platform>
   <Config />
   <SourceFiles>
+    <File>C:/Users/benni/OneDrive/Desktop/MMT/2.Semester/MMP1/Visual Studio/Tower Defence MMP1/Tower Defence MMP1/Content/IntroItems/IntroFont.spritefont</File>
+    <File>C:/Users/benni/OneDrive/Desktop/MMT/2.Semester/MMP1/Visual Studio/Tower Defence MMP1/Tower Defence MMP1/Content/IntroItems/introSound.wav</File>
+    <File>C:/Users/benni/OneDrive/Desktop/MMT/2.Semester/MMP1/Visual Studio/Tower Defence MMP1/Tower Defence MMP1/Content/IntroItems/logo.png</File>
+    <File>C:/Users/benni/OneDrive/Desktop/MMT/2.Semester/MMP1/Visual Studio/Tower Defence MMP1/Tower Defence MMP1/Content/MenuFont/countdownFont.spritefont</File>
+    <File>C:/Users/benni/OneDrive/Desktop/MMT/2.Semester/MMP1/Visual Studio/Tower Defence MMP1/Tower Defence MMP1/Content/MenuFont/EndGameFont.spritefont</File>
+    <File>C:/Users/benni/OneDrive/Desktop/MMT/2.Semester/MMP1/Visual Studio/Tower Defence MMP1/Tower Defence MMP1/Content/MenuFont/File.spritefont</File>
+    <File>C:/Users/benni/OneDrive/Desktop/MMT/2.Semester/MMP1/Visual Studio/Tower Defence MMP1/Tower Defence MMP1/Content/MenuFont/menuFont.spritefont</File>
     <File>C:/Users/benni/OneDrive/Desktop/MMT/2.Semester/MMP1/Visual Studio/Tower Defence MMP1/Tower Defence MMP1/Content/MenuItems/button_off.png</File>
     <File>C:/Users/benni/OneDrive/Desktop/MMT/2.Semester/MMP1/Visual Studio/Tower Defence MMP1/Tower Defence MMP1/Content/MenuItems/button_on.png</File>
     <File>C:/Users/benni/OneDrive/Desktop/MMT/2.Semester/MMP1/Visual Studio/Tower Defence MMP1/Tower Defence MMP1/Content/MenuButtons/button_menu.png</File>
@@ -45,9 +52,6 @@
     <File>C:/Users/benni/OneDrive/Desktop/MMT/2.Semester/MMP1/Visual Studio/Tower Defence MMP1/Tower Defence MMP1/Content/MenuButtons/button_settings.png</File>
     <File>C:/Users/benni/OneDrive/Desktop/MMT/2.Semester/MMP1/Visual Studio/Tower Defence MMP1/Tower Defence MMP1/Content/MenuButtons/ico_3.png</File>
     <File>C:/Users/benni/OneDrive/Desktop/MMT/2.Semester/MMP1/Visual Studio/Tower Defence MMP1/Tower Defence MMP1/Content/MenuButtons/skull_arr.png</File>
-    <File>C:/Users/benni/OneDrive/Desktop/MMT/2.Semester/MMP1/Visual Studio/Tower Defence MMP1/Tower Defence MMP1/Content/MenuFont/EndGameFont.spritefont</File>
-    <File>C:/Users/benni/OneDrive/Desktop/MMT/2.Semester/MMP1/Visual Studio/Tower Defence MMP1/Tower Defence MMP1/Content/MenuFont/File.spritefont</File>
-    <File>C:/Users/benni/OneDrive/Desktop/MMT/2.Semester/MMP1/Visual Studio/Tower Defence MMP1/Tower Defence MMP1/Content/MenuFont/menuFont.spritefont</File>
     <File>C:/Users/benni/OneDrive/Desktop/MMT/2.Semester/MMP1/Visual Studio/Tower Defence MMP1/Tower Defence MMP1/Content/MenuItems/rope_small.png</File>
     <File>C:/Users/benni/OneDrive/Desktop/MMT/2.Semester/MMP1/Visual Studio/Tower Defence MMP1/Tower Defence MMP1/Content/MenuItems/table_2.png</File>
     <File>C:/Users/benni/OneDrive/Desktop/MMT/2.Semester/MMP1/Visual Studio/Tower Defence MMP1/Tower Defence MMP1/Content/MenuSound/buttonSound.wav</File>
@@ -62,6 +66,11 @@
     <File>C:/Users/benni/OneDrive/Desktop/MMT/2.Semester/MMP1/Visual Studio/Tower Defence MMP1/Tower Defence MMP1/Content/Weapons/40.png</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File>MenuFont/endGameFont.spritefont</File>
+    <File>MenuFont/explanationFont.spritefont</File>
     <File>MenuItems/fullScreenOff.png</File>
     <File>MenuItems/fullScreenOn.png</File>
     <File>MenuButtons/impressumButton.png</File>
@@ -70,7 +79,6 @@
     <File>Background/menuBackground.png</File>
     <File>Background/levelMap.png</File>
     <File>Background/levelMapTwo.png</File>
-    <File xsi:nil="true" />
     <File>GameItems/subtractionMouse.png</File>
     <File>GameItems/failed.png</File>
     <File>GameItems/win.png</File>
@@ -95,8 +103,6 @@
     <File>MenuButtons/settingsButton.png</File>
     <File>MenuButtons/manualButton.png</File>
     <File>MenuButtons/mouse.png</File>
-    <File>MenuFont/endGameFont.spritefont</File>
-    <File>MenuFont/explanationFont.spritefont</File>
     <File>MenuItems/ropeSmall.png</File>
     <File>MenuItems/descriptionBubble.png</File>
     <File>Tower/fireTower.png</File>

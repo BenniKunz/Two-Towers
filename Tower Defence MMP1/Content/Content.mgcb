@@ -265,6 +265,31 @@
 /processorParam:Quality=Best
 /build:GameSound/mathOperationSound.wav
 
+#begin IntroItems/IntroFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:IntroItems/IntroFont.spritefont
+
+#begin IntroItems/introSound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:IntroItems/introSound.wav
+
+#begin IntroItems/logo.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:IntroItems/logo.png
+
 #begin MenuButtons/button_close.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -444,6 +469,13 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:MenuButtons/skull_arr.png;MenuButtons/mouse.png
+
+#begin MenuFont/countdownFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:MenuFont/countdownFont.spritefont
 
 #begin MenuFont/EndGameFont.spritefont
 /importer:FontDescriptionImporter

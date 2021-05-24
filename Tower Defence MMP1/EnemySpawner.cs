@@ -21,8 +21,10 @@ namespace Tower_Defence
         private float _mathTimer;
         private float _enemySpawnTime;
         private float _mathEnemySpawnTime;
+        private float _countdownTime;
         private bool _startEnemySpawned;
         private int _enemyCounter;
+        private int _countdown = 5;
         private Vector2 _enemySpawnPointOne = new Vector2(0, 600);
         private Vector2 _enemySpawnPointTwo = new Vector2(0, 350);
         private List<Texture2D> _levelOneEnemyList = new List<Texture2D>();
@@ -30,6 +32,7 @@ namespace Tower_Defence
         private Texture2D _healthBarTexture;
         private Texture2D _healthBarBackgroundTexture;
         private SpriteFont _spriteFont;
+        private SpriteFont _countdownFont;
         private Random random = new Random();
 
         public static event Action AllEnemiesSpawned; 
@@ -45,7 +48,7 @@ namespace Tower_Defence
 
         private Dictionary<Level, Vector2> _spawnPointDictionary = new Dictionary<Level, Vector2>();
 
-        public EnemySpawner(Texture2D[] enemyTextureArray, Texture2D healthBar, Texture2D healthBarBackground, SpriteFont spriteFont)
+        public EnemySpawner(Texture2D[] enemyTextureArray, Texture2D healthBar, Texture2D healthBarBackground, SpriteFont spriteFont, SpriteFont countdownFont)
         {
             foreach (Texture2D texture in enemyTextureArray)
             {
@@ -56,42 +59,54 @@ namespace Tower_Defence
             _healthBarTexture = healthBar;
             _healthBarBackgroundTexture = healthBarBackground;
             _spriteFont = spriteFont;
+            _countdownFont = countdownFont;
 
             _spawnPointDictionary.Add(Level.LevelOne, _enemySpawnPointOne);
             _spawnPointDictionary.Add(Level.LevelTwo, _enemySpawnPointTwo);
         }
         public void Update(GameTime gameTime, List<IGameParts> gameParts, List<Tower> backgroundTowers)
         {
+            _countdownTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
             _timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
             _mathTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            if(_enemyCounter < _numberOfEnemies[GameManager.GameManagerInstance.Difficulty])
+            if(_timer >= 1.0 && _countdownTime < 5.0f)
             {
-                if (_timer >= _enemySpawnTime || _startEnemySpawned == false)
-                {
-                    _timer = 0f;
-                    _startEnemySpawned = true;
-                    var enemy = SpawnEnemies(gameTime);
+                _countdown--;
+                _timer = 0;
+            }
 
-                    gameParts.Add(enemy);
-                    gameParts.Add(enemy._healthBarBackground);
-                    gameParts.Add(enemy._healthBar);
-                    _enemyCounter++;
+            if(_countdownTime >= 5.0f)
+            {
+                if (_enemyCounter < _numberOfEnemies[GameManager.GameManagerInstance.Difficulty])
+                {
+                    if (_timer >= _enemySpawnTime || _startEnemySpawned == false)
+                    {
+                        _timer = 0f;
+                        _startEnemySpawned = true;
+                        var enemy = SpawnEnemies(gameTime);
+
+                        gameParts.Add(enemy);
+                        gameParts.Add(enemy._healthBarBackground);
+                        gameParts.Add(enemy._healthBar);
+                        _enemyCounter++;
+                    }
+                    if (_mathTimer >= _mathEnemySpawnTime)
+                    {
+                        _mathTimer = 0f;
+
+                        var mathEnemy = SpawnMathEnemy(gameTime);
+
+                        gameParts.Add(mathEnemy);
+                        _enemyCounter++;
+                    }
                 }
-                if (_mathTimer >= _mathEnemySpawnTime)
+                else
                 {
-                    _mathTimer = 0f;
-
-                    var mathEnemy = SpawnMathEnemy(gameTime);
-
-                    gameParts.Add(mathEnemy);
-                    _enemyCounter++;
+                    AllEnemiesSpawned?.Invoke();
                 }
             }
-            else
-            {
-                AllEnemiesSpawned?.Invoke();
-            }
+            
             
         }
 
@@ -133,7 +148,12 @@ namespace Tower_Defence
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-           
+            if(_countdownTime < 5.0f)
+            {
+                spriteBatch.DrawString(_countdownFont, _countdown.ToString(),
+                new Vector2(Game1.ScreenWidth / 2 - _countdownFont.MeasureString(_countdown.ToString()).X, Game1.ScreenHeight / 2 - _countdownFont.MeasureString(_countdown.ToString()).Y), Color.White);
+            }
+            
         }
 
 
