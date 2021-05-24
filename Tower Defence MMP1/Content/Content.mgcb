@@ -265,6 +265,12 @@
 /processorParam:Quality=Best
 /build:GameSound/mathOperationSound.wav
 
+#begin IntroItems/bowSound.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:IntroItems/bowSound.wav
+
 #begin IntroItems/IntroFont.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor

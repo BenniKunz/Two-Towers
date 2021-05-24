@@ -28,6 +28,7 @@
     <File>C:/Users/benni/OneDrive/Desktop/MMT/2.Semester/MMP1/Visual Studio/Tower Defence MMP1/Tower Defence MMP1/Content/GameSound/levelOneSong.mp3</File>
     <File>C:/Users/benni/OneDrive/Desktop/MMT/2.Semester/MMP1/Visual Studio/Tower Defence MMP1/Tower Defence MMP1/Content/GameSound/levelTwoSong.mp3</File>
     <File>C:/Users/benni/OneDrive/Desktop/MMT/2.Semester/MMP1/Visual Studio/Tower Defence MMP1/Tower Defence MMP1/Content/GameSound/mathOperationSound.wav</File>
+    <File>C:/Users/benni/OneDrive/Desktop/MMT/2.Semester/MMP1/Visual Studio/Tower Defence MMP1/Tower Defence MMP1/Content/IntroItems/bowSound.wav</File>
     <File>C:/Users/benni/OneDrive/Desktop/MMT/2.Semester/MMP1/Visual Studio/Tower Defence MMP1/Tower Defence MMP1/Content/IntroItems/IntroFont.spritefont</File>
     <File>C:/Users/benni/OneDrive/Desktop/MMT/2.Semester/MMP1/Visual Studio/Tower Defence MMP1/Tower Defence MMP1/Content/IntroItems/introSound.wav</File>
     <File>C:/Users/benni/OneDrive/Desktop/MMT/2.Semester/MMP1/Visual Studio/Tower Defence MMP1/Tower Defence MMP1/Content/IntroItems/logo.png</File>
@@ -85,6 +86,7 @@
     <File>GameItems/divisionMouse.png</File>
     <File xsi:nil="true" />
     <File>GameItems/tableGUI.png</File>
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />

@@ -8,6 +8,7 @@ using Tower_Defence;
 using Tower_Defence.States;
 using Tower_Defence.Enums;
 using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Input;
 
 namespace Tower_Defence.States
 {
@@ -17,7 +18,8 @@ namespace Tower_Defence.States
         private float _titleTimer;
         private SpriteFont _menuFont;
         private Texture2D _logo;
-        private SoundEffect _soundEffect; 
+        private SoundEffect _soundEffect;
+        private SoundEffect _bowSound;
         private string _title = "Two Towers";
         private string _tempTitle = "";
         private int counter = 0;
@@ -32,6 +34,7 @@ namespace Tower_Defence.States
             _logo = _content.Load<Texture2D>("IntroItems/logo");
             _menuFont = _content.Load<SpriteFont>("IntroItems/IntroFont");
             _soundEffect = _content.Load<SoundEffect>("IntroItems/introSound");
+            _bowSound = _content.Load<SoundEffect>("IntroItems/bowSound");
             _titleArray = _title.ToCharArray();
         }
 
@@ -46,13 +49,14 @@ namespace Tower_Defence.States
 
         public override void Update(GameTime gameTime)
         {
+            KeyboardState state = Keyboard.GetState();
             _timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
             _titleTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
             
 
             if(_titleTimer >= 0.5f && counter < _titleArray.Length)
             {
-                System.Diagnostics.Debug.WriteLine(_titleArray.Length);
+                
                 _tempTitle += _titleArray[counter].ToString();
                 
                 if (_titleArray[counter].ToString() != " ")
@@ -63,8 +67,14 @@ namespace Tower_Defence.States
                 counter++;
                 _titleTimer = 0f;
             }
+            
+            if(_timer >= 5.5f && counter == _titleArray.Length)
+            {
+                _bowSound.Play();
+                counter++;
+            }
 
-            if(_timer >= 6.0f)
+            if(_timer >= 6.0f || state.IsKeyDown(Keys.Escape))
             {
                 _game1.ChangeState(new MenuState(_game1, _graphics, _content, Difficulty.easy));
             }

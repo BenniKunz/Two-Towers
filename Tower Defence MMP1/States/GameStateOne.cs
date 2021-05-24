@@ -314,11 +314,11 @@ namespace Tower_Defence.States
         public override void Update(GameTime gameTime)
         {
             //remove
-            KeyboardState state = Keyboard.GetState();
-            if(state.IsKeyDown(Keys.M))
-            {
-                HandleNextLevelButtonClicked(true);
-            }
+            //KeyboardState state = Keyboard.GetState();
+            //if(state.IsKeyDown(Keys.M))
+            //{
+            //    HandleNextLevelButtonClicked(true);
+            //}
 
             if (_pauseGame || _isGameOver)
             {
