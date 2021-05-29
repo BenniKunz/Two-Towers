@@ -223,7 +223,7 @@ namespace Tower_Defence.States
             }
 
             spriteBatch.DrawString(_menuFont, "Fullscreen", _difficultyTextPosition - new Vector2(300, 0), Color.White);
-            spriteBatch.Draw(_mouseCursor, _currentMouseRectangle, null, Color.White, -2.0f, zeroPosition, SpriteEffects.None, 0f);
+            spriteBatch.Draw(_mouseCursor, new Vector2(_currentMouseRectangle.X, _currentMouseRectangle.Y + _mouseCursor.Height),null, Color.White, -2.0f, zeroPosition, 1.0f, SpriteEffects.None, 0f);
         }
         private void HandleFullScreenButtonClicked(bool obj)
         {

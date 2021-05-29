@@ -16,6 +16,7 @@ namespace Tower_Defence.Buttons
     public class MenuButton : Button, IGameParts
     {
         #region Properties
+        private Color _colour = Color.White;
 
         public bool IsMusicButton { get; set; }
         public bool MusicIsOn { get; set; }
@@ -46,11 +47,16 @@ namespace Tower_Defence.Buttons
 
             var mouseRectangle = new Rectangle(_currentMouse.X, _currentMouse.Y, 1, 1);
 
-            _isHovering = false;
-
+           
             if (mouseRectangle.Intersects(Rectangle))
             {
                 _isHovering = true;
+                _colour = Color.Gray;
+            }
+            else
+            {
+                _isHovering = false;
+                _colour = Color.White;
             }
 
             if (_isHovering == true && _currentMouse.LeftButton == ButtonState.Released && _previousMouse.LeftButton == ButtonState.Pressed)
@@ -71,15 +77,10 @@ namespace Tower_Defence.Buttons
         }
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
-        {
-            var colour = Color.White;
-            if (_isHovering)
-            {
-                colour = Color.Gray;
-            }
+        {       
 
             //spriteBatch.Draw(_texture, Rectangle, colour);
-            spriteBatch.Draw(_texture, Position, null, colour, 0f, new Vector2(0, 0), Scale, SpriteEffects.None, 0f);
+            spriteBatch.Draw(_texture, Position, null, _colour, 0f, new Vector2(0, 0), Scale, SpriteEffects.None, 0f);
 
             if (!string.IsNullOrEmpty(Text))
             {

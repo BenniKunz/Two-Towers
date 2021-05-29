@@ -1,7 +1,7 @@
-# A0 Tower Defence Game – 2 Towers / Konzept
+# H0 Tower Defence Game – 2 Towers / Konzept
 Dynamisches 2D Tower Defence Game mit der Möglichkeit die Angreifer mit Hilfe von Towern sowie Rechenoperationen aufzuhalten.
 
-# A1 Features im Endprodukt:
+# H1 Features im Endprodukt:
 * Gegner spawnen an fixiertem Punkt der statischen Map
 * Gegner(fixierte Anzahl) laufen anhand fixierter Punkte auf der Karte zu einem fixierten Zielpunkt
 * der Spieler verliert Leben, wenn ein Gegner das Ziel erreicht
