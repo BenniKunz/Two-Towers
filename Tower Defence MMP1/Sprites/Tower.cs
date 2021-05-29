@@ -7,9 +7,8 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using Microsoft.Xna.Framework.Input;
-using Tower_Defence.States;
+using Tower_Defence.Enums;
 
 namespace Tower_Defence.Sprites
 {
@@ -148,7 +147,7 @@ namespace Tower_Defence.Sprites
 
         private void AddTowerPlacableRectangles()
         {
-            if (_towerPlacableRectangles.Count == 0 && GameManager.GameManagerInstance.CurrentLevel == Tower_Defence_MMP1.Enums.Level.LevelOne)
+            if (_towerPlacableRectangles.Count == 0 && GameManager.GameManagerInstance.CurrentLevel == Level.LevelOne)
             {
                 _towerPlacableRectangles = new List<Rectangle>
                 {
@@ -163,7 +162,7 @@ namespace Tower_Defence.Sprites
                     towerPlacableRectangleNine
                 };
             }
-            else if (_towerPlacableRectangles.Count == 0 && GameManager.GameManagerInstance.CurrentLevel == Tower_Defence_MMP1.Enums.Level.LevelTwo)
+            else if (_towerPlacableRectangles.Count == 0 && GameManager.GameManagerInstance.CurrentLevel == Level.LevelTwo)
             {
                 _towerPlacableRectangles = new List<Rectangle>
                 {
@@ -178,7 +177,7 @@ namespace Tower_Defence.Sprites
 
         public bool CheckIfTowerIsBackgroundTower()
         {
-            if(GameManager.GameManagerInstance.CurrentLevel == Tower_Defence_MMP1.Enums.Level.LevelOne)
+            if(GameManager.GameManagerInstance.CurrentLevel == Level.LevelOne)
             {
 
                 if (this.Rectangle.Intersects(towerPlacableRectangleFour) || this.Rectangle.Intersects(towerPlacableRectangleFive))
@@ -186,7 +185,7 @@ namespace Tower_Defence.Sprites
                     return true;
                 }  
             }
-            else if (GameManager.GameManagerInstance.CurrentLevel == Tower_Defence_MMP1.Enums.Level.LevelTwo)
+            else if (GameManager.GameManagerInstance.CurrentLevel == Level.LevelTwo)
             {
                 if (this.Rectangle.Intersects(towerPlacableRectangleTen) || this.Rectangle.Intersects(towerPlacableRectangleThirteen))
                 {

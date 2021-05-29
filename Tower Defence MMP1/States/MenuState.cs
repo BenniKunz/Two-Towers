@@ -9,9 +9,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using Tower_Defence.Buttons;
 using Tower_Defence.Enums;
 using Tower_Defence.Interfaces;
@@ -184,8 +182,6 @@ namespace Tower_Defence.States
 
         public override void Update(GameTime gameTime)
         {
-            //System.Diagnostics.Debug.WriteLine(_graphics.IsFullScreen);
-
             foreach (IGameParts gamePart in _gameParts.ToArray())
             {
                 gamePart.Update(gameTime, _gameParts);

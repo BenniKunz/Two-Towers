@@ -6,9 +6,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using Tower_Defence.Enums;
 
 namespace Tower_Defence.Buttons
 {
@@ -19,7 +17,6 @@ namespace Tower_Defence.Buttons
         protected MouseState _previousMouse;
         protected Texture2D _texture;
         protected bool _isHovering;
-
 
         #endregion
 

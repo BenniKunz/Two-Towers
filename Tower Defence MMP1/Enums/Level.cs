@@ -3,11 +3,7 @@
 //MultiMediaProjekt 1
 //Benjamin Kunz
 
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Tower_Defence_MMP1.Enums
+namespace Tower_Defence.Enums
 {
     public enum Level
     {

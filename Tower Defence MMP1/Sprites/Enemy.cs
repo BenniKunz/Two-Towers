@@ -7,11 +7,10 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using Tower_Defence.Animations;
 using Tower_Defence.Enums;
 using Tower_Defence.Interfaces;
-using Tower_Defence.States;
+
 
 namespace Tower_Defence.Sprites
 {
@@ -105,7 +104,7 @@ namespace Tower_Defence.Sprites
 
             _timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            if(GameManager.GameManagerInstance.CurrentLevel == Tower_Defence_MMP1.Enums.Level.LevelOne)
+            if(GameManager.GameManagerInstance.CurrentLevel == Level.LevelOne)
             {
                 if (_timer > 0.01f)
                 {
@@ -127,7 +126,7 @@ namespace Tower_Defence.Sprites
                     Position += new Vector2(1, 0) * Speed * deltaTime;
                 }
             }
-            else if (GameManager.GameManagerInstance.CurrentLevel == Tower_Defence_MMP1.Enums.Level.LevelTwo)
+            else if (GameManager.GameManagerInstance.CurrentLevel == Enums.Level.LevelTwo)
             {
                 if (_timer > 0.01f)
                 {

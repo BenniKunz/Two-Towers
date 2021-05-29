@@ -8,7 +8,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using Tower_Defence.Animations;
 using Tower_Defence.Buttons;
 using Tower_Defence.Enums;
@@ -57,14 +56,14 @@ namespace Tower_Defence.Sprites
             MathOperationButton.mathOperationButtonIsClicked += HandleMathOperationButtonIsClicked;
             Speed = 65;
 
-            if (GameManager.GameManagerInstance.CurrentLevel == Tower_Defence_MMP1.Enums.Level.LevelOne)
+            if (GameManager.GameManagerInstance.CurrentLevel == Level.LevelOne)
             {
                 GameStateOne.TowerButtonIsClicked += HandleTowerButtonClicked;
                 _mathOperation = GameStateOne._mathOperation;
                 MathOperationButtonIsClicked = GameStateOne._mathOperationButtonIsClicked;
                 TowerButtonIsClicked = GameStateOne._towerButtonIsClicked;
             }
-            else if (GameManager.GameManagerInstance.CurrentLevel == Tower_Defence_MMP1.Enums.Level.LevelTwo)
+            else if (GameManager.GameManagerInstance.CurrentLevel == Level.LevelTwo)
             {
                 GameStateTwo.TowerButtonIsClicked += HandleTowerButtonClicked;
                 _mathOperation = GameStateTwo._mathOperation;
@@ -192,7 +191,7 @@ namespace Tower_Defence.Sprites
 
             _timer += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            if (GameManager.GameManagerInstance.CurrentLevel == Tower_Defence_MMP1.Enums.Level.LevelOne)
+            if (GameManager.GameManagerInstance.CurrentLevel == Level.LevelOne)
             {
                 if (_timer > 0.01f)
                 {
@@ -212,7 +211,7 @@ namespace Tower_Defence.Sprites
                     Position += new Vector2(1, 0) * Speed * deltaTime;
                 }
             }
-            else if (GameManager.GameManagerInstance.CurrentLevel == Tower_Defence_MMP1.Enums.Level.LevelTwo)
+            else if (GameManager.GameManagerInstance.CurrentLevel == Level.LevelTwo)
             {
                 if (_timer > 0.01f)
                 {
@@ -232,20 +231,6 @@ namespace Tower_Defence.Sprites
                     Position += new Vector2(1, 0) * Speed * deltaTime;
                 }
             }
-
-
-            //if (this.Position.X >= 350 && this.Position.X < 700 && this.Position.Y >= 270)
-            //{
-            //    Position += new Vector2(100, -100) * deltaTime;
-            //    return;
-            //}
-            //if (this.Position.X >= 1000 && this.Position.X <= 1230)
-            //{
-            //    Position += new Vector2(100, -100) * deltaTime;
-            //    return;
-            //}
-
-            //Position += new Vector2(100, 0) * deltaTime;
 
         }
 

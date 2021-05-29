@@ -3,9 +3,7 @@
 //MultiMediaProjekt 1
 //Benjamin Kunz
 
-using System;
-using System.Collections.Generic;
-using System.Text;
+using Tower_Defence.Enums;
 
 namespace Tower_Defence
 {

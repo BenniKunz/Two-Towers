@@ -78,8 +78,6 @@ namespace Tower_Defence.Buttons
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {       
-
-            //spriteBatch.Draw(_texture, Rectangle, colour);
             spriteBatch.Draw(_texture, Position, null, _colour, 0f, new Vector2(0, 0), Scale, SpriteEffects.None, 0f);
 
             if (!string.IsNullOrEmpty(Text))

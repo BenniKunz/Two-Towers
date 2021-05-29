@@ -114,9 +114,6 @@ namespace Tower_Defence.States
 
             _titleSong = _content.Load<Song>("MenuSound/titleSong");
 
-            //MediaPlayer.Play(_titleSong);
-            //MediaPlayer.IsRepeating = true;
-
             MenuButton playButton = new MenuButton(_playButton, _menuFont)
             {
                 Position = new Vector2(Game1.ScreenWidth - 610, 200),

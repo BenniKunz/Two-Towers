@@ -8,7 +8,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using Tower_Defence.Enums;
 using Tower_Defence.Sprites;
 using Tower_Defence.States;
@@ -34,11 +33,11 @@ namespace Tower_Defence.Buttons
             _mathOperation = mathOperation;
             PenColour = Color.Black;
 
-            if (GameManager.GameManagerInstance.CurrentLevel == Tower_Defence_MMP1.Enums.Level.LevelOne)
+            if (GameManager.GameManagerInstance.CurrentLevel == Level.LevelOne)
             {
                 GameStateOne.TowerButtonIsClicked += HandleTowerButtonIsClicked;
             }
-            else if (GameManager.GameManagerInstance.CurrentLevel == Tower_Defence_MMP1.Enums.Level.LevelTwo)
+            else if (GameManager.GameManagerInstance.CurrentLevel == Level.LevelTwo)
             {
                 GameStateTwo.TowerButtonIsClicked += HandleTowerButtonIsClicked;
             }

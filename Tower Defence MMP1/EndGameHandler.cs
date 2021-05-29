@@ -7,11 +7,9 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using Tower_Defence.Enums;
 using Tower_Defence.Interfaces;
 using Tower_Defence.Sprites;
-using Tower_Defence.States;
 
 namespace Tower_Defence
 {

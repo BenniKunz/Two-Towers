@@ -8,7 +8,6 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using Tower_Defence.Buttons;
 using Tower_Defence.Sprites;
 using Microsoft.Xna.Framework.Input;
@@ -16,7 +15,6 @@ using Tower_Defence.Enums;
 using Microsoft.Xna.Framework.Media;
 using Tower_Defence.Interfaces;
 using Microsoft.Xna.Framework.Audio;
-using Tower_Defence_MMP1.Enums;
 
 namespace Tower_Defence.States
 {
@@ -349,8 +347,6 @@ namespace Tower_Defence.States
             int x, y;
             DrawUI(spritebatch, out x, out y);
 
-            //spritebatch.DrawString(_menuFont, $"{x}:{y}", new Vector2(50, 600), Color.White);
-
             if (_pauseGame)
             {
                 foreach (IGameParts gamePart in _gameParts)
@@ -495,7 +491,7 @@ namespace Tower_Defence.States
         {
             Unsubscribe();
             UnsubscribeListElements();
-            //_gameParts.Clear();
+            
             GameManager.GameManagerInstance.StoppedEnemies = 0;
             _game1.ChangeState(new GameStateTwo(_game1, _graphics, _content, GameManager.GameManagerInstance.Difficulty));
         }
@@ -514,7 +510,7 @@ namespace Tower_Defence.States
         private void HandleBackToMenuButtonClicked(bool clicked)
         {
             Unsubscribe();
-            //_gameParts.Clear();
+            
             endgameHandler.Unsubscribe();
             GameManager.GameManagerInstance.StoppedEnemies = 0;
             _game1.ChangeState(new MenuState(_game1, _graphics, _content, GameManager.GameManagerInstance.Difficulty));

@@ -5,9 +5,7 @@
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Tower_Defence.Sprites
 {
@@ -24,7 +22,7 @@ namespace Tower_Defence.Sprites
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            Rectangle sourceRectangle = new Rectangle(0, 0, (int)(_texture.Width * Offset), _texture.Height);
+            sourceRectangle = new Rectangle(0, 0, (int)(_texture.Width * Offset), _texture.Height);
          
             spriteBatch.Draw(_texture, Position, sourceRectangle, Color.White, 0f, _zeroPosition, 0.15f, SpriteEffects.None, 0f);
         }

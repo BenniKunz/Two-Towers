@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using Tower_Defence.Enums;
 
 namespace Tower_Defence.Sprites
 {
@@ -100,7 +100,7 @@ namespace Tower_Defence.Sprites
             {
                 for (int x = left; x < right; x++)
                 {
-                    // Code Review
+                    
                     Color colorA = textureDataWeapon[(x - destinationWeapon.Left) +
                                             (y - destinationWeapon.Top) * destinationWeapon.Width];
                     Color colorB = textureEnemyData[(x - destinationEnemy.Left) +
