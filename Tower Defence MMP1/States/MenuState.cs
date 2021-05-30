@@ -37,7 +37,7 @@ namespace Tower_Defence.States
         private Texture2D _fullScreenOn;
         private Texture2D _fullScreenOff;
         private string _manualText = "Read the manual\nbefore your first\nbattle.";
-        private string _impressumText = "MultiMediaTechnology\nFHS 45891\nMultiMediaProjekt 1\n\nBenjamin Kunz\n\nAssets:\nhttps://craftpix.net";
+        private string _impressumText = "MultiMediaTechnology\nFHS 45891\nMultiMediaProjekt 1\n\nBenjamin Kunz\n\nAssets:\nhttps://craftpix.net\nSounds:\nhttps://zapsplat.com/\n";
         private Difficulty _difficulty;
         private Song _titleSong;
         private SoundEffect _buttonSound;

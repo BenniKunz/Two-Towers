@@ -312,7 +312,7 @@ namespace Tower_Defence.States
 
         public override void Update(GameTime gameTime)
         {
-            //remove
+            //cheat
             KeyboardState state = Keyboard.GetState();
             if (state.IsKeyDown(Keys.M))
             {
