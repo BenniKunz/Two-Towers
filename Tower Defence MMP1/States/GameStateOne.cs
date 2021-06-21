@@ -217,7 +217,7 @@ namespace Tower_Defence.States
 
             backButton = new MenuButton(_backButton, _menuFont)
             {
-                Position = new Vector2(Game1.ScreenWidth - _backButton.Width - 350, 30),
+                Position = new Vector2(40, 370),
                 Scale = 0.7f
             };
 
@@ -225,7 +225,7 @@ namespace Tower_Defence.States
 
             pauseButton = new MenuButton(_pauseButton, _gameFont)
             {
-                Position = new Vector2(Game1.ScreenWidth - 300, 30),
+                Position = new Vector2(240, 370),
                 Scale = 0.7f
             };
 
