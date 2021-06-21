@@ -394,7 +394,10 @@ namespace Tower_Defence.States
 
             }
 
-            spritebatch.Draw(_mouseCursor, _currentMouseRectangle, null, Color.White, -2.0f, _zeroPosition, SpriteEffects.None, 0f);
+            if (!_towerButtonIsClicked)
+            {
+                spritebatch.Draw(_mouseCursor, _currentMouseRectangle, null, Color.White, -2.0f, _zeroPosition, SpriteEffects.None, 0f);
+            }
         }
 
         private void CheckIfEnemyIsHit()
@@ -491,7 +494,8 @@ namespace Tower_Defence.States
         {
             Unsubscribe();
             UnsubscribeListElements();
-            
+            _towerButtonIsClicked = false;
+
             GameManager.GameManagerInstance.StoppedEnemies = 0;
             _game1.ChangeState(new GameStateTwo(_game1, _graphics, _content, GameManager.GameManagerInstance.Difficulty));
         }
@@ -510,7 +514,7 @@ namespace Tower_Defence.States
         private void HandleBackToMenuButtonClicked(bool clicked)
         {
             Unsubscribe();
-            
+            _towerButtonIsClicked = false;
             endgameHandler.Unsubscribe();
             GameManager.GameManagerInstance.StoppedEnemies = 0;
             _game1.ChangeState(new MenuState(_game1, _graphics, _content, GameManager.GameManagerInstance.Difficulty));
@@ -520,6 +524,7 @@ namespace Tower_Defence.States
         private void HandlePauseButtonClicked(bool clicked)
         {
             _pauseGame = !_pauseGame;
+            _towerButtonIsClicked = !_towerButtonIsClicked;
         }
 
         private void HandleTowerPreview(AttackType towerType)

@@ -126,7 +126,7 @@ namespace Tower_Defence.States
         public GameStateOne(Game1 game1, GraphicsDeviceManager graphics, ContentManager content, Difficulty difficulty) : base(game1, graphics, content)
         {
             GameManager.GameManagerInstance.Difficulty = difficulty;
-            
+
             _mathOperation = MathOperation.setDefault;
         }
         public List<IGameParts> GetGamePartsList()
@@ -329,7 +329,7 @@ namespace Tower_Defence.States
                 }
                 return;
             }
-            if(_isGameOver == false)
+            if (_isGameOver == false)
             {
                 if (_backgroundTowers.Count > 0)
                 {
@@ -364,13 +364,15 @@ namespace Tower_Defence.States
                         gamePart.Draw(gameTime, spritebatch);
                     }
                 }
+
                 spritebatch.Draw(_mouseCursor, _currentMouseRectangle, null, Color.White, -2.0f, _zeroPosition, SpriteEffects.None, 0f);
+
                 return;
             }
 
             if (_isGameOver == false)
             {
-                if(_backgroundTowers.Count > 0)
+                if (_backgroundTowers.Count > 0)
                 {
                     foreach (Tower tower in _backgroundTowers)
                     {
@@ -380,13 +382,13 @@ namespace Tower_Defence.States
 
                 foreach (IGameParts gamePart in _gameParts)
                 {
-                    if(gamePart is null) { continue;}
+                    if (gamePart is null) { continue; }
                     gamePart.Draw(gameTime, spritebatch);
                 }
             }
-            else if(_gameWon || _isGameOver)
+            else if (_gameWon || _isGameOver)
             {
-               
+
                 Texture2D header;
                 header = (!_gameWon) ? _failed : _win;
                 spritebatch.Draw(_endTable, _endTablePosition, Color.White);
@@ -401,8 +403,10 @@ namespace Tower_Defence.States
                 }
 
             }
-
-            spritebatch.Draw(_mouseCursor, _currentMouseRectangle, null, Color.White, -2.0f, _zeroPosition, SpriteEffects.None, 0f);
+            if (!_towerButtonIsClicked)
+            {
+                spritebatch.Draw(_mouseCursor, _currentMouseRectangle, null, Color.White, -2.0f, _zeroPosition, SpriteEffects.None, 0f);
+            }
         }
 
         private void CheckIfEnemyIsHit()
@@ -474,7 +478,7 @@ namespace Tower_Defence.States
 
         private void HandleEndGame(bool won)
         {
-            if(!won)
+            if (!won)
             {
                 _isGameOver = true;
             }
@@ -491,7 +495,7 @@ namespace Tower_Defence.States
 
             restartButton.menuButtonEventHandler += HandleRestartButtonClicked;
 
-            if(won)
+            if (won)
             {
                 MenuButton nextLevelButton = new MenuButton(_nextLevelButton, _menuFont)
                 {
@@ -500,9 +504,9 @@ namespace Tower_Defence.States
                 nextLevelButton.menuButtonEventHandler += HandleNextLevelButtonClicked;
                 _gameParts.Add(nextLevelButton);
             }
-           
+
             _gameParts.Add(restartButton);
-            
+
         }
 
         private void HandleNextLevelButtonClicked(bool obj)
@@ -510,6 +514,7 @@ namespace Tower_Defence.States
             Unsubscribe();
             UnsubscribeListElements();
             GameManager.GameManagerInstance.StoppedEnemies = 0;
+            _towerButtonIsClicked = false;
             _game1.ChangeState(new GameStateTwo(_game1, _graphics, _content, GameManager.GameManagerInstance.Difficulty));
         }
 
@@ -517,6 +522,7 @@ namespace Tower_Defence.States
         {
             Unsubscribe();
             UnsubscribeListElements();
+            _towerButtonIsClicked = false;
             GameManager.GameManagerInstance.StoppedEnemies = 0;
             _game1.ChangeState(new GameStateOne(_game1, _graphics, _content, GameManager.GameManagerInstance.Difficulty));
         }
@@ -525,7 +531,7 @@ namespace Tower_Defence.States
         {
             foreach (IGameParts gamePart in _gameParts)
             {
-                if(gamePart is IUnsubscribable iUnsubsribable)
+                if (gamePart is IUnsubscribable iUnsubsribable)
                 {
                     iUnsubsribable.Unsubscribe();
                 }
@@ -536,14 +542,16 @@ namespace Tower_Defence.States
         {
             Unsubscribe();
             endgameHandler.Unsubscribe();
+            _towerButtonIsClicked = false;
             GameManager.GameManagerInstance.StoppedEnemies = 0;
             _game1.ChangeState(new MenuState(_game1, _graphics, _content, GameManager.GameManagerInstance.Difficulty));
-           
+
         }
 
         private void HandlePauseButtonClicked(bool clicked)
         {
             _pauseGame = !_pauseGame;
+            _towerButtonIsClicked = !_towerButtonIsClicked;
         }
 
         private void HandleTowerPreview(AttackType towerType)
@@ -563,8 +571,8 @@ namespace Tower_Defence.States
                 towerStartRange = _towerStartRangeArcher;
                 towerMaxRange = _towerMaxRangeArcher;
 
-             }
-            else if(towerType == AttackType.fire)
+            }
+            else if (towerType == AttackType.fire)
             {
                 towerStartRange = _towerStartRangeFire;
                 towerMaxRange = _towerMaxRangeFire;
@@ -576,9 +584,9 @@ namespace Tower_Defence.States
                 weapon = new Weapon(weaponTexture, towerType),
                 TowerMaxRange = towerMaxRange,
                 TowerStartRange = towerStartRange
-                
-        };
-            
+
+            };
+
 
             _gameParts.Add(newTower);
         }
@@ -603,7 +611,7 @@ namespace Tower_Defence.States
                 tower.isPreview = false;
                 tower.isPlaced = true;
 
-                if(tower.CheckIfTowerIsBackgroundTower())
+                if (tower.CheckIfTowerIsBackgroundTower())
                 {
                     _gameParts.Remove(tower);
                     _backgroundTowers.Add(tower);
@@ -624,7 +632,7 @@ namespace Tower_Defence.States
             if (_towerQueue.Count > 2)
             {
                 var removeTower = _towerQueue.Dequeue();
-                if(_gameParts.Contains(removeTower))
+                if (_gameParts.Contains(removeTower))
                 {
                     _gameParts.Remove(removeTower);
                 }
