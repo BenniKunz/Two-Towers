@@ -21,6 +21,7 @@ namespace Tower_Defence.Buttons
         private bool _mathOperationIsUsed;
         private float _coolDownTimer;
         private int counter = 0;
+        private string _tempMathButtonText;
         public string MathButtonText { get; set; }
         public float CoolDownTime { get; set; }
 
@@ -97,6 +98,7 @@ namespace Tower_Defence.Buttons
 
             if(_mathOperationIsUsed && (_mathOperation == MathOperation.division || _mathOperation == MathOperation.squareroot))
             {
+                
                _coolDownTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
                 Colour = Color.Red;
                 
@@ -104,13 +106,15 @@ namespace Tower_Defence.Buttons
                 {
                     Clicked = false;
                     mathOperationButtonIsClicked?.Invoke(this._mathOperation, Clicked);
-                    
+                    _tempMathButtonText = MathButtonText;
                     counter++;
                 }
+                MathButtonText = (CoolDownTime - (int)_coolDownTimer).ToString();
 
                 if (_coolDownTimer >= CoolDownTime)
                 {
                     _coolDownTimer = 0f;
+                    MathButtonText = _tempMathButtonText;
                     Colour = Color.White;
                     _mathOperationIsUsed = false;
                     counter--;
