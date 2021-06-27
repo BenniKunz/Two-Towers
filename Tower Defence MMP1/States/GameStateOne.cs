@@ -204,7 +204,7 @@ namespace Tower_Defence.States
 
             Enemy.EnemyDeathHandler += HandleEnemyDeath;
             MathEnemy.MathEnemyDeathHandler += HandleMathEnemyDeath;
-            MathOperationButton.mathOperationButtonIsClicked += HandleMathOperationButtonIsClicked;
+            MathOperationButton.MathOperationButtonIsClicked += HandleMathOperationButtonIsClicked;
 
             GameManager.GameManagerInstance.CurrentLevel = Level.LevelOne;
 
@@ -372,6 +372,25 @@ namespace Tower_Defence.States
 
             if (_isGameOver == false)
             {
+                if (_towerButtonIsClicked)
+                {
+
+                    var tower = (Tower)_gameParts.FindLast(t => t is Tower);
+
+                    foreach (Rectangle rectangle in tower._towerPlacableRectangles)
+                    {
+                        Texture2D rect = new Texture2D(_graphics.GraphicsDevice, rectangle.Width, rectangle.Height);
+
+                        Color[] colorData = new Color[rectangle.Width * rectangle.Height];
+                        for (int i = 0; i < colorData.Length; ++i)
+                        {
+                            colorData[i] = Color.Chocolate;
+                        }
+                        rect.SetData(colorData);
+                        spritebatch.Draw(rect, new Vector2(rectangle.X, (rectangle.Y + tower.Texture.Height / 2)), Color.White * 0.4f);
+                    }
+
+                }
                 if (_backgroundTowers.Count > 0)
                 {
                     foreach (Tower tower in _backgroundTowers)
@@ -407,6 +426,7 @@ namespace Tower_Defence.States
             {
                 spritebatch.Draw(_mouseCursor, _currentMouseRectangle, null, Color.White, -2.0f, _zeroPosition, SpriteEffects.None, 0f);
             }
+
         }
 
         private void CheckIfEnemyIsHit()
@@ -478,6 +498,7 @@ namespace Tower_Defence.States
 
         private void HandleEndGame(bool won)
         {
+            _towerButtonIsClicked = false;
             if (!won)
             {
                 _isGameOver = true;
@@ -593,6 +614,7 @@ namespace Tower_Defence.States
         private void HandleTurnPreviewOff()
         {
             _gameParts.Remove((Tower)_gameParts.FindLast(t => t is Tower));
+           
             TowerButtonIsClicked?.Invoke(false);
             _towerButtonIsClicked = false;
         }
@@ -610,6 +632,7 @@ namespace Tower_Defence.States
                 tower._weaponSpawnPoint = new Vector2(0, 0);
                 tower.isPreview = false;
                 tower.isPlaced = true;
+                
 
                 if (tower.CheckIfTowerIsBackgroundTower())
                 {
@@ -648,7 +671,7 @@ namespace Tower_Defence.States
         {
             Enemy.EnemyDeathHandler -= HandleEnemyDeath;
             MathEnemy.MathEnemyDeathHandler -= HandleMathEnemyDeath;
-            MathOperationButton.mathOperationButtonIsClicked -= HandleMathOperationButtonIsClicked;
+            MathOperationButton.MathOperationButtonIsClicked -= HandleMathOperationButtonIsClicked;
             endgameHandler.endGameHandler -= HandleEndGame;
             backToMenuButton.menuButtonEventHandler -= HandleBackToMenuButtonClicked;
             backButton.menuButtonEventHandler -= HandleBackToMenuButtonClicked;

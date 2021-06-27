@@ -52,8 +52,8 @@ namespace Tower_Defence.Sprites
             _spriteFont = spriteFont;
             HealthPoints = RandomHealthPoints();
             Color = Color.White;
-            MathOperationButton.changeMathOperationHandler += HandleMathOperation;
-            MathOperationButton.mathOperationButtonIsClicked += HandleMathOperationButtonIsClicked;
+            MathOperationButton.ChangeMathOperationHandler += HandleMathOperation;
+            MathOperationButton.MathOperationButtonIsClicked += HandleMathOperationButtonIsClicked;
             Speed = 65;
 
             if (GameManager.GameManagerInstance.CurrentLevel == Level.LevelOne)
@@ -236,8 +236,8 @@ namespace Tower_Defence.Sprites
 
         public void Unsubscribe()
         {
-            MathOperationButton.changeMathOperationHandler -= HandleMathOperation;
-            MathOperationButton.mathOperationButtonIsClicked -= HandleMathOperationButtonIsClicked;
+            MathOperationButton.ChangeMathOperationHandler -= HandleMathOperation;
+            MathOperationButton.MathOperationButtonIsClicked -= HandleMathOperationButtonIsClicked;
             GameStateOne.TowerButtonIsClicked -= HandleTowerButtonClicked;
         }
     }

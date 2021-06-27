@@ -140,7 +140,7 @@ namespace Tower_Defence.States
             Enemy enemy = new Enemy(_enemyTexture, 5, 4, _healthBar, _healthBarBackground)
             {
                 Position = new Vector2(80, 600),
-                idle = true
+                Idle = true
             };
 
             MathEnemy mathEnemy = new MathEnemy(_mathEnemyTexture, 2, 5, _healthBar, _healthBarBackground, _menuFont)

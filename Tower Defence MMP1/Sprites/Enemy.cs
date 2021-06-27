@@ -27,7 +27,7 @@ namespace Tower_Defence.Sprites
         public int HealthPoints { get; set; }
         public int StartHealth { get; set; }
         public bool HasReachedTarget { get ; set ; }
-        public bool idle { get; set; }
+        public bool Idle { get; set; }
 
         public HealthBar _healthBar;
         public HealthBar _healthBarBackground;
@@ -75,7 +75,7 @@ namespace Tower_Defence.Sprites
 
         public override void Update(GameTime gameTime, List<IGameParts> gameParts, List<Tower> backgroundTowers)
         {
-            if(!idle)
+            if(!Idle)
             {
                 EnemyMovement(gameTime);
             }

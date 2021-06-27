@@ -32,7 +32,7 @@ namespace Tower_Defence.Sprites
         private float _timer;
         private Vector2 _weaponOffset;
 
-        private List<Rectangle> _towerPlacableRectangles = new List<Rectangle>();
+        public List<Rectangle> _towerPlacableRectangles = new List<Rectangle>();
 
         private Vector2 _tempTowerPosition = new Vector2();
 

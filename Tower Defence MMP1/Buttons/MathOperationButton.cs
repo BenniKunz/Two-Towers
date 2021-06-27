@@ -25,8 +25,8 @@ namespace Tower_Defence.Buttons
         public string MathButtonText { get; set; }
         public float CoolDownTime { get; set; }
 
-        public static event Action<MathOperation> changeMathOperationHandler;
-        public static event Action<MathOperation, bool> mathOperationButtonIsClicked;
+        public static event Action<MathOperation> ChangeMathOperationHandler;
+        public static event Action<MathOperation, bool> MathOperationButtonIsClicked;
         
         public MathOperationButton(Texture2D texture, MathOperation mathOperation)
         {
@@ -81,8 +81,8 @@ namespace Tower_Defence.Buttons
                     
                     Clicked = true;
                     
-                    changeMathOperationHandler?.Invoke(this._mathOperation);
-                    mathOperationButtonIsClicked?.Invoke(this._mathOperation, Clicked);
+                    ChangeMathOperationHandler?.Invoke(this._mathOperation);
+                    MathOperationButtonIsClicked?.Invoke(this._mathOperation, Clicked);
                     
                     
                 }
@@ -90,7 +90,7 @@ namespace Tower_Defence.Buttons
                 if (_currentMouse.LeftButton == ButtonState.Released && _previousMouse.RightButton == ButtonState.Pressed)
                 {
                     Clicked = false;
-                    mathOperationButtonIsClicked?.Invoke(this._mathOperation, Clicked);
+                    MathOperationButtonIsClicked?.Invoke(this._mathOperation, Clicked);
                     
 
                 }
@@ -105,7 +105,7 @@ namespace Tower_Defence.Buttons
                 if(counter < 1)
                 {
                     Clicked = false;
-                    mathOperationButtonIsClicked?.Invoke(this._mathOperation, Clicked);
+                    MathOperationButtonIsClicked?.Invoke(this._mathOperation, Clicked);
                     _tempMathButtonText = MathButtonText;
                     counter++;
                 }
